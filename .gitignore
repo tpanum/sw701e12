@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /droneControl/log/*.log
 /droneControl/tmp
+
+# Ignore OSX file
+.DS_STORE
