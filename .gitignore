@@ -16,3 +16,6 @@
 
 # Ignore OSX file
 .DS_STORE
+
+# Ignore Report Stuff
+master.pdf
