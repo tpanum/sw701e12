@@ -41,6 +41,7 @@
 # pitch 30 deg:   java ARDrone 192.168.1.1 AT*ANIM=402,1,1000
 
 require 'socket'
+require 'eventmachine'
 
 if ARGV.length < 2
     puts "Usage: stuff"
@@ -58,6 +59,12 @@ end
 host = ip
 port = 5556
 msg = ARGV[1]
+
+connection = EventMachine.open_datagram_socket (127.0.0.1, port, Control connection.setup host, port)
+
+control_timer = EventMachine.add_periodic_timer 0.02 do
+  connection.send_quened_messages
+end
 
 s = UDPSocket.new
 s.bind(nil, port)
