@@ -13,7 +13,7 @@ class Drone < ActiveRecord::Base
 
     @application_id = 'RorARDrone'
     @user_id = 'bjarke'
-    @session_id = "#{Sokect.gethostname}:#{$$}"
+    @session_id = "#{Socket.gethostname}:#{$$}"
 
     axis_reset
 
@@ -33,6 +33,8 @@ class Drone < ActiveRecord::Base
     s.send msg, 0, @drone_ip, @drone_control_port unless msg.empty?
   end
 
+
+
   def state_msg
     push format_cmd *ref(@drone_state)
   end
@@ -45,15 +47,39 @@ class Drone < ActiveRecord::Base
     push format_cmd *configids(session_id, user_id, application_id)
   end
 
-  def land
-    @drone_state = 0
-    state_msg
-  end
+
 
   def takeoff
     @drone_state = REF_FLYING
     state_msg
   end
+
+  def land
+    @drone_state = 0
+    state_msg
+  end
+
+  def hover
+
+  end
+
+  def gaz
+
+  end
+
+  def pitch
+
+  end
+
+  def yaw
+
+  end
+
+  def roll
+
+  end
+
+
 
   def configids(session_id, user_id, application_id)
     ['AT*CONFIG_IDS', "#{session_id},#{user_id},#{application_id}"]
