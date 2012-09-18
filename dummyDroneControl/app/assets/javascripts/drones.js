@@ -1,23 +1,39 @@
+var takeoff = false;
+
 $(document).ready(function(){
 	
 	$(document).keydown(function(e){
-	    
+	    var action;
+	
 		switch(e.keyCode){
 			case 32:
-			alert("SPACE");
+			if(takeoff){
+				action = "landing"
+				takeoff = false;
+			} else {
+				action = "takeoff"
+				takeoff = true;
+			}
+			break;
 			case 37:
-			alert( "left pressed" );
+				action = "left"
 			break;
 			case 38:
-			alert( "up pressed" );
+				action = "forward"
 			break;
 			case 39:
-			alert( "right pressed" );
+				action = "right"
 			break;
 			case 40:
-			alert( "down pressed" );
+				action = "backward"
+			break;
+			case 72:
+				action = "hover"
 			break;
 		}
+		
+		$.post('/drones/'+action);
+		
 		return false;
 	});
 });
