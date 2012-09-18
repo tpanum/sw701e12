@@ -60,7 +60,7 @@ class Drone < ActiveRecord::Base
   end
 
   def hover
-
+    
   end
 
   def gaz
