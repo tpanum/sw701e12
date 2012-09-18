@@ -82,7 +82,7 @@ class ARorDrone
 
         def push(msg)
             # @send_queue << msg
-            send_datagram(msg, @drone_ip, @drone_control_port) if msg.present?
+            send_datagram(msg, @drone_ip, @drone_control_port) unless msg.empty?
         end
 
         def state_msg
@@ -131,10 +131,8 @@ EventMachine.run {
     i = 0
     @control_timer = EventMachine.add_periodic_timer 0.50 do
         if i % 2 == 0
-            puts "hej"
             connection.takeoff
         else
-            puts "bov"
             connection.land
         end
         i += 1
