@@ -13,7 +13,7 @@ class Drone < ActiveRecord::Base
 
     @application_id = 'RorARDrone'
     @user_id = 'bjarke'
-    @session_id = "#{Sokect.gethostname}:#{$$}"
+    @session_id = "#{Socket.gethostname}:#{$$}"
 
     axis_reset
 
