@@ -60,11 +60,13 @@ class Drone < ActiveRecord::Base
   end
 
   def hover
-    
+    axis_reset
+    push format_cmd *flight
   end
 
   def gaz
-
+    @gaz = 1036831949
+    push format_cmd *flight
   end
 
   def pitch
@@ -83,6 +85,10 @@ class Drone < ActiveRecord::Base
 
   def configids(session_id, user_id, application_id)
     ['AT*CONFIG_IDS', "#{session_id},#{user_id},#{application_id}"]
+  end
+
+  def flight
+    ['AT*PCMD', "1,#{@phi},#{@theta},#{@yaw},#{@gaz}"]
   end
 
   def ref(input)
