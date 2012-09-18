@@ -7,7 +7,7 @@ class Drone < ActiveRecord::Base
   REF_EMERGENCY = 1 << 8
   REF_FLYING = 1 << 9
   REF_ZEROONE = 1036831949
-  REF_NEGZEROONE = -1036831949
+  REF_NEGZEROONE = -1110651699
 
   def setup(ip, port)
     @drone_ip = ip
@@ -73,25 +73,28 @@ class Drone < ActiveRecord::Base
 
   def backward
     @pitch = REF_NEGZEROONE
-  end
-
-  def gaz
-    @gaz = 1036831949
     push format_cmd *flight
   end
 
-  def pitch
-
+  def turnLeft
+    @yaw = REF_ZEROONE
+    push format_cmd *flight
   end
 
-  def yaw
-
+  def turnRight
+    @yaw = REF_NEGZEROONE
+    push format_cmd *flight
   end
 
-  def roll
-
+  def up
+    @gaz = REF_ZEROONE
+    push format_cmd *flight
   end
 
+  def down
+    @gaz = REF_NEGZEROONE
+    push format_cmd *flight
+  end
 
 
   def configids(session_id, user_id, application_id)
