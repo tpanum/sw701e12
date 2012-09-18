@@ -6,6 +6,8 @@ class Drone < ActiveRecord::Base
   REF_CONST = 290717696
   REF_EMERGENCY = 1 << 8
   REF_FLYING = 1 << 9
+  REF_ZEROONE = 1036831949
+  REF_NEGZEROONE = -1036831949
 
   def setup(ip, port)
     @drone_ip = ip
@@ -62,6 +64,15 @@ class Drone < ActiveRecord::Base
   def hover
     axis_reset
     push format_cmd *flight
+  end
+
+  def forward
+    @pitch = REF_ZEROONE
+    push format_cmd *flight
+  end
+
+  def backward
+    @pitch = REF_NEGZEROONE
   end
 
   def gaz
