@@ -43,31 +43,102 @@
 require 'socket'
 require 'eventmachine'
 
-if ARGV.length < 2
-    puts "Usage: stuff"
-    abort
-end
+abort "Usage: ruby ARDrone.rb <IP>" unless ARGV.length == 1
 
 ip = ARGV[0]
-ipParts =  ip.split '.'
 
-if ipParts.length < 4
-    puts "Illegal IP"
-    abort
+if ip.split('.').length < 4
+    abort "Illegal IP"
 end
 
 host = ip
 port = 5556
-msg = ARGV[1]
 
-connection = EventMachine.open_datagram_socket (127.0.0.1, port, Control connection.setup host, port)
+class ARorDrone
+    module Control
+        REF_EMERGENCY = 1 << 8
+        REF_FLYING = 1 << 9
 
-control_timer = EventMachine.add_periodic_timer 0.02 do
-  connection.send_quened_messages
+        def setup(drone_ip, drone_control_port)
+            @drone_ip = drone_ip
+            @drone_control_port = drone_control_port
+
+            @application_id = 'ARDrone'
+            @user_id = 'bjarke'
+            @session_id = "#{Socket.gethostname}:#{$$}"
+
+            axis_reset
+
+            config_ids @session_id, @user_id, @application_id
+        end
+
+        def format_cmd(cmd, data = nil)
+            "#{cmd}=#{next_seq},#{data}\r"
+        end
+
+        def next_seq
+            @seq = @seq.nil? ? 1 : @seq + 1
+        end
+
+        def push(msg)
+            # @send_queue << msg
+            send_datagram(msg, @drone_ip, @drone_control_port) if msg.present?
+        end
+
+        def state_msg
+            push format_cmd *ref(@drone_state)
+        end
+
+        def axis_reset
+            @phi, @theta, @yaw, @gaz = 0, 0, 0, 0
+        end
+
+        def config_ids(session_id, user_id, application_id)
+            push format_cmd *configids(session_id, user_id, application_id)
+        end
+
+        def land
+            @drone_state = 0
+            state_msg
+        end
+
+        def takeoff
+            @drone_state = REF_FLYING
+            state_msg
+        end
+
+    # end
+
+    # module ControlMessages
+
+        REF_CONST = 290717696
+
+        def configids(session_id, user_id, application_id)
+            ['AT*CONFIG_IDS', "#{session_id},#{user_id},#{application_id}"]
+        end
+
+        def ref(input)
+            ['AT*REF', input.to_i | REF_CONST]
+        end
+
+    end
 end
 
-s = UDPSocket.new
-s.bind(nil, port)
-s.send msg, 0, host, port
+EventMachine.run {
+    connection = EventMachine.open_datagram_socket('0.0.0.0', port, ARorDrone::Control)
+    connection.setup host, port
 
-puts s.recv(100)
+    i = 0
+    @control_timer = EventMachine.add_periodic_timer 0.50 do
+        if i % 2 == 0
+            puts "hej"
+            connection.takeoff
+        else
+            puts "bov"
+            connection.land
+        end
+        i += 1
+    end
+
+    connection
+}
