@@ -5,51 +5,51 @@ class DronesController < ApplicationController
   end
 
   def takeoff
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.takeoff
     render 'blank'
   end
 
   def landing
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.land
     render 'blank'
   end
 
   def backward
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.backward
     render 'blank'
   end
 
   def forward
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.forward
     render 'blank'
   end
 
   def left
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.turnLeft
     render 'blank'
   end
 
   def right
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
+    @drone = Drone.find(1)
+    @drone.setup
     @drone.turnRight
     render 'blank'
   end
 
   def hover
-    @drone = Drone.new
-    @drone.setup("192.168.1.1", "5556")
-    @drone.hover
+    @drone = Drone.find(1)
+    @drone.setup
+    #@drone.hover
     render 'blank'
   end
 
