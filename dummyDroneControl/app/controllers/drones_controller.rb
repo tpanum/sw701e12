@@ -35,14 +35,14 @@ class DronesController < ApplicationController
   def left
     @drone = Drone.find(1)
     @drone.setup
-    @drone.turnLeft
+    @drone.left
     render 'blank'
   end
 
   def right
     @drone = Drone.find(1)
     @drone.setup
-    @drone.turnRight
+    @drone.right
     render 'blank'
   end
 

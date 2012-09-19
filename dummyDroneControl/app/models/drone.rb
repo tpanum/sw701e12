@@ -5,6 +5,10 @@ class Drone < ActiveRecord::Base
   REF_EMERGENCY = 1 << 8
   REF_FLYING = 1 << 9
   REF_CONTROLPORT = 5556
+  
+  #Phi positive -> Right
+  #Phi negative -> Left
+  #Theta positive -> Backwards
 
   def setup
     @drone_ip = self.ip_address
@@ -33,8 +37,6 @@ class Drone < ActiveRecord::Base
     puts msg
     s.send msg, 0, @drone_ip, @drone_control_port unless msg.empty?
   end
-
-
 
   def state_msg
     push format_cmd *ref(@drone_state)
@@ -66,9 +68,8 @@ class Drone < ActiveRecord::Base
     push format_cmd *configids(session_id, user_id, application_id)
   end
 
-
-
   def takeoff
+    ftrim
     @drone_state = REF_FLYING
     state_msg
   end
@@ -83,25 +84,25 @@ class Drone < ActiveRecord::Base
     push format_cmd *pcmd(flags, 0, 0, 0, 0)
   end
 
-  # def forward
-    # @pitch = REF_ZEROONE
-    # push format_cmd *flight
-  # end
+  def forward
+    flags = 1
+    push format_cmd *pcmd(flags, 0, -0.4, 0, 0)
+  end
 
-  # def backward
-    # @pitch = REF_NEGZEROONE
-    # push format_cmd *flight
-  # end
+  def backward
+    flags = 1
+    push format_cmd *pcmd(flags, 0, 0.4, 0, 0)
+  end
 
-  # def turnLeft
-    # @yaw = REF_ZEROONE
-    # push format_cmd *flight
-  # end
+  def left
+    flags = 1
+    push format_cmd *pcmd(flags, -0.4, 0, 0, 0)
+  end
 
-  # def turnRight
-    # @yaw = REF_NEGZEROONE
-    # push format_cmd *flight
-  # end
+  def right
+    flags = 1
+    push format_cmd *pcmd(flags, 0.4, 0, 0, 0)
+  end
 
   # def up
     # @gaz = REF_ZEROONE
@@ -133,6 +134,12 @@ class Drone < ActiveRecord::Base
 
   def ref(input)
     ['AT*REF', input.to_i | REF_CONST]
+  end
+
+  def ftrim
+    push 'AT*FTRIM=1<LF>'
+    self.seq = 1
+    self.save
   end
 
 end
