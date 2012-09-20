@@ -37,10 +37,4 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	$(document).keyup(function(e){
-		
-		$.post('/drones/hover');
-		
-		return false;
-	});
 });
