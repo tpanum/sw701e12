@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920125727) do
+ActiveRecord::Schema.define(:version => 20120920125828) do
+
+  create_table "actions", :force => true do |t|
+    t.integer  "duration"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "drone_roles", :force => true do |t|
     t.string   "title"
@@ -30,6 +36,12 @@ ActiveRecord::Schema.define(:version => 20120920125727) do
 
   create_table "flight_plans", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "instructions", :force => true do |t|
+    t.string   "AT_command"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
