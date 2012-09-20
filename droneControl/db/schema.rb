@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920125038) do
+ActiveRecord::Schema.define(:version => 20120920125727) do
+
+  create_table "drone_roles", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "drones", :force => true do |t|
+    t.string   "ip"
+    t.string   "location"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "flight_plans", :force => true do |t|
     t.string   "name"
