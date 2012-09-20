@@ -75,7 +75,7 @@ class Drone < ActiveRecord::Base
   end
 
   def land
-    @drone_state = 0
+    @drone_state = 0 << 9
     state_msg
   end
 
@@ -96,12 +96,12 @@ class Drone < ActiveRecord::Base
 
   def left
     flags = 1
-    push format_cmd *pcmd(flags, -0.4, 0, 0, 0)
+    push format_cmd *pcmd(flags, 0, 0, 0, -0.4)
   end
 
   def right
     flags = 1
-    push format_cmd *pcmd(flags, 0.4, 0, 0, 0)
+    push format_cmd *pcmd(flags, 0, 0, 0, 0.4)
   end
 
   # def up
