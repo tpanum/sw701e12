@@ -3,5 +3,5 @@ class UserDronePrivilege < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :drone
-  belongs_to :drone_role
+  has_one :drone_role
 end
