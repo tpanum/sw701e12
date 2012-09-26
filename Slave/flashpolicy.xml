@@ -10,7 +10,7 @@
 
    <!-- Instead of setting to-ports="*", administrator's can use ranges and commas -->
    <!-- This will allow access to ports 123, 456, 457 and 458 -->
-   <allow-access-from domain="localhost" to-ports="5000" />
+   <allow-access-from domain="localhost" to-ports="8081" />
 
 </cross-domain-policy>
 
