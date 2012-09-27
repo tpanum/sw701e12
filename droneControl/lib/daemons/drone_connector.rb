@@ -17,18 +17,19 @@ end
 module Handler
   def post_init
     puts "-- someone connected to the echo server!"
-    send_data "I see you the Rasmus"
+    send_data "Yo"
   end
 
   def receive_data data 
     port, ip = Socket.unpack_sockaddr_in(get_peername)
-    puts "got #{data.inspect} from #{ip}:#{port}"
-    send_data "I see IPs and sockets"
-    c = Connections.new(:port => port, :id => ip)
-    c.save
+    #puts "got #{data.inspect} from #{ip}:#{port}"
+    #c = Connections.new(:port => port, :id => ip)
+    #c.save
     if is_json?(data)
       obj = JSON.parse(data)
-      sid = obj['slave_id']
+      name = obj['slave_id']
+      drone = Drone.new(:IP => ip, :name => name, :description => "Red Leader")
+      drone.save
       puts sid 
     end
     
