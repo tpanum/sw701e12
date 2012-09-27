@@ -1,0 +1,1 @@
+system("rake daemon:drone_connector:start")
