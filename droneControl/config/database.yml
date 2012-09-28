@@ -15,7 +15,7 @@ development:
   database: DroneControl_development
   pool: 5
   username: root
-  password: root
+  password: psqhat.7
   host: localhost
 
 # Warning: The database defined as "test" will be erased and

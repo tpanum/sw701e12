@@ -61,14 +61,14 @@ ActiveRecord::Schema.define(:version => 20120920130001) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "priviliges", :force => true do |t|
+  create_table "privileges", :force => true do |t|
     t.string   "description"
     t.integer  "roles_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "priviliges", ["roles_id"], :name => "index_priviliges_on_roles_id"
+  add_index "privileges", ["roles_id"], :name => "index_privileges_on_roles_id"
 
   create_table "roles", :force => true do |t|
     t.string   "title"
