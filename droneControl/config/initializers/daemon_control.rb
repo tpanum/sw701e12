@@ -1,1 +1,1 @@
-system("rake daemon:drone_connector:start")
+#system("rake daemon:drone_connector:start")
