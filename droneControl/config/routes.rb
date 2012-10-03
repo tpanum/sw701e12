@@ -1,4 +1,12 @@
 DroneControl::Application.routes.draw do
+  get "drone/new"
+
+  get "drone/send_request"
+
+  get "drone_controller/new"
+
+  get "drone_controller/send_request"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
