@@ -5,7 +5,6 @@ class DroneController < ApplicationController
   module Handler
 
     def post_init
-      puts "Starting TLS"
       puts "before send"
       data = request(1)
       send_data data
@@ -25,22 +24,66 @@ class DroneController < ApplicationController
       end
     @request = "{\"session\":\"true\", \"name\":\"#{@drone.name}\"}"
     @request
+    end
+
+    def unbind
+      EventMachine::stop_event_loop
+    end
+
+  end
+
+  module Session_server
+
+  def post_init
+    puts "Incomming connection"
+  end
+
+  def receive_data data
+    puts data
+    if is_json?(data)
+      obj = JSON.parse(data)
+      session = obj['session']
+      unless session.nil?
+        @key = rand(36**40).to_s(36) 
+        @respond = "{\"sessionkey\":\"#{@key}\"}"
+      else
+        @respond = "{\"sessionkey\":\"invalid\"}"
+      end
+    else
+      @respond = "{\"sessionkey\":\"invalid\"}"
+    end
+      puts @respond
+      send_data @respond
   end
 
   def unbind
-    EventMachine::stop_event_loop
+  EventMachine::stop_event_loop
   end
 
-end
+  def is_json?(string)
+    begin
+      JSON.parse(string).all?
+    rescue JSON::ParserError
+      false
+    end
+  end
 
-def new
-end
+  end
 
-def send_request
-  EventMachine.run {
-    EventMachine::connect "192.168.1.108", 5123, DroneController::Handler
-  }
+  def new
 
-end
+  end
+
+  def send_session
+    EventMachine.run {
+      EventMachine::start_server "0.0.0.0", 5123, DroneController::Session_server
+   }
+  end
+
+  def send_request
+    EventMachine.run {
+      EventMachine::connect "192.168.1.108", 5123, DroneController::Handler
+   }
+  end
 
 end
