@@ -1,10 +1,10 @@
 DroneControl::Application.routes.draw do
+  root :to => "access#login"
+  match 'admin', :to => 'access#menu'
+
   get "drone/new"
-
   get "drone/send_request"
-
   get "drone_controller/new"
-
   get "drone_controller/send_request"
 
   # The priority is based upon order of creation:
@@ -62,5 +62,5 @@ DroneControl::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  match ':controller(/:action(/:id))(.:format)'
 end

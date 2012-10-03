@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>DroneControl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+		<title>Drone Control | <%= @page_title ||  'Admin Area' %></title>
+		<%= stylesheet_link_tag('application', :media => 'all') %>
+		<%= javascript_include_tag "application" %>
+  		<%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Drone Control</h1>
+		</div>
+		<div id="main">
+			<% if !flash[:notice].blank? %>
+				<div class="notice">
+					<%= flash[:notice] %>
+				</div>
+			<% end %>
 
-<%= yield %>
-
-</body>
+			<div id="content">
+				<%= yield %>
+			</div>
+		</div>
+		<div id="footer">
+			<p id="copyright">&copy; sw701e12</p>
+		</div>		
+	</body>
 </html>
