@@ -2,6 +2,7 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   # attr_accessible :title, :body
+  attr_accessible :email, :first_name, :last_name, :password
 
   has_one :role
   has_many :user_drone_privileges
@@ -9,7 +10,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
-  validates_length_of :password, :within => 8..25, :on => :create
+  #validates_length_of :password, :within => 8..25, :on => :create
 
   before_save :create_hashed_password
   after_save :clear_password
