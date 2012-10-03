@@ -21,7 +21,7 @@ We model the sales on a per sale basis. We use two fact tables to keep track of 
     \label{tab:balanceFactTable}
 \end{table}
 
-The Time dimension is shown in Table~\ref{tab:timeDimensionTable}, and contains nothing special. The Product dimension is shown in Table~\ref{tab:productDimensionTable} and contains the slowly changing dimension Price, since products' price might increase or decrease over time. The Location dimension shown in Table~\ref{tab:locationDimensionTable} keeps track of where/in which context every purchase has been performed. Lastly the Member dimension shown in Table~\ref{tab:memberDimensionTable} contains every member within the fclub. Each member has an id in the system, which we will present with the UserId, this is because surrogate keys should always be used, in case updates might happen.
+The Time dimension is shown in Table~\ref{tab:timeDimensionTable}, and contains nothing special. The Product dimension is shown in Table~\ref{tab:productDimensionTable} and contains the slowly changing Price, since products' price might increase or decrease over time. This may or may not be implemented depending on time. The Location dimension shown in Table~\ref{tab:locationDimensionTable} keeps track of where/in which context every purchase has been performed. Lastly the Member dimension shown in Table~\ref{tab:memberDimensionTable} contains every member within the fclub. Each member has an id in the system, which we will present with the UserId, this is because surrogate keys should always be used, in case updates might happen.
 
 \begin{table}[H]
     \centering
