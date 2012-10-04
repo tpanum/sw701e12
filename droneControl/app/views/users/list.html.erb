@@ -3,6 +3,7 @@
 <div class="users list">
 	<h2>Users</h2>
 
+	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
 	<%= link_to("Add New User", {:action => 'new'}, :class => 'action new') %>
 
 	<table class="listing" summary="Users list">

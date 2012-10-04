@@ -1,0 +1,32 @@
+<% @page_title = "Drones List" %>
+
+<div class="drones list">
+	<h2>Drpones</h2>
+
+	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
+	<%= link_to("Add New Drone", {:action => 'new'}, :class => 'action new') %>
+
+	<table class="listing" summary="drones list">
+		<tr class="header">
+			<th>&nbsp;</th>
+			<th>Name</th>
+			<th>Location</th>
+			<th>IP</th>
+			<th>Actions</th>
+		</tr>
+
+		<% @drones.each do |drone| %>
+			<tr>
+				<td><%= drone.id %></td>
+				<td><%= drone.name %></td>
+				<td><%= drone.location %></td>
+				<td><%= drone.ip %></td>
+				<td class="actions">
+					<%= link_to("Show", {:action => 'show', :id => drone.id}, :class => 'action show') %>
+					<%= link_to("Edit", {:action => 'edit', :id => drone.id}, :class => 'action edit') %>
+					<%= link_to("Delete", {:action => 'delete', :id => drone.id}, :class => 'action delete') %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+</div>

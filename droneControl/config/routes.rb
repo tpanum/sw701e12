@@ -1,4 +1,20 @@
 DroneControl::Application.routes.draw do
+  get "drones/index"
+
+  get "drones/list"
+
+  get "drones/new"
+
+  get "drones/create"
+
+  get "drones/edit"
+
+  get "drones/update"
+
+  get "drones/delete"
+
+  get "drones/destroy"
+
   root :to => "access#login"
   match 'admin', :to => 'access#menu'
 

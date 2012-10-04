@@ -1,0 +1,16 @@
+<%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
+
+<div class="drone delete">
+	<h2>Delete Drone</h2>
+
+	<%= form_for(:drone, :url => {:action => 'destroy', :id => @drone.id}) do |f| -%>
+
+		<p>Are you sure you want to permanently delete this drone?</p>
+		<p class="reference-name"><%= @drone.name %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag("Delete Drone") %>
+		</div>
+
+	<% end %>
+</div>

@@ -1,16 +1,16 @@
-<% @page_title = "Create User" %>
+<% @page_title = "Create Drone" %>
 
 <%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
 
-<div class="user new">
-	<h2>Create User</h2>
+<div class="drone new">
+	<h2>Create Drone</h2>
 
-	<%= form_for(:user, :url => {:action => 'create'}) do |f| %>
+	<%= form_for(:drone, :url => {:action => 'create'}) do |f| %>
 		
 		<%= render(:partial => "form", :locals => {:f => f}) %>
 
 		<div class="form-buttons">
-			<%= submit_tag("Create User") %>
+			<%= submit_tag("Create Drone") %>
 		</div>
 	<% end %>
 
