@@ -44,6 +44,7 @@ GEM
       rails (~> 3.0)
     erubis (2.7.0)
     eventmachine (1.0.0)
+    eventmachine (1.0.0-x86-mingw32)
     execjs (1.4.0)
       multi_json (~> 1.0)
     hike (1.2.1)
