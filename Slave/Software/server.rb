@@ -278,7 +278,10 @@ class SlaveServer
 
       pointer = 0
       @header, @drone_nav_state, @seq, @vision_flag = msg[pointer,16].unpack('VVVV')
+      puts @drone_nav_state
       pointer += 16
+
+      puts msg.inspect
 
       # Compare states
       compare_states prev_state, @drone_nav_state
@@ -294,6 +297,8 @@ class SlaveServer
         # Length is number of 16-bit ints
         data = msg[pointer, length*2]
         pointer += length*2
+
+        puts "Length of option:"+length.to_s
 
         unless TAGS.keys.include?(option_id)
           puts "Found invalid options id: 0x%x" % option_id.inspect
