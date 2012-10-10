@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DroneRoleTest < ActiveSupport::TestCase
+class UserPrivilegesTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

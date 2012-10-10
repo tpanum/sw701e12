@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920130001) do
+ActiveRecord::Schema.define(:version => 20121010095255) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -24,12 +24,6 @@ ActiveRecord::Schema.define(:version => 20120920130001) do
   add_index "actions", ["flight_action_relationships_id"], :name => "index_actions_on_flight_action_relationships_id"
   add_index "actions", ["instructions_id"], :name => "index_actions_on_instructions_id"
 
-  create_table "drone_roles", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "drones", :force => true do |t|
     t.string   "ip"
     t.string   "location"
@@ -38,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20120920130001) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "drones_privileges", :id => false, :force => true do |t|
+    t.integer "drone_id"
+    t.integer "privilege_id"
+  end
+
+  add_index "drones_privileges", ["drone_id", "privilege_id"], :name => "index_drones_privileges_on_drone_id_and_privilege_id"
 
   create_table "flight_action_relationships", :force => true do |t|
     t.integer  "rank"
@@ -70,23 +71,35 @@ ActiveRecord::Schema.define(:version => 20120920130001) do
 
   add_index "privileges", ["roles_id"], :name => "index_privileges_on_roles_id"
 
+  create_table "privileges_roles", :id => false, :force => true do |t|
+    t.integer "privilege_id"
+    t.integer "role_id"
+  end
+
+  add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id"
+
   create_table "roles", :force => true do |t|
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "user_drone_privileges", :force => true do |t|
-    t.integer  "users_id"
-    t.integer  "drones_id"
-    t.integer  "drone_roles_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
-  add_index "user_drone_privileges", ["drone_roles_id"], :name => "index_user_drone_privileges_on_drone_roles_id"
-  add_index "user_drone_privileges", ["drones_id"], :name => "index_user_drone_privileges_on_drones_id"
-  add_index "user_drone_privileges", ["users_id"], :name => "index_user_drone_privileges_on_users_id"
+  add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id"
+
+  create_table "user_privileges", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "privilege_id"
+    t.integer  "flag",         :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "user_privileges", ["user_id", "privilege_id"], :name => "index_user_privileges_on_user_id_and_privilege_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"
