@@ -3,10 +3,8 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :email, :first_name, :last_name, :password
-
-  has_one :role
-  has_many :user_drone_privileges
-  has_many :drones, :through => :user_drone_privileges
+  has_many :privileges, :through => :user_privileges
+  has_and_belongs_to_many :roles
 
   attr_accessor :password
 
