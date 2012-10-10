@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010095255) do
+ActiveRecord::Schema.define(:version => 20121010111329) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -64,12 +64,9 @@ ActiveRecord::Schema.define(:version => 20121010095255) do
 
   create_table "privileges", :force => true do |t|
     t.string   "description"
-    t.integer  "roles_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
-
-  add_index "privileges", ["roles_id"], :name => "index_privileges_on_roles_id"
 
   create_table "privileges_roles", :id => false, :force => true do |t|
     t.integer "privilege_id"
@@ -108,11 +105,8 @@ ActiveRecord::Schema.define(:version => 20121010095255) do
     t.string   "salt"
     t.string   "hashed_password"
     t.string   "password"
-    t.integer  "roles_id"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
-
-  add_index "users", ["roles_id"], :name => "index_users_on_roles_id"
 
 end
