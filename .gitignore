@@ -17,6 +17,9 @@
 # Ignore OSX file
 .DS_STORE
 
+# Ignore yml files
+*.yml
+
 # LaTeX
 master.pdf
 *.acn
