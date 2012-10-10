@@ -14,6 +14,9 @@
 /droneControl/log/*.log
 /droneControl/tmp
 
+#datebase.yml ignore
+/droneControl/config/database.yml
+
 # Ignore OSX file
 .DS_STORE
 
