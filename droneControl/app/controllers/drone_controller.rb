@@ -80,7 +80,7 @@ def send_session
   }
 end
 
-def send_request
+def send_request 
   EventMachine.run {
     EventMachine::connect "192.168.1.108", 5123, DroneController::Handler
   }
