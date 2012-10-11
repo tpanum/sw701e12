@@ -232,6 +232,42 @@ class SlaveServer
 
   end
 
+  module Session_server
+
+    def post_init
+      puts "Incomming connection"
+    end
+
+    def receive_data data
+      if is_json?(data)
+        obj = JSON.parse(data)
+        session = obj['session']
+        unless session.nil?
+          @key = rand(36**40).to_s(36)
+          @respond = "{\"sessionkey\":\"#{@key}\"}"
+        else
+          @respond = "{\"sessionkey\":\"invalid\"}"
+        end
+      else
+        @respond = "{\"sessionkey\":\"invalid\"}"
+      end
+      send_data @respond
+    end
+
+    def unbind
+      EventMachine::stop_event_loop
+    end
+
+    def is_json?(string)
+      begin
+        JSON.parse(string).all?
+      rescue JSON::ParserError
+        false
+      end
+    end
+
+  end
+
   module NavDrone
 
     TAGS = {
@@ -426,4 +462,6 @@ EventMachine::run {
   ip = IPAddr.new(MULTICAST_IP).hton + IPAddr.new(@local_ip).hton
   droneNav.set_sock_opt(Socket::IPPROTO_IP, Socket::IP_ADD_MEMBERSHIP, ip)
   droneNav.send_initial_message
+
+  EventMachine::start_server "0.0.0.0", 5122, SlaveServer::Session_server
 }

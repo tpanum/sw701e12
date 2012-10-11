@@ -31,9 +31,11 @@ module Handler
     url = "http://api.hostip.info/?ip="+ip
     @xmldoc = open(url).read {|f|f.read}
     doc = REXML::Document.new(@xmldoc)
+
     doc.elements.each('//gml:name') do |c|
-    @loc = c.text
+      @loc = c.text
     end
+    
     if is_json?(data)
       obj = JSON.parse(data)
       name = obj['slave_id']

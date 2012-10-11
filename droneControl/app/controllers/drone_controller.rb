@@ -19,20 +19,20 @@ class DroneController < ApplicationController
     def request arg1
      if arg1.is_a? Integer
       @drone = Drone.find(arg1)
-      else
+    else
       @drone = Drone.find_by_name(arg1)
-      end
-    @request = "{\"session\":\"true\", \"name\":\"#{@drone.name}\"}"
+    end
+    @request = "{\"session\":\"true\"}"
     @request
-    end
-
-    def unbind
-      EventMachine::stop_event_loop
-    end
-
   end
 
-  module Session_server
+  def unbind
+    EventMachine::stop_event_loop
+  end
+
+end
+
+module Session_server
 
   def post_init
     puts "Incomming connection"
@@ -52,12 +52,12 @@ class DroneController < ApplicationController
     else
       @respond = "{\"sessionkey\":\"invalid\"}"
     end
-      puts @respond
-      send_data @respond
+    puts @respond
+    send_data @respond
   end
 
   def unbind
-  EventMachine::stop_event_loop
+    EventMachine::stop_event_loop
   end
 
   def is_json?(string)
@@ -68,22 +68,22 @@ class DroneController < ApplicationController
     end
   end
 
-  end
+end
 
-  def new
+def new
 
-  end
+end
 
-  def send_session
-    EventMachine.run {
-      EventMachine::start_server "0.0.0.0", 5123, DroneController::Session_server
-   }
-  end
+def send_session
+  EventMachine.run {
+    EventMachine::start_server "0.0.0.0", 5123, DroneController::Session_server
+  }
+end
 
-  def send_request
-    EventMachine.run {
-      EventMachine::connect "192.168.1.108", 5123, DroneController::Handler
-   }
-  end
+def send_request 
+  EventMachine.run {
+    EventMachine::connect "192.168.1.108", 5123, DroneController::Handler
+  }
+end
 
 end
