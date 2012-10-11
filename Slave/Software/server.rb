@@ -63,6 +63,9 @@ class SlaveServer
             $drone.camera @camera_channel+1
         end
 
+        response_message = "{\"battery_level\":\"#{$drone.get_battery_level}\"}"
+        send_data response_message
+
       rescue JSON::ParserError
         puts "Too fast Bjarke, SLOWER!"
       end
@@ -94,16 +97,26 @@ class SlaveServer
     REF_CONST = 290717696
 
     def setup(drone_ip, drone_control_port)
-        @drone_ip = drone_ip
-        @drone_control_port = drone_control_port
+      @drone_ip = drone_ip
+      @drone_control_port = drone_control_port
 
-        @application_id = 'ARDrone'
-        @user_id = 'bjarke'
-        @session_id = "#{Socket.gethostname}:#{$$}"
+      @application_id = 'ARDrone'
+      @user_id = 'bjarke'
+      @session_id = "#{Socket.gethostname}:#{$$}"
 
-        config_ids @session_id, @user_id, @application_id
+      @battery_level = 0
 
-        navdata
+      config_ids @session_id, @user_id, @application_id
+      video_codec
+      navdata
+    end
+
+    def set_battery_level battery_level
+      @battery_level = battery_level
+    end
+
+    def get_battery_level
+      @battery_level
     end
 
     def axis_reset
@@ -124,7 +137,7 @@ class SlaveServer
 
     def push(msg)
         unless msg.empty?
-          puts 'Message send : '+msg
+          puts 'Message sent : '+msg
           send_datagram(msg, @drone_ip, @drone_control_port)
         end
     end
@@ -138,11 +151,15 @@ class SlaveServer
     end
 
     def state_msg
-        push format_cmd *ref(@drone_state)
+      push format_cmd *ref(@drone_state)
     end
 
     def camera channel
       set_option 'video:video_channel', channel.to_s
+    end
+
+    def video_codec
+      set_option 'video:video_codec', '129'
     end
 
     def navdata
@@ -277,50 +294,70 @@ class SlaveServer
       prev_state = @drone_nav_state
 
       pointer = 0
-      @header, @drone_nav_state, @seq, @vision_flag = msg[pointer,16].unpack('VVVV')
-      puts @drone_nav_state
+      @header, @drone_nav_state, @seq_nav, @vision_flag = msg[pointer,16].unpack('VVVV')
+      puts "Header: "+@header.to_s
+      puts "State: "+@drone_nav_state.to_s
+      puts "Seq: "+@seq_nav.to_s
+      puts "Vision: "+@vision_flag.to_s
       pointer += 16
 
       puts msg.inspect
 
       # Compare states
-      compare_states prev_state, @drone_nav_state
+      # compare_states prev_state, @drone_nav_state
 
       options = []
-      while pointer < msg.length
-        option_id = msg[pointer, 2].unpack('v').first
-        pointer += 2
 
-        length = msg[pointer, 2].unpack('v').first
-        pointer += 2
+      option_id = msg[pointer, 2].unpack('v').first
+      pointer += 2
 
-        # Length is number of 16-bit ints
-        data = msg[pointer, length*2]
-        pointer += length*2
+      size = msg[pointer, 2].unpack('v').first
+      pointer += 2
 
-        puts "Length of option:"+length.to_s
+      battery = msg[pointer+4, 4].unpack('V').first
+      puts "Battery voltage: "+battery.to_s
 
-        unless TAGS.keys.include?(option_id)
-          puts "Found invalid options id: 0x%x" % option_id.inspect
-          error = true
-          next
-        end
+      $drone.set_battery_level battery
 
-        unless length > 0
-          puts "Found option #{TAGS[option_id]} with invalid length of 0"
-          break
-        end
-        # puts "Decoded option #{TAGS[option_id]} with value #{data.inspect}"
-        options.push :id => option_id, :length => length, :data => data
-      end
+      # while pointer < msg.length
+        # puts "Rest of message: "+msg[pointer, msg.length-pointer].inspect
+        # puts msg[pointer,2].unpack('v')
+        # puts "Pointer: "+pointer.to_s
+        # option_id = msg[pointer, 2].unpack('v').first
+        # pointer += 2
+        # puts "Option: "+option_id.to_s
+
+        # length = msg[pointer, 2].unpack('v').first
+        # pointer += 2
+
+        # puts "length:"+length.to_s
+
+        # # Length is number of 16-bit ints
+        # data = msg[pointer, length*2]
+        # pointer += length*2
+        # puts "Data: "+data.inspect
+
+        # unless TAGS.keys.include?(option_id)
+        #   puts "Found invalid options id: 0x%x" % option_id.inspect
+        #   error = true
+        #   next
+        # end
+
+        # unless length > 0
+        #   puts "Found option #{TAGS[option_id]} with invalid length of 0"
+        #   break
+        # end
+        # # puts "Decoded option #{TAGS[option_id]} with value #{data.inspect}"
+        # options.push :id => option_id, :length => length, :data => data
+      # end
 
       # Checksum is always the last option sent by the AR Drone
-      checksum = options.last
-      if checksum[:id] == TAGS.key(:checksum)
-        validate checksum
-      else
-        #puts "No checksum found for this packet.  Last option was tagged #{TAGS[checksum[:id]]}"
-      end
+      # checksum = options.last
+      # if checksum[:id] == TAGS.key(:checksum)
+      #   validate checksum
+      # else
+      #   #puts "No checksum found for this packet.  Last option was tagged #{TAGS[checksum[:id]]}"
+      # end
       puts "PACKET: #{msg.inspect}" if error
     end
 
