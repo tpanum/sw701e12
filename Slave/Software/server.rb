@@ -463,5 +463,5 @@ EventMachine::run {
   droneNav.set_sock_opt(Socket::IPPROTO_IP, Socket::IP_ADD_MEMBERSHIP, ip)
   droneNav.send_initial_message
 
-  EventMachine::start_server "0.0.0.0", 5123, SlaveServer::Session_server
+  EventMachine::start_server "0.0.0.0", 5122, SlaveServer::Session_server
 }
