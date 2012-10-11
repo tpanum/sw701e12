@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010111329) do
+ActiveRecord::Schema.define(:version => 20121011125237) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20121010111329) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "session_key"
   end
 
   create_table "drones_privileges", :id => false, :force => true do |t|

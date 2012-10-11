@@ -1,5 +1,5 @@
 class Drone < ActiveRecord::Base
-  attr_accessible :ip, :name, :location, :description
+  attr_accessible :ip, :name, :location, :description, :session_key
 
   has_many :flight_plans
   has_many :privileges
