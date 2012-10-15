@@ -61,12 +61,13 @@ public void reset()
 private boolean DangerOfAny()
 {
 
-        if ((getReceptiveFieldCellValue(marioEgoRow + 2, marioEgoCol + 1) == 0 &&
-            getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + 1) == 0) ||
+        if ((getReceptiveFieldCellValue(marioEgoRow + 2, marioEgoCol + 1) == 0 && getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + 1) == 0) ||
             getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
             getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 2) != 0 ||
             getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
-            getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != 0)
+            getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != 0 || 
+            getEnemiesCellValue(marioEgoRow, marioEgoCol + 3) != 0 || 
+            getEnemiesCellValue(marioEgoRow, marioEgoCol + 4) != 0)
             return true;
         else
             return false;
