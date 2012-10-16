@@ -1,21 +1,63 @@
-\section{Motivation}
 This student report is written as part of a learning project. Therefore we must comply with the study regulation.
 The study regulation states that the main focus of this semester's project is to gain knowledge of, and develop, Internet applications, -agents, or -services.
 The goal is thus to create an Internet application that provides a service with focus on agent technologies, scalability and data intensity.
+\section{Motivation}
 
-\subsection{Security Systems}
-In their current form most security systems consist of a set of sensors and cameras, each covering a limited area.
-Both a sensor and a camera is limited by its range and spectrum.
-As a consequence security systems require a large amount of hardware to monitor a large area to a satisfying degree.
+\subsection{Video Surveillance of large Outdoor Areas}
+The need for video surveillance is based on the need for documentation, which is required in case of damage loses from an insurance perspective.
+%Should a break-in occur a definitive proof of such must often be presented in order for insurances to cover potential losses.
+Similarly video footage or witnesses is in most cases required in order to convict a person of a break-in.
+One solution to the problem is to have mounted video cameras.
+Video cameras have a limited scope, both in terms of view angle and distance, in order for the quality to be suited for documentation.
+This limitation can make it tough, and very resource intensive to surveil large areas.
+The resource intensitivity stems from the amount of hardware required to surveil in terms of cameras, and cables connecting the surveillance system.
+The difficulty in surveilling the areas comes from the nature of an outdoor environment.
+In terms of surveillance an indoor environment is static, as there is a limited amount of entrances and the interior of the buildings in terms of walls and doors remain the same.
+In an outdoor environment there are many aspects which can change such as: the weather,
+physical objects.
+The weather can foggy, rainy, and the sun can blind a camera if it is improperly placed.
+Physical objects can be moved around, creating blind spots.
+These conditions makes video surveillance of outdoor areas difficult.
+
+\subsection{Current solutions}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/drome_sensor.pdf}
+    \caption{A Classic Dome Setup}
+    \label{fig:drone_sensor}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/light_sensor.pdf}
+    \caption{A Light Sensor Setup}
+    \label{fig:multiprojdesign}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/regular_camera_setup.pdf}
+    \caption{A Regular Camera Setup}
+    \label{fig:multiprojdesign}
+\end{figure}
+
+\subsection{Internet Technologies in a Surveillance Perspective}
+With the development and standardization of network technologies, video surveillance is becomming digitized.
+The digitization of video surveillance is important as it e.g. makes it faster to examine a video recording, and video cameras can be programmed to trigger alarms when they detect movement.
+Video recordings are examined faster as it is easy to skip through digital data compared to the analog data which would be stored on e.g. a VHS cassette.
+The programming of video cameras is possible due to the data being digital which makes it possible to apply algorithms to examine the data, which could e.g. detect movement.
+%In their current form most security systems consist of a set of sensors and cameras, each covering a limited area.
+%Both a sensor and a camera is limited by its range and spectrum.
+%As a consequence security systems require a large amount of hardware to monitor a large area to a satisfying degree.
 %Hardware is expensive and therefore the cost of....
-However such a surveillance system still suffer from most of its hardware components being static.
-This means that if a sensor is triggered in an area not covered by a camera, a security company would have to send a guard to the location to investigate the source of the alarm.
-The static nature of security systems combined with the high costs security guards makes it very expensive for a company to properly secure their property.\footnote{Sources for this section, pretty important}
+%However such a surveillance system still suffer from most of its hardware components being static.
+%This means that if a sensor is triggered in an area not covered by a camera, a security company would have to send a guard to the location to investigate the source of the alarm.
+%The static nature of security systems combined with the high costs security guards makes it very expensive for a company to properly secure their property.\footnote{Sources for this section, pretty important}
 
-A possible solution to the high cost and static nature of security systems could be a non-static and self movable surveillance system where cameras are placed on a drone capable of flight.
-In such a system a guard would be able to access and control a drone through a web application to investigate what triggered an alarm, and based on a video stream determine whether or not to send someone to the location.
-Moveable cameras would reduce the amount of hardware required, and the manpower required to investigate alarms.
-Therefore the idea of a drone-based surveillance system is interesting to investigate.
+%A possible solution to the high cost and static nature of security systems could be a non-static and self movable surveillance system where cameras are placed on a drone capable of flight.
+%In such a system a guard would be able to access and control a drone through a web application to investigate what triggered an alarm, and based on a video stream determine whether or not to send someone to the location.
+%Moveable cameras would reduce the amount of hardware required, and the manpower required to investigate alarms.
+%Therefore the idea of a drone-based surveillance system is interesting to investigate.
 
 %\subsection{}
 
