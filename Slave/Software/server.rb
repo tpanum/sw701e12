@@ -236,7 +236,7 @@ class SlaveServer
   module Session_server
 
     def post_init
-      puts "Incomming connection"
+      puts "Sessionkey requested"
     end
 
     def receive_data data
@@ -256,7 +256,7 @@ class SlaveServer
     end
 
     def unbind
-      EventMachine::stop_event_loop
+      puts "Sessionkey send"
     end
 
     def is_json?(string)
