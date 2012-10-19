@@ -19,7 +19,7 @@ Signal.trap("TERM") do
 end
 
 #Module for handling incomming connections to the server
-module Handler
+module Drone_connector
 
   #When a connection is established the following method is invoked
   def post_init
@@ -60,11 +60,83 @@ module Handler
 
 end
 
+module Seskey_server
+
+  $request = false
+  #When a connection is established the following method is invoked
+  def post_init
+    puts "connected to seskey server"
+  end
+
+  def receive_data data
+    puts "received seskey_request"
+    @seskey1 = "invalid"
+    if $request == false
+      puts "1"
+      $request = true 
+      if is_json?(data)
+        puts "2"
+        obj = JSON.parse(data)
+        if obj['request'] == "true"
+          puts "3"
+            EventMachine::run {
+              em = EventMachine::connect obj['ip'], 5122, Seskey_connector
+              @seskey1 = $seskey
+            }
+        end
+      end
+    end
+    $request = false
+    send_data "{\"sessionkey\":\"#{@seskey1}\"}"
+  end
+
+  def unbind
+    
+  end
+
+  def is_json?(string)
+    begin
+      JSON.parse(string).all?
+    rescue JSON::ParserError
+      false
+    end
+  end
+
+end
+
+module Seskey_connector
+  $seskey = "invalid"
+  def post_init
+    send_data "{\"session\":\"true\"}"
+  end
+
+  def receive_data data
+    if is_json?(data)
+      obj = JSON.parse(data)
+      $seskey = obj['sessionkey']
+    end
+    EventMachine::stop_event_loop
+  end
+
+  def unbind
+    
+  end
+
+  def is_json?(string)
+    begin
+      JSON.parse(string).all?
+    rescue JSON::ParserError
+      false
+    end
+  end
+
+end
+
 while($running) do  
   EventMachine::run {
-    puts "test"
-    EventMachine::start_server "0.0.0.0", 5124, Handler
+    EventMachine::start_server "0.0.0.0", 5124, Drone_connector
+    EventMachine::start_server "0.0.0.0", 5125, Seskey_server
   }
-  puts "done"
+  
   sleep (1)
 end
