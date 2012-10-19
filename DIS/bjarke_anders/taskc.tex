@@ -3,9 +3,9 @@ We model the sales on a per sale basis. We use two fact tables to keep track of 
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|l|}
         \hline
-        Time\_id(FK) & Product\_id(FK) & Location\_id(FK) & Member\_id(FK) & Sale \\ \hline
+        Time\_id(FK) & Date\_id(FK) & Product\_id(FK) & Location\_id(FK) & Member\_id(FK) & Sale \\ \hline
     \end{tabular}
     \caption{Fact Table for Sales}
     \label{tab:salesFactTable}
@@ -15,7 +15,7 @@ We model the sales on a per sale basis. We use two fact tables to keep track of 
     \centering
     \begin{tabular}{|l|l|l|}
         \hline
-        Time\_id(FK) & Member\_id(FK) & Balance \\ \hline
+        Time\_id(FK) & Date\_id(FK) & Member\_id(FK) & Balance \\ \hline
     \end{tabular}
     \caption{Fact Table for Balance}
     \label{tab:balanceFactTable}

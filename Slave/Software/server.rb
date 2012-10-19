@@ -158,6 +158,7 @@ class SlaveServer
       set_option 'video:video_channel', channel.to_s
     end
 
+    # Can be found in VLIB/video_codec.h
     def video_codec
       set_option 'video:video_codec', '129'
     end
