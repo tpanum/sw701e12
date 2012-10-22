@@ -3,6 +3,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :email, :first_name, :last_name, :password
+  has_many :user_privileges
   has_many :privileges, :through => :user_privileges
   has_and_belongs_to_many :roles
 
@@ -15,7 +16,7 @@ class User < ActiveRecord::Base
 
   attr_protected :hashed_password, :salt
 
-  def self.authendicate(email="", password="")
+  def self.authenticate(email="", password="")
   	user = User.find_by_email(email)
 
   	if user && user.password_match?(password)
@@ -47,5 +48,11 @@ class User < ActiveRecord::Base
 
   def clear_password
   	self.password = nil
+  end
+
+  def has_privilege? privilege
+    p_id = Privilege.find_by_description(privilege).id
+    p_roles_all = self.roles.collect{|r| r.privileges.collect(&:id)}.flatten
+    p_roles_all.include? p_id
   end
 end

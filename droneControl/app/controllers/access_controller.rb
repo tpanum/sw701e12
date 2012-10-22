@@ -15,7 +15,7 @@ class AccessController < ApplicationController
   end
 
   def attempt_login
-  	authorized_user = User.authendicate(params[:email], params[:password])
+  	authorized_user = User.authenticate(params[:email], params[:password])
 
   	if authorized_user
   	  session[:user_id] = authorized_user.id
