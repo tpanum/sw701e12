@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011125237) do
+ActiveRecord::Schema.define(:version => 20121022131609) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -50,12 +50,12 @@ ActiveRecord::Schema.define(:version => 20121011125237) do
 
   create_table "flight_plans", :force => true do |t|
     t.string   "name"
-    t.integer  "drones_id"
+    t.integer  "drone_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "flight_plans", ["drones_id"], :name => "index_flight_plans_on_drones_id"
+  add_index "flight_plans", ["drone_id"], :name => "index_flight_plans_on_drone_id"
 
   create_table "instructions", :force => true do |t|
     t.string   "AT_command"
