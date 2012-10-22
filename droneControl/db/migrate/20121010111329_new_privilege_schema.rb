@@ -1,5 +1,5 @@
 class NewPrivilegeSchema < ActiveRecord::Migration
-  def up
+  def change
   	change_table :users do |t|
       t.remove "roles_id"
     end
@@ -8,8 +8,5 @@ class NewPrivilegeSchema < ActiveRecord::Migration
       t.remove "roles_id"
     end
 
-  end
-
-  def down
   end
 end

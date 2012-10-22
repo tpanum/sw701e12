@@ -53,6 +53,12 @@ class User < ActiveRecord::Base
   def has_privilege? privilege
     p_id = Privilege.find_by_description(privilege).id
     p_roles_all = self.roles.collect{|r| r.privileges.collect(&:id)}.flatten
-    p_roles_all.include? p_id
+    if p_roles_all.include? p_id || UserPrivilege.where(:user_id => self.id, :privilege_id => p_id, :flag => 1).exists?
+      if UserPrivilege.where(:user_id => self.id, :privilege_id => p_id, :flag => -1).exists?
+        true
+      else
+        false
+      end
+    end
   end
 end
