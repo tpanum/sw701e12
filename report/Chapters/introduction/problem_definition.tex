@@ -1,17 +1,26 @@
 \section{Problem Definition}
-Video surveillance is static and as a concesequence a large amount of hardware is required to properly surveil an area.
-This is problematic when a large area has to be survailed, as it requires a lot of hardware.
+Video surveillance is stationary, which means that the camera cannot move, but only turn.
+As a consequence of this, a large amount of hardware is required to properly surveil an area.
+This is problematic when a large area has to be surveilled, as it requires a lot of hardware.
 Drone technology offers a possible solution to this problem by making video surveillance dynamic through moveable cameras.
 This possible solution yields the following preliminary problem statement:\\
 
-\textit{How can drone technology be applied in a software application to improve the effeciency of video surveillance?}\\
+%http://guide-images.ifixit.net/igi/cI6EGVSLLjjDFATI.medium
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/drone.jpg}
+    \caption{A picture of the drone that we are using. Picture from: http://guide-images.ifixit.net/igi/cI6EGVSLLjjDFATI.medium}
+    \label{fig:multiprojdesign}
+\end{figure}
+
+\textit{How can drone technology be applied in a software application to improve the efficiency of video surveillance?}\\
 
 From the preliminary problem statement the following aspects must be considered:
 \begin{itemize}
 	\item How to control a drone through the web application
 	\item How to provide video streaming of the drones camera through the web application
 	\item How to make the web application scalable to support more than one drone
-	\item How the make the system accesible from remote locations in a secure manner
+	\item How the make the system accessible from remote locations in a secure manner
 \end{itemize}
 
 

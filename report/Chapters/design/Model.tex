@@ -1,0 +1,16 @@
+\section{Model}
+In this section the model of \projectname{} will be presented and explained.
+First the objects that needs to be represented by the model are identified, and then their relationships will be described.
+
+\subsection{Objects}
+The core aspects that must be represented is users and drones.
+An users' access to the system will need to be restricted.
+This restriction will be represented through privileges that grant an user access to the systems functionalities.
+Granting privileges directly to a user is not the ideal case in most situations.
+There will be some global privileges all users will have access to, and assigning these to each individual user, will result in a lot of unnecessary data.
+This issue is handled with roles.
+A role will in \projectname{} be a set of privileges that can be assigned to multiple users.
+
+A drone is controlled by sending a set of ordered instructions\fixme{ref to section when it is written} to the drone.
+A log of flights made by the drone will need to be kept, to be able to recreate previous flights, and examine a flight that might have caused the drone to crash.
+
