@@ -11,18 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022131609) do
+ActiveRecord::Schema.define(:version => 20121022134824) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
-    t.integer  "flight_action_relationships_id"
-    t.integer  "instructions_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.integer  "flight_action_relationship_id"
+    t.integer  "instruction_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
-  add_index "actions", ["flight_action_relationships_id"], :name => "index_actions_on_flight_action_relationships_id"
-  add_index "actions", ["instructions_id"], :name => "index_actions_on_instructions_id"
+  add_index "actions", ["flight_action_relationship_id"], :name => "index_actions_on_flight_action_relationship_id"
+  add_index "actions", ["instruction_id"], :name => "index_actions_on_instruction_id"
 
   create_table "drones", :force => true do |t|
     t.string   "ip"
@@ -43,10 +43,12 @@ ActiveRecord::Schema.define(:version => 20121022131609) do
 
   create_table "flight_action_relationships", :force => true do |t|
     t.integer  "rank"
-    t.integer  "flight_plans_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "flight_plan_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
+
+  add_index "flight_action_relationships", ["flight_plan_id"], :name => "index_flight_action_relationships_on_flight_plan_id"
 
   create_table "flight_plans", :force => true do |t|
     t.string   "name"
