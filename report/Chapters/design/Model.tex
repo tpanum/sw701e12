@@ -47,6 +47,12 @@ A role is linked to a set of privileges through the relationship table \verb+Pri
 \verb+Privilege_roles+ links the ids of roles to the ids of privileges.
 Users and roles a linked in the same manner as roles and privileges.
 In the table \verb+Role_Users+ the ids of users to the ids of roles are linked\fixme{Måske sample model der viser princippet hvis det er for upræcist}.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/UML_model.pdf}
+    \caption{Model of \projectname{}}
+    \label{fig:model_diagram}
+\end{figure}
 
 However linking privileges to users only through roles creates cases were maintaining privileges can become troublesome.
 As an example a user \verb+u+ might need to have his access to a specific privilege \verb+p+ in a role \verb+r+, he is a member of, revoked.
@@ -55,6 +61,8 @@ The problem with this solution arises if a new privilege \verb+p1+ is to be adde
 The user \verb+u+ is natively a member of \verb+r+, but has the role \verb+r1+ to exclude him from the privilege \verb+p+.
 To grant \verb+u+ \verb+p1+, \verb+p1+ must be added to \verb+r1+ as well as \verb+r+.
 Granting privileges only through roles can therefore quickly result in a lot of unstructured data that needs to be maintained.
+
+To handle this users are linked directly to privileges through the relationship table 
 
 %\subsection{Privileges}
 %A user is granted privileges through a whitelist.
