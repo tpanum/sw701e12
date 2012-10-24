@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   before_save :create_hashed_password
   after_save :clear_password
 
+  after_destroy :destroy_privileges
+
   attr_protected :hashed_password, :salt
 
   def self.authenticate(email="", password="")
@@ -38,6 +40,10 @@ class User < ActiveRecord::Base
   	Digest::SHA1.hexdigest("Put #{salt} on the #{password}")
   end
 
+  def full_name
+    self.first_name + ' ' + self.last_name
+  end
+
   private
   def create_hashed_password
   	unless password.blank?
@@ -46,19 +52,28 @@ class User < ActiveRecord::Base
   	end
   end
 
+  private
+  def destroy_privileges
+    self.user_privileges.each do |t|
+      t.destroy
+    end
+  end
+
   def clear_password
   	self.password = nil
   end
 
   def has_privilege? privilege
-    p_id = Privilege.find_by_description(privilege).id
-    p_roles_all = self.roles.collect{|r| r.privileges.collect(&:id)}.flatten
-    if p_roles_all.include? p_id || UserPrivilege.where(:user_id => self.id, :privilege_id => p_id, :flag => 1).exists?
-      if UserPrivilege.where(:user_id => self.id, :privilege_id => p_id, :flag => -1).exists?
+    p_id = Privilege.find_by_identifier(privilege).id
+    p_user = UserPrivilege.where(:user_id => self.id, :privilege_id => p_id).limit(1).first
+    if !p_user.nil?
+      if p_user.flag == 1
         true
       else
         false
       end
     end
+
+    self.roles.collect{|r| r.privileges.collect(&:id)}.flatten.include? p_id
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022134824) do
+ActiveRecord::Schema.define(:version => 20121024105738) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -66,10 +66,13 @@ ActiveRecord::Schema.define(:version => 20121022134824) do
   end
 
   create_table "privileges", :force => true do |t|
-    t.string   "description"
+    t.string   "identifier"
+    t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "privileges", ["identifier"], :name => "index_privileges_on_identifier"
 
   create_table "privileges_roles", :id => false, :force => true do |t|
     t.integer "privilege_id"
