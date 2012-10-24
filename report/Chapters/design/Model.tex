@@ -34,28 +34,40 @@ A structured list of the object can be seen in Figure~\ref{tab:model_objects}.
 	Action \\ \hline
 	Instruction\\ \hline  
 \end{tabular}
-
 \caption{Use Cases}
 \label{tab:model_objects}
 \end{center}
 \end{figure}
 
-\subsection{Relationships}
-The objects described in Section~\ref{subsec:objects} are connected through a set relationships.
-The relationships will be of the form
+\subsection{Model Diagram}
+A diagram of the model can be seen in Figure~\ref{}\fixme{indsæt figur}.
+The upper part of figure describes the relationship between users, roles, and privileges.
+As mentioned in Section~\ref{subsec:objects} a role in \projectname{} is a set of privileges.
+A role is linked to a set of privileges through the relationship table \verb+Privilege_roles+.
+\verb+Privilege_roles+ links the ids of roles to the ids of privileges.
+Users and roles a linked in the same manner as roles and privileges.
+In the table \verb+Role_Users+ the ids of users to the ids of roles are linked\fixme{Måske sample model der viser princippet hvis det er for upræcist}.
 
-\subsection{Privileges}
-A user is granted privileges through a whitelist.
-Every privilege not found in a users whitelist is implicitly blacklisted.
-As described in Section~\ref{subsec:objects} a user can be granted privileges through roles.
-There are however a set of cases where handling privileges only through roles is not ideal.
+However linking privileges to users only through roles creates cases were maintaining privileges can become troublesome.
 As an example a user \verb+u+ might need to have his access to a specific privilege \verb+p+ in a role \verb+r+, he is a member of, revoked.
 A possible solution is to remove the user from \verb+r+ and add him a to new role \verb+r1+ that contains all privileges in \verb+r+ except \verb+p+.
 The problem with this solution arises if a new privilege \verb+p1+ is to be added to \verb+r+.
 The user \verb+u+ is natively a member of \verb+r+, but has the role \verb+r1+ to exclude him from the privilege \verb+p+.
 To grant \verb+u+ \verb+p1+, \verb+p1+ must be added to \verb+r1+ as well as \verb+r+.
 Granting privileges only through roles can therefore quickly result in a lot of unstructured data that needs to be maintained.
-To solve privileges need to be manageable on the user level.
+
+%\subsection{Privileges}
+%A user is granted privileges through a whitelist.
+%Every privilege not found in a users whitelist is implicitly blacklisted.
+%As described in Section~\ref{subsec:objects} a user can be granted privileges through roles.
+%There are however a set of cases where handling privileges only through roles is not ideal.
+%As an example a user \verb+u+ might need to have his access to a specific privilege \verb+p+ in a role \verb+r+, he is a member of, revoked.
+%A possible solution is to remove the user from \verb+r+ and add him a to new role \verb+r1+ that contains all privileges in \verb+r+ except \verb+p+.
+%The problem with this solution arises if a new privilege \verb+p1+ is to be added to \verb+r+.
+%The user \verb+u+ is natively a member of \verb+r+, but has the role \verb+r1+ to exclude him from the privilege \verb+p+.
+%To grant \verb+u+ \verb+p1+, \verb+p1+ must be added to \verb+r1+ as well as \verb+r+.
+%Granting privileges only through roles can therefore quickly result in a lot of unstructured data that needs to be maintained.
+%To solve privileges need to be manageable on the user level.
 
 
 %As an example a user might need a specific privilege that allows him to fly a specific drone.
