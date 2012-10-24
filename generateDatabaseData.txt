@@ -1,0 +1,56 @@
+# Create privileges
+
+100000.times do
+  Privilege.create(:identifier => (0...50).map{ ('a'..'z').to_a[rand(26)] }.join)
+end; nil
+
+-----
+# Create roles and assign privileges to roles
+
+p_size = Privilege.count; nil
+r_size = (p_size.to_f * 0.05).to_i; nil
+
+10.times do
+  r = Role.create(:title => (0...50).map{ ('a'..'z').to_a[rand(26)] }.join)
+
+  r_size.times do
+    target = rand(1..p_size)
+    r.privileges << Privilege.find(target)
+  end
+end; nil
+
+-----
+# Create users and assign roles to users
+require 'csv'
+
+fornavne_text = File.read('../fornavne.csv'); nil
+fornavne_csv = CSV.parse(fornavne_text).flatten; nil
+efternavne_text = File.read('../efternavne.csv'); nil
+efternavne_csv = CSV.parse(efternavne_text).flatten; nil
+f_count = fornavne_csv.size
+e_count = efternavne_csv.size
+
+5000.times do
+  first_name = fornavne_csv[rand(f_count)]
+  last_name = efternavne_csv[rand(e_count)]
+  email = first_name + '_' + last_name + '@dummy.com'
+  u = User.create(:first_name => first_name, :last_name => last_name, :email => email)
+end; nil
+
+
+-----
+
+p_size = Privilege.count; nil
+r_size = (p_size.to_f * 0.05).to_i; nil
+k = 1; nil
+
+User.all do |u|
+  if rand(1..10) == 1
+    amount = Math.log10(r_size)*k
+
+    amount.times do
+      target = rand(1..r_size)
+      u.roles.privileges[target]
+    end
+  end
+end; nil
