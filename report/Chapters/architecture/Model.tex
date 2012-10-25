@@ -76,9 +76,15 @@ The design makes management of privileges more flexible.
 Groups of privileges can be assigned through roles, and should a case arise where a users privileges needs to be managed individually this is possible through the \verb+User_Privileges+ relation.
 
 \subsection{Drone Flight Plan Relationship}
-The flight logging system consists of the classes
+The flight logging system consists directly of the classes \verb+Drones+, \verb+Flight_plan+, and \verb+Actions+.
+Drones are linked to flight plans through a foreign key.
+A flight plan is connected to a set of actions through a one to many relation.
+The actions must be numbered representing the order in which the actions were send to the drone.
+This numbering will be managed in the \verb+Flight_Action_Relationship+\fixme{Opdater dette når den gives et nyt navn} with the field \verb+rank+.
+An action will be linked to an instruction.
+Instruction represent the set of AT commands which can be send to the drone to control.\fixme{Ref til AT command sektion når den skrives}
 
-
+Through this model the log for a flight with a given drone can be extracted by locating all action associated with the flight plan through the \verb+Flight_Action_Relationship+.
 
 
 
