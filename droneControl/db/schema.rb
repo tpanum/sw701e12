@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024105738) do
+ActiveRecord::Schema.define(:version => 20121025115810) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -23,6 +23,34 @@ ActiveRecord::Schema.define(:version => 20121024105738) do
 
   add_index "actions", ["flight_action_relationship_id"], :name => "index_actions_on_flight_action_relationship_id"
   add_index "actions", ["instruction_id"], :name => "index_actions_on_instruction_id"
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "companies_drones", :id => false, :force => true do |t|
+    t.integer "company_id"
+    t.integer "drone_id"
+  end
+
+  add_index "companies_drones", ["company_id", "drone_id"], :name => "index_companies_drones_on_company_id_and_drone_id"
+
+  create_table "companies_roles", :id => false, :force => true do |t|
+    t.integer "company_id"
+    t.integer "role_id"
+  end
+
+  add_index "companies_roles", ["company_id", "role_id"], :name => "index_companies_roles_on_company_id_and_role_id"
+
+  create_table "companies_users", :id => false, :force => true do |t|
+    t.integer "company_id"
+    t.integer "user_id"
+  end
+
+  add_index "companies_users", ["company_id", "user_id"], :name => "index_companies_users_on_company_id_and_user_id"
 
   create_table "drones", :force => true do |t|
     t.string   "ip"
@@ -83,8 +111,9 @@ ActiveRecord::Schema.define(:version => 20121024105738) do
 
   create_table "roles", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "level_type", :default => 2
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "roles_users", :id => false, :force => true do |t|

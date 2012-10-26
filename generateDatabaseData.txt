@@ -39,6 +39,7 @@ end; nil
 
 
 -----
+# Add privileges to users
 
 p_size = Privilege.count; nil
 r_size = (p_size.to_f * 0.05).to_i; nil
@@ -54,3 +55,6 @@ User.all do |u|
     end
   end
 end; nil
+
+-----
+

@@ -1,5 +1,5 @@
 class Privilege < ActiveRecord::Base
-  attr_accessible :description
+  attr_accessible :description, :identifier
 
   has_and_belongs_to_many :roles
   has_many :drones

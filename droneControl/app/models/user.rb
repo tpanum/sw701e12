@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :password
   has_many :user_privileges
   has_many :privileges, :through => :user_privileges
+  has_many :companies
+  has_and_belongs_to_many :companies
   has_and_belongs_to_many :roles
 
   attr_accessor :password
@@ -44,25 +46,6 @@ class User < ActiveRecord::Base
     self.first_name + ' ' + self.last_name
   end
 
-  private
-  def create_hashed_password
-  	unless password.blank?
-  	  self.salt = User.make_salt(email) if salt.blank?
-  	  self.hashed_password = User.hash_with_salt(password, salt)
-  	end
-  end
-
-  private
-  def destroy_privileges
-    self.user_privileges.each do |t|
-      t.destroy
-    end
-  end
-
-  def clear_password
-  	self.password = nil
-  end
-
   def has_privilege? privilege
     p_id = Privilege.find_by_identifier(privilege).id
     p_user = UserPrivilege.where(:user_id => self.id, :privilege_id => p_id).limit(1).first
@@ -75,5 +58,23 @@ class User < ActiveRecord::Base
     end
 
     self.roles.collect{|r| r.privileges.collect(&:id)}.flatten.include? p_id
+  end
+
+  private
+  def create_hashed_password
+  	unless password.blank?
+  	  self.salt = User.make_salt(email) if salt.blank?
+  	  self.hashed_password = User.hash_with_salt(password, salt)
+  	end
+  end
+
+  def destroy_privileges
+    self.user_privileges.each do |t|
+      t.destroy
+    end
+  end
+
+  def clear_password
+  	self.password = nil
   end
 end

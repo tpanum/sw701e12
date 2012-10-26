@@ -1,5 +1,5 @@
 class CreateDronesPrivilegesJoin < ActiveRecord::Migration
-def up
+  def up
   	create_table :drones_privileges, :id => false do |t|
   		t.integer "drone_id"
   		t.integer "privilege_id"
