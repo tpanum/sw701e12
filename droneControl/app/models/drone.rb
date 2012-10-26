@@ -6,7 +6,7 @@ class Drone < ActiveRecord::Base
   has_and_belongs_to_many :privileges
   has_many :users, :through => :user_drone_privileges
 
-  after_find :temp_company
+  after_initialize :temp_company
   after_create :create_privileges
   after_destroy :drop_privileges
   before_save :check_amount_companies, :move_privileges
