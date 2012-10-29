@@ -1,27 +1,7 @@
 DroneControl::Application.routes.draw do
-  get "drones/index"
-
-  get "drones/list"
-
-  get "drones/new"
-
-  get "drones/create"
-
-  get "drones/edit"
-
-  get "drones/update"
-
-  get "drones/delete"
-
-  get "drones/destroy"
 
   root :to => "access#login"
   match 'admin', :to => 'access#menu'
-
-  get "drone/new"
-  get "drone/send_request"
-  get "drone_controller/new"
-  get "drone_controller/send_request"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -62,6 +42,9 @@ DroneControl::Application.routes.draw do
   #       get 'recent', :on => :collection
   #     end
   #   end
+
+  resources :drones
+  resources :companies
 
   # Sample resource route within a namespace:
   #   namespace :admin do
