@@ -1,6 +1,25 @@
 <p id="notice"><%= notice %></p>
 
-<h3><%= @company.name %></h3>
+<h3>Name: <%= @company.name %></h3>
+<p>Owner: <%= @company.owner.full_name %></p>
+
+<div class="roles">
+    <h4>Roles</h4>
+    <% @company.roles.each do |r| %>
+        <div class="role">
+            <p>Title: <%= r.title %></p>
+            <div class="privileges">
+                <p>Privileges from Role:</p>
+                <% r.privileges.each do |p| %>
+                    <div class="privilege">
+                        <p>Identifier: <%= p.identifier %></p>
+                        <p>Description: <%= p.description %></p>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
 
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
