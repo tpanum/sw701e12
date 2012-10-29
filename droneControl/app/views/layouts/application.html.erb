@@ -9,9 +9,6 @@
   		<%= csrf_meta_tags %>
 	</head>
 	<body>
-		<div id="header">
-			<h1>Drone Control</h1>
-		</div>
 		<div id="main">
 			<% if !flash[:notice].blank? %>
 				<div class="notice">
@@ -23,8 +20,8 @@
 				<%= yield %>
 			</div>
 		</div>
-		<div id="footer">
-			<p id="copyright">&copy; sw701e12</p>
-		</div>		
+		<footer>
+			<p id="copyright">&copy; sw701e12 &mdash; Aalborg University 2012</p>
+		</footer>		
 	</body>
 </html>
