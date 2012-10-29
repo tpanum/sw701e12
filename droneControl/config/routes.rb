@@ -1,6 +1,5 @@
 DroneControl::Application.routes.draw do
 
-  root :to => "access#login"
   match 'admin', :to => 'access#menu'
 
   # The priority is based upon order of creation:
@@ -45,6 +44,7 @@ DroneControl::Application.routes.draw do
 
   resources :drones
   resources :companies
+  resources :roles
 
   # Sample resource route within a namespace:
   #   namespace :admin do
@@ -55,7 +55,7 @@ DroneControl::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'access#login'
 
   # See how all your routes lay out with "rake routes"
 
