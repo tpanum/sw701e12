@@ -103,9 +103,15 @@
 \renewcommand{\bflabel}[1]{{#1}\hfill} % fix the list of acronyms
 \usepackage[footnote,draft,english,silent,nomargin]{fixme}  % final instead of draft produces errors at
                                                             % compile time
+                                                            
+%Bjarke HS stuff
 \newcommand{\todo}[1]{\fxnote{#1}}
 \newcommand{\todoi}[1]{\fxfatal{#1}}
 \newcommand{\todoI}[1]{\todoi{#1}}
+
+%Rasmus stuff
+\newcommand{\figref}[1]{\figurename~\ref{#1}}
+
 % ****************************************************************************************************
 
 
