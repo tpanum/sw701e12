@@ -48,7 +48,7 @@ In \figref{fig:search_bar_design} the search bar of the application is seen. The
     \label{fig:table_design}
 \end{figure}
 
-In \figref{fig:table_design} the general design for tables of the application is seen. 
+In \figref{fig:table_design} the general design for tables of the application is seen. Odd rows will be light blue and even rows will be blue.
 
 \begin{figure}[htb]
     \centering
@@ -57,9 +57,24 @@ In \figref{fig:table_design} the general design for tables of the application is
     \label{fig:list_design}
 \end{figure}
 
+The list design seen in \figref{fig:list_design} is the core list item in the application. This list can show more and less information depending on where the user clicks. All levels are represented in \figref{fig:list_design} where a dark blue tab item with a name is a user in the system, the blue is a drone and the light blue is the privilege for the selected drone.
+The list is made in such a way that the levels can be distinguished by the indent of the item.
+The boxes in \figref{fig:list_design} shows the privilege status of an item. There are three different states these boxes can be in
+
+\begin{itemize}
+	\item Not marked
+	\item Dotted
+	\item ticked
+\end{itemize}
+ 
+If a box is not marked like ``Drone 1337'' the user have no privileges for this drone. If a box is dotted the user have some privileges for this drone like ``Drone 42''. If a box is ticked the user have all privileges for this drone e.g. Drone 1.
+
 \begin{figure}[htb]
     \centering
     \includegraphics[scale=1.0]{gfx/button.pdf}
     \caption{Button design for the application.}
     \label{fig:button_design}
 \end{figure}
+
+The \projectname{} application have also gotten its own button design seen in \figref{fig:button_design}. There are three different groups of buttons and six buttons in total.
+These buttons is used to navigate the site, make a selection for add or remove or accepting or declining depending on the situation.
