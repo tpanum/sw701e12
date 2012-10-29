@@ -1,12 +1,15 @@
 \section{Problem Domain}
-In trying to construct a solution that addresses the challenges listed in the problem statement, we will address some different domains in relation to the problem. We have already learned that the solution to this problem will consist of two parts: One or more drones and a web application to control this. \\
+The problem domain for the application is surveillance of large outdoor areas.
+The solution investigated in this report is to use drone instead of stationary cameras to handle this.
 
-The identified problem domains are:
+The main problems present in the problem domain is as follows:
 \begin{itemize}
-	\item Wireless short-distance and wired long-distance communication with and control of a drone via TCP and/or UDP. We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
-	\item Wireless short-distance and wired long-distance video streaming via TCP and/or UDP. As with communication the drone must be able to send back a video feed of what it sees. Therefore the system must also be able to send back a real-time video feed over long distances. 
-	\item Interaction with the drone via a web application. It is already decided that the user must be able to control the drone via a web application. Therefore we need to look into how one can do this, knowing that the web is a state-less environment. 
-	\item Permissions- and access control in the web application. The web application will have support for several users and drones. Therefore security measures must be taken to ensure that the users can only access their own drones.
+	\item Wireless short-distance and wired long-distance communication with a drone via TCP and/or UDP. This includes controlling the drone.
+	%We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
+	\item Wireless short-distance and wired long-distance video streaming via TCP and/or UDP. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances. 
+	%\item Interaction with the drone will be handled through a web application. It is already decided that the user must be able to control the drone via a web application. Therefore we need to look into how one can do this, knowing that the web is a state-less environment. 
+	\item Permissions- and access control in the web application. Includes both access to the system and access to specific drones.
+	\item Scalability - the system must be scalable in terms of users and drones.
 \end{itemize}
 
 These are all areas that needs study to be understood before a solution that solves the problem can be constructed, as this will build on these principles.

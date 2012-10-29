@@ -1,7 +1,7 @@
 \section{Development Platform}
-At this point we know that we will need a variety of different functions and methods to make the systems as described.
-The problem domain implies that we need both web development and server-side scripting.
-This means that we will have to make two decisions: First the operating system of the server and secondly the programming language in which our program will be written.
+The problem domain dictates that the proposed solution will consist of web development and server-side scripting.
+The development platform will therefore consist of two parts.
+Firstly the setup including the operating system of the server must be decided, and secondly the programming language for the application must be decided.
 
 \subsection{Server operating system}
 There are two major operating system families to choose from, which each has some potential operating systems beneath them:
@@ -30,19 +30,20 @@ There are two major operating system families to choose from, which each has som
 We have chosen to use Linux Debian due to the following reasons:
 
 \begin{itemize}
-	\item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. 
+	\item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. \fixme{Why? give examples}
 	\item It is easy to get started on the project, as installation of the programs needed is simple.
 	\item Linux Debian is open-source and does not require a license to install or use. 
-	\item Linux Debian is one of the most well-seen operating systems amongst system administrators, getting credit for its maintainability, size, customisability and community support.\citep{why_debian}
+	\item Linux Debian is one of the most well-seen operating systems amongst system administrators, creditted for its maintainability, size, customisability and community support.\citep{why_debian}
 \end{itemize}
 
-It is important to underline that any of the listed operating systems are fully capable of handling any task we might ask of it in this project. 
-Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
-Our preference is Linux Debian.
+It is important to underline that any of the listed operating systems are fully capable of handling any task needed in this project.
+Operating systems are often chosen based on a personal preference for- or experience with a given operating system.
+%Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
+The operating system chosen for \projectname{} is Linux Debian.
 
 \subsection{Programming language}
-Our choice of operating system limits us in which programming languages that we can use. 
-Programming languages such as .NET that are not natively written to work on other platforms than Windows Server are discarded as we do not consider emulating tools such as Wine a sustainable solution. 
+Linux Debian as operating system a limits the possible choices for programming languages. 
+Programming languages such as .NET that are not natively written to work on other platforms than Windows Server are discarded as we do not consider emulating tools such as Wine a viable solution. 
 
 We have some requirements to the programming language that we want to use.
 These are:
@@ -64,32 +65,29 @@ These are:
 \end{itemize}
 
 Just as when you are choosing which operating system to use, choosing which programming language to use can be considered a bit ``religious''.
-All of the above are semantic equivalent and runs on Linux Debian, so either would work with this project.
-However, we have chosen to go with Ruby on this project. 
-The reasons why are:
-
- 
-We have decided to use the programming language Ruby and the web development framework Ruby on Rails as this gives us a number of advantages:
+All of the above are semantic equivalent\fixme{source?} and runs on Linux Debian.
+The language chosen for \projectname{} is Ruby and the web development framework Ruby on Rails as this gives us a number of advantages:
 
 \begin{itemize}
-	\item Ruby itself is easy to install server-side.
-	\item Ruby works well as a server-side scripting language.
+	\item Ruby is easy to install server-side.
+	\item Ruby can be used as a server-side scripting language.
 	\item Rails provide an easy-to-use framework for web-development with Ruby.
 \end{itemize}
 
 Ruby is a object oriented scripting language.
 Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby.
 
-Ruby on Rails \emph{ROR} is a open-source web framework for Ruby that is optimized to make programming as easy and efficient as possible.
-By using this framework on the web application side of the project, we give ourselves and the project an advantage as this provides a lot of built-in features, such as support for the MVC model, ActiveRecords etc. that enables us to be more efficient and write better quality code.
-ROR also has build in features that make it easier to be multiple programmers working on the same project.
-As an example we can look at ``Migrations'', which is ROR' way of handling databases.
-Instead of having one big database that each developer connects to, to make sure that everybody is always working on an updated database, ROR uses these migrations to save changes to the databases.
-When a developer pulls the newest revision from the repository, he is able to run a command to run migrations.
-This will initialize a part of ROR that updates the developers local database and enables him to keep working.
-If he makes some changes to the database, he simply makes a new migration document, pushes it to the repository and the rest of the team can follow the same procedure.
+Ruby on Rails \emph{Rails} is a open-source web framework for Ruby that is optimized to make programming as easy and efficient as possible.
+Rails provide a set of advantages through its built-in features, such as native support for the MVC model, ActiveRecords. 
+%that enables us to be more efficient and write better quality code.
+Rails also has build in features that make it easier to be multiple programmers working on the same project.
+An example is ``Migrations'', which is Rails' way of handling databases.
+Instead of having one big shared database that each developer connects to, to make sure that everybody is always working on an updated database, Rails uses migrations to save changes to the databases.
+When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
+This will initialize a part of Rails that updates the developers local database.
+If he makes some changes to the database, he simply makes a new migration document, pushes it to the repository and the rest of the team can get the updated version of the database by running the migration.
 
-This is one of the features of ROR that helped us to make the decision to use it. \\
+%This is one of the features of Rails that helped us to make the decision to use it. \\
 
 Keeping in mind that this is a student project, Ruby is also a natural choice as we in the group have little to no knowledge of how Ruby works.
 This is a great opportunity for us to lean how to use another programming language. \\
