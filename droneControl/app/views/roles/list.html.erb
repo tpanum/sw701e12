@@ -1,0 +1,27 @@
+<% @page_title = "Role List" %>
+
+<div class="role list">
+	<h2>Users</h2>
+
+	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
+	<%= link_to("Add New Role", {:action => 'new'}, :class => 'action new') %>
+
+	<table class="listing" summary="Role list">
+		<tr class="header">
+			<th>&nbsp;</th>
+			<th>Titile</th>
+		</tr>
+
+		<% @roles.each do |role| %>
+			<tr>
+				<td><%= role.id %></td>
+				<td><%= role.title %></td>
+				<td class="actions">
+					<%= link_to("Show", {:action => 'show', :id => role.id}, :class => 'action show') %>
+					<%= link_to("Edit", {:action => 'edit', :id => role.id}, :class => 'action edit') %>
+					<%= link_to("Delete", {:action => 'delete', :id => role.id}, :class => 'action delete') %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+</div>

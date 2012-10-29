@@ -1,4 +1,22 @@
 DroneControl::Application.routes.draw do
+  get "roles/index"
+
+  get "roles/list"
+
+  get "roles/show"
+
+  get "roles/new"
+
+  get "roles/create"
+
+  get "roles/edit"
+
+  get "roles/update"
+
+  get "roles/delete"
+
+  get "roles/destroy"
+
   get "drones/index"
 
   get "drones/list"
