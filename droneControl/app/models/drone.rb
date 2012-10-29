@@ -50,11 +50,3 @@ class Drone < ActiveRecord::Base
     @temp_companies = self.companies
   end
 end
-
-
-# Privilege.where(:identifier => self.privileges.first).limit(1).first.roles.first.companies.first != self.companies.first
-
-# parent_privileges = self.companies.first.roles.where(:level_type => 1).limit(1).first.privileges
-# self.privileges.each do |sp|
-#   if parent_privileges.include? sp
-# end

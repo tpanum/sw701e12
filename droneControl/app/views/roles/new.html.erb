@@ -1,0 +1,25 @@
+<!-- <<<<<<< HEAD
+<h1>New role</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', roles_path %>
+=======-->
+<% @page_title = "Create Role" %>
+
+<%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
+
+<div class="role new">
+	<h2>Create Role</h2>
+
+	<%= form_for(:role, :url => {:action => 'create'}) do |f| %>
+		
+		<%= render(:partial => "form", :locals => {:f => f}) %>
+
+		<div class="form-buttons">
+			<%= submit_tag("Create Role") %>
+		</div>
+	<% end %>
+
+</div>
+

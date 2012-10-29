@@ -1,0 +1,26 @@
+<!-- <<<<<<< HEAD
+<h1>Editing role</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @role %> |
+<%= link_to 'Back', roles_path %>
+=======-->
+<% @page_title = "Edit Role: #{@role.title}" %>
+
+<%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
+
+<div class="user edit">
+	<h2>Update role</h2>
+
+	<%= form_for(:role, :url => {:action => 'update', :id => @role.id}) do |f| %>
+		
+		<%= render(:partial => "form", :locals => {:f => f}) %>
+
+		<div class="form-buttons">
+			<%= submit_tag("Update Role") %>
+		</div>
+	<% end %>
+
+</div>
+
