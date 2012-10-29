@@ -1,3 +1,96 @@
 // Place all the styles related to the access controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Clear Fix */
+
+.container:before,
+.container:after {
+    content:"";
+    display:table;
+}
+.container:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.container {
+    zoom:1;
+}
+
+
+body {
+	margin: 0;
+	font-family: 'Helvetica';
+}
+
+#loginlogo {
+	background: image-url('logo.png');
+	width: 212px;
+	height: 82px;
+	margin: 150px auto 0 auto;
+}
+
+form {
+	@extend .container;
+	
+	margin: 25px auto;
+	width: 300px;
+	border: 1px solid #CCCCCB;
+	padding: 15px 20px;
+	border-radius: 10px;
+	
+	table {
+		width: 100%;
+		
+		tr {
+			width: 100%;
+			td {
+				width: 100%;
+
+			}
+		}
+	}
+	
+	label {
+		font-size: 11px;
+		padding: 2px 6px;
+		border-radius: 5px 5px 0 0;
+		color: #104659;
+		background: #CCCCCB;
+	}
+	
+	input {
+		border: 1px solid #CCCCCB;
+		border-radius: 0 5px 5px 5px;
+	}
+	
+	input[type="text"], input[type="password"] {
+		outline: none;
+		margin: -2px 0 15px 0;
+		width: 270px;
+		font-size: 14px;
+		padding: 4px 8px;
+		
+	}
+	
+	input[type="submit"]{
+		float: right;
+	}
+	
+}
+
+footer {
+	position:absolute;
+	bottom: 0;
+	height: 25px;
+	background: #0099CC;
+	width: 100%;
+	
+	p {
+		margin: 6px auto 0 auto;
+		font-size: 11px;
+		color: #104659;
+		width: 100%;
+		text-align: center;
+	}
+}
