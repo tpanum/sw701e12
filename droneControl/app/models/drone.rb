@@ -12,7 +12,6 @@ class Drone < ActiveRecord::Base
   before_save :check_amount_companies, :move_privileges
 
   private
-
   def check_amount_companies
     raise "Too many companies" if self.companies.size > 1
   end
@@ -24,25 +23,31 @@ class Drone < ActiveRecord::Base
 
   def drop_privileges
   	self.privileges.each do |p|
-  	 p.destroy
+      p.destroy
   	end
   end
 
   def move_privileges
-    unless @companies == nil
-      puts @companies + self.companies
+    @temp_companies ||= []
+    self.companies ||= []
+    if ((@temp_companies | self.companies) - (@temp_companies & self.companies)).size > 0
+      unless @temp_companies.nil?
+        # Delete privileges of drone from @temp_companies
+        @temp_companies.each do |c|
+          c.roles.where(:level_type => 1).limit(1).first.privileges.delete self.privileges
+        end
+      end
+      unless self.companies.nil?
+        # Add privileges of drone to self.companies
+        self.companies.each do |c|
+          c.roles.where(:level_type => 1).limit(1).first.privileges << self.privileges
+        end
+      end
     end
-    # if self.companies_changed?
-    #   self.companies_was.first.roles.where(:level_type => 1).limit(1).first.privileges - self.privileges
-    #   if self.companies.size > 0
-    #     self.companies.first.roles.where(:level_type => 1).limit(1).first.privileges << self.privileges
-
-    #   end
-    # end
   end
 
   def temp_company
-    puts self.companies
+    @temp_companies = self.companies
   end
 end
 
