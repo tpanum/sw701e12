@@ -1,16 +1,28 @@
-
 <p id="notice"><%= notice %></p>
-
-<%= @role.title%> 
-
 <%= link_to 'Edit', edit_role_path(@role) %> |
 <%= link_to 'Back', roles_path %>
 
+Showing: <%= @role.title%>  
 
-<% @role.users.each do |u| %>
-<%= u.first_name + u.last_name%>
-<%end%>
-
+<table class="privileges show" summary="Privileges list">
+<tr class="header">
+<th>Identifier</th>
+</tr>
 <% @role.privileges.each do |p| %>
-<%= p.identifier%>
+<tr>
+<td><%= p.identifier %></td>
 <%end%>
+</table>
+
+<table class="user show" summary="User list">
+<tr class="header">
+<th>Name</th>
+<th>E-mail>/th>
+</tr>
+<% @role.users.each do |u| %>
+<tr>
+<td><%= u.full_name %></td>
+<td><%= u.email %></td>
+</tr>
+<%end%>
+</table>
