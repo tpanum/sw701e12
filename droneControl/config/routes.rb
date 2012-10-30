@@ -45,6 +45,7 @@ DroneControl::Application.routes.draw do
   resources :drones
   resources :companies
   resources :roles
+  resources :users
 
   # Sample resource route within a namespace:
   #   namespace :admin do

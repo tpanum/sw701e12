@@ -1,4 +1,7 @@
 class CompaniesController < ApplicationController
+
+  before_filter :confirm_logged_in
+
   # GET /companies
   # GET /companies.json
   def index
@@ -41,6 +44,7 @@ class CompaniesController < ApplicationController
   # POST /companies.json
   def create
     @company = Company.new(params[:company])
+    @company.owner = User.find(session[:user_id])
 
     respond_to do |format|
       if @company.save

@@ -1,4 +1,7 @@
 class RolesController < ApplicationController
+
+  before_filter :confirm_logged_in
+
   def index
     list
     render('list')
@@ -9,7 +12,7 @@ class RolesController < ApplicationController
   end
 
   def show
-    @role = Role.find(params[:id]) 
+    @role = Role.find(params[:id])
   end
 
   def new
