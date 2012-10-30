@@ -7,6 +7,7 @@ class AccessController < ApplicationController
   end
 
   def menu
+    render :layout => 'admin'
   	#display menu
   end
 

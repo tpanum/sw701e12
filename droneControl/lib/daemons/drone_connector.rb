@@ -72,13 +72,10 @@ module Seskey_server
     puts "received seskey_request"
     @seskey1 = "invalid"
     if $request == false
-      puts "1"
       $request = true 
       if is_json?(data)
-        puts "2"
         obj = JSON.parse(data)
         if obj['request'] == "true"
-          puts "3"
             EventMachine::run {
               em = EventMachine::connect obj['ip'], 5122, Seskey_connector
               @seskey1 = $seskey

@@ -19,6 +19,11 @@ body {
 	font-family: 'Helvetica';
 }
 
+#content {
+	width: 800px;
+	margin: 0 auto;
+}
+
 form {
 	@extend .container;
 	
@@ -66,6 +71,62 @@ form {
 		float: right;
 	}
 	
+}
+
+header {
+	
+	
+	
+	width: 800px;
+	height: 40px;
+	margin: 10px auto 35px auto;
+	background:#0099CC;
+	border-radius: 10px;
+	
+	.background {
+		height: 40px;
+		border-radius: 10px;
+		border: 1px solid #2E67B1;
+		background: #0099cc; /* Old browsers */
+
+		background: -moz-linear-gradient(top,  #0099cc 0%, #3da8cc 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0099cc), color-stop(100%,#3da8cc)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #0099cc 0%,#3da8cc 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #0099cc 0%,#3da8cc 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #0099cc 0%,#3da8cc 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #0099cc 0%,#3da8cc 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0099cc', endColorstr='#3da8cc',GradientType=0 ); /* IE6-9 */
+
+		
+		
+		#toplogo {
+			background: image-url('logo_small_white.png');
+			width: 80px;
+			height: 40px;
+			margin: 0 0 0 10px;
+			background-position: 0 -1px;
+		}
+	}
+	
+	.identity {
+		
+		color: #666;
+		background: #ccc;
+		border-radius: 0 5px 5px 5px;
+		float: right;
+		font-size: 11px;
+		padding: 6px 8px 4px 8px;
+		margin: 5px 0 0 0;
+		
+		.icon {
+			background: image-url('user_icon.png');
+			width: 15px;
+			height: 14px;
+			margin: 0 0 0 5px;
+			float:right;
+			background-position: 0 -1px;
+		}
+	}
 }
 
 footer {
