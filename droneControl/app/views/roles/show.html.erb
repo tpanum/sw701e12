@@ -1,13 +1,16 @@
 
 <p id="notice"><%= notice %></p>
 
+<%= @role.title%> 
 
 <%= link_to 'Edit', edit_role_path(@role) %> |
 <%= link_to 'Back', roles_path %>
 
+
 <% @role.users.each do |u| %>
-<%puts u.first_name + u.last_name%>
+<%= u.first_name + u.last_name%>
+<%end%>
 
 <% @role.privileges.each do |p| %>
-<%puts p.identifier%>
-
+<%= p.identifier%>
+<%end%>

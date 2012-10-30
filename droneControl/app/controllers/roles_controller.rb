@@ -1,10 +1,5 @@
 class RolesController < ApplicationController
   def index
-    list
-    render('list')
-  end
-
-  def list
     @roles = Role.order('title ASC')
   end
 
@@ -21,7 +16,7 @@ class RolesController < ApplicationController
 
     if @role.save
       flash[:notice] = "Role created."
-      redirect_to(:action => 'list')
+      redirect_to(:action => 'index')
     else
       render('new')
     end
@@ -42,15 +37,11 @@ class RolesController < ApplicationController
     end
   end
 
-  def delete
-    @role = Role.find(params[:id])
-  end
-
   def destroy
     Role.find(params[:id]).destroy
 
     flash[:notice] = "The Role has been destroyed"
-    redirect_to(:action => 'list')
+    redirect_to(:action => 'index')
   end
 
 end

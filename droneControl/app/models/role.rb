@@ -13,8 +13,4 @@ class Role < ActiveRecord::Base
       self._privileges
     end
   end
-    def users
-      self.users
-  end
-
 end

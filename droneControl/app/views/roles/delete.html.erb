@@ -1,12 +1,12 @@
-<%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
+<%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
 
 <div class="role delete">
 	<h2>Delete Role</h2>
 
-	<%= form_for(:role, :url => {:action => 'destroy', :id => @role.id}) do |f| -%>
+	<%= form_for(:role, :url => {:action => 'new', :id => @role.id}) do |f| -%>
 
 		<p>Are you sure you want to permanently delete this role?</p>
-		<p class="reference-name"><%= @role.name %></p>
+		<p class="reference-name"><%= @role.title %></p>
 
 		<div class="form-buttons">
 			<%= submit_tag("Delete Role") %>
