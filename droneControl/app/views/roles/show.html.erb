@@ -5,3 +5,9 @@
 <%= link_to 'Edit', edit_role_path(@role) %> |
 <%= link_to 'Back', roles_path %>
 
+<% @role.users.each do |u| %>
+<%puts u.first_name + u.last_name%>
+
+<% @role.privileges.each do |p| %>
+<%puts p.identifier%>
+
