@@ -2,7 +2,8 @@ class Drone < ActiveRecord::Base
   attr_accessible :ip, :name, :location, :description, :session_key
 
   has_many :flight_plans
-  has_and_belongs_to_many :companies
+  has_many :company_drones
+  has_many :companies, :through => :company_drones
   has_and_belongs_to_many :privileges
   has_many :users, :through => :user_drone_privileges
 

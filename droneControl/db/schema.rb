@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025115810) do
+ActiveRecord::Schema.define(:version => 20121030134256) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -31,26 +31,30 @@ ActiveRecord::Schema.define(:version => 20121025115810) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "companies_drones", :id => false, :force => true do |t|
-    t.integer "company_id"
-    t.integer "drone_id"
-  end
-
-  add_index "companies_drones", ["company_id", "drone_id"], :name => "index_companies_drones_on_company_id_and_drone_id"
-
-  create_table "companies_roles", :id => false, :force => true do |t|
-    t.integer "company_id"
-    t.integer "role_id"
-  end
-
-  add_index "companies_roles", ["company_id", "role_id"], :name => "index_companies_roles_on_company_id_and_role_id"
-
   create_table "companies_users", :id => false, :force => true do |t|
     t.integer "company_id"
     t.integer "user_id"
   end
 
   add_index "companies_users", ["company_id", "user_id"], :name => "index_companies_users_on_company_id_and_user_id"
+
+  create_table "company_drones", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "drone_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "company_drones", ["company_id", "drone_id"], :name => "index_company_drones_on_company_id_and_drone_id"
+
+  create_table "company_roles", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "role_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "company_roles", ["company_id", "role_id"], :name => "index_company_roles_on_company_id_and_role_id"
 
   create_table "drones", :force => true do |t|
     t.string   "ip"
