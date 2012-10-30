@@ -26,11 +26,12 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 		history = new ArrayList<Integer>(10);
 		stuckCount = 0;
 		stuck = false;
-		repeatMax = 12;
+		repeatMax = 15;
 	}
 
 
 	public boolean[] getAction() {
+
 		action[Mario.KEY_SPEED] = false;
 		action[Mario.KEY_LEFT] = false;
 		action[Mario.KEY_RIGHT] = true;
@@ -38,27 +39,44 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 
 		if (history.size() >= repeatMax) {
 			int occurrence = history.get(0);
-			if (!stuck) {
-				stuck = true;
-				for (int i = 1; i < repeatMax; i++) {
-					if (occurrence != history.get(i)) {
-						stuck = false;
-						break;
+			if (occurrence != 0) {
+				if (!stuck) {
+					stuck = true;
+					for (int i = 1; i < repeatMax; i++) {
+						if (occurrence != history.get(i)) {
+							stuck = false;
+							break;
+						}
 					}
 				}
 			}
 		}
 
-		if (stuck && stuckCount < 7) {
+		if (stuck && stuckCount < 3) {
 			action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
-			action[Mario.KEY_SPEED] = true;
+			//action[Mario.KEY_SPEED] = true;
 			System.out.println("Stuck");
 			stuckCount++;
 		}
 		else {
-			stuck = false;
-			stuckCount = 0;
-			if (EnemyBelowLeft()) {
+			if (stuck && stuckCount > 18) {
+				stuck = false;
+				stuckCount = 0;
+			}
+			else {
+				stuckCount++;
+			}
+			if (EnemyBelow()) {
+				action[Mario.KEY_RIGHT] = false;
+				action[Mario.KEY_LEFT] = false;
+				if (shoot) {
+					shoot = false;
+				} else {
+					shoot = true;
+				}
+				current = 2;
+			}
+			else if (EnemyBelowLeft() && !stuck) {
 				action[Mario.KEY_RIGHT] = false;
 				action[Mario.KEY_LEFT] = true;
 				action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
@@ -69,19 +87,8 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 				}
 				current = 1;
 			}
-			else if (EnemyBelow()) {
-				action[Mario.KEY_RIGHT] = false;
-				action[Mario.KEY_LEFT] = false;
-				action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
-				if (shoot) {
-					shoot = false;
-				} else {
-					shoot = true;
-				}
-				current = 2;
-			}
 			else if (EnemyAboveRight()) {
-				action[Mario.KEY_JUMP] = action[Mario.KEY_SPEED] = isMarioAbleToJump || !isMarioOnGround;
+				action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
 				current = 3;
 			}
 			else if (EnemyBelowRight()) {
@@ -95,11 +102,12 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			}
 			else if (ObstructionAhead()) {
 				action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
-				action[Mario.KEY_SPEED] = true;
+				//action[Mario.KEY_SPEED] = true;
 				current = 5;
 			} 
 			else {
 				action[Mario.KEY_JUMP] = false;
+				action[Mario.KEY_SPEED] = false;
 				System.out.println("Default");
 			}
 		}
@@ -127,8 +135,17 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 	}
 
 	private boolean ObstructionAhead() {
-		if (getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
-				getReceptiveFieldCellValue(marioEgoRow - 1, marioEgoCol + 1) != 0) {
+		if (
+				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) == -24 ||
+				getReceptiveFieldCellValue(marioEgoRow - 1, marioEgoCol + 1) == -24 ||
+				getReceptiveFieldCellValue(marioEgoRow - 2, marioEgoCol + 1) == -24 ||
+				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) == -60 ||
+				getReceptiveFieldCellValue(marioEgoRow - 1, marioEgoCol + 1) == -60 ||
+				getReceptiveFieldCellValue(marioEgoRow - 2, marioEgoCol + 1) == -60 ||
+				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) == -85 ||
+				getReceptiveFieldCellValue(marioEgoRow - 1, marioEgoCol + 1) == -85 ||
+				getReceptiveFieldCellValue(marioEgoRow - 2, marioEgoCol + 1) == -85
+				) {
 			System.out.println("Obstruction Ahead");
 			return true;
 		} else {
@@ -139,21 +156,27 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 	private boolean EnemyAboveRight() {
 		if (getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow - 4, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow - 4, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow - 4, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow - 4, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow - 5, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow - 5, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow - 5, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow - 5, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow - 6, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow - 6, marioEgoCol + 2) != 0) {
+				getEnemiesCellValue(marioEgoRow - 6, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow - 6, marioEgoCol + 3) != 0) {
 			System.out.println("Above Right");
 			return true;
 		} else {
@@ -165,37 +188,34 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 		if (getEnemiesCellValue(marioEgoRow, marioEgoCol - 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow, marioEgoCol - 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow, marioEgoCol - 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow, marioEgoCol - 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 2) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 3) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 4) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol - 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol - 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol - 2) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol - 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol - 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 2) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 3) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 4) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol - 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol - 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol - 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol - 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol - 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol - 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol - 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol - 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol - 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol - 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol - 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol - 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol - 2) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol - 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol - 4) != 0) {
+
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol - 1) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol - 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol - 3) != 0) {
 			System.out.println("Below Left");
 			return true;
 		} else {
@@ -210,7 +230,8 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol) != 0) {
+				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol) != 0) {
 			System.out.println("Below");
 			return true;
 		} else {
@@ -222,37 +243,34 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 		if (getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow, marioEgoCol + 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow, marioEgoCol + 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 2) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 3) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 4) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 2) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol + 2) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol + 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 2, marioEgoCol + 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol + 2) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol + 3) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol + 4) != 0 ||
+				getEnemiesCellValue(marioEgoRow + 3, marioEgoCol + 3) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol + 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol + 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 4, marioEgoCol + 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol + 2) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol + 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 5, marioEgoCol + 4) != 0 ||
 
 				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol + 1) != 0 || 
-				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol + 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol + 3) != 0 ||
-				getEnemiesCellValue(marioEgoRow + 6, marioEgoCol + 4) != 0) {
+
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol + 1) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol + 2) != 0 || 
+				getEnemiesCellValue(marioEgoRow + 7, marioEgoCol + 3) != 0) {
 			System.out.println("Below Right");
 			return true;
 		} else {

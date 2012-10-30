@@ -11,8 +11,8 @@
     <div class="role">
         <p>Title: <%= r.title %></p>
         <div class="privileges">
+            <% unless r.privileges.nil? %>
             <p>Privileges from Role:</p>
-            <% unless r.nil?%> 
             <% r.privileges.each do |p| %>
             <div class="privilege">
                 <p>Identifier: <%= p.identifier %></p>
