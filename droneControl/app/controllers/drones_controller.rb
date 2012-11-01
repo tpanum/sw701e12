@@ -3,11 +3,6 @@ class DronesController < ApplicationController
   before_filter :confirm_logged_in
 
   def index
-    list
-    render('list')
-  end
-
-  def list
     @drones = Drone.order("name ASC")
   end
 
@@ -25,7 +20,7 @@ class DronesController < ApplicationController
 
     if @drone.save
       flash[:notice] = "Drone created."
-      redirect_to(:action => 'list')
+      redirect_to(:action => 'index')
     else
       render('new')
     end
@@ -54,6 +49,6 @@ class DronesController < ApplicationController
     Drone.find(params[:id]).destroy
 
     flash[:notice] = "The Drone has been destroyed"
-    redirect_to(:action => 'list')
+    redirect_to(:action => 'index')
   end
 end
