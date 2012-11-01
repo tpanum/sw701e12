@@ -133,13 +133,16 @@ header {
 	width: 800px;
 	height: 40px;
 	margin: 10px auto 35px auto;
-	background:#0099CC;
 	border-radius: 10px;
+	position:relative;
 	
 	.background {
 		height: 40px;
+		width: 100%;
 		border-radius: 10px;
 		border: 1px solid #2E67B1;
+		position: absolute;
+		z-index: 1;
 		background: #0099cc; /* Old browsers */
 
 		background: -moz-linear-gradient(top,  #0099cc 0%, #3da8cc 100%); /* FF3.6+ */
@@ -184,6 +187,26 @@ header {
 		}
 	}
 	
+	.notice {
+		text-align:center;
+		font-size: 11px;
+		width: 100%;
+		position:absolute;
+		top: -9999px;
+		z-index: 0;
+		
+		p {
+			display: inline-block;
+			margin: 0 auto;
+			background: #104659;
+			border-radius: 0 0 10px 10px;
+			padding: 4px 8px;
+			color: #3da8cc;
+			max-width: 400px;
+			max-height: 40px;
+		}
+	}
+	
 	.identity {
 		
 		color: #666;
@@ -192,7 +215,9 @@ header {
 		float: right;
 		font-size: 11px;
 		padding: 6px 8px 4px 8px;
-		margin: 5px 0 0 0;
+		position: absolute;
+		right: 0;
+		top: 50px;
 		
 		.icon {
 			background: image-url('user_icon.png');
