@@ -9,14 +9,17 @@
 			<td><%= label_tag(:email) %></td>
 		</tr>
     <tr>
-      <td><%= text_field_tag(:email) %></td>
+      <td><%= text_field_tag(:email, session[:_user_email]) %></td>
     </tr>
 		<tr>
 			<td><%= label_tag(:password) %></td>
 		</tr>
     <tr>
       <td><%= password_field_tag(:password) %></td>
-    </tr> 
+    </tr>
+    <tr>
+      <td><%= check_box_tag(:remember_email, "1", session[:_remember_email]) %></td>
+    </tr>
   </table>
 	<%= submit_tag("Log In") %>
   <% end %>
