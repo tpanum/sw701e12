@@ -1,9 +1,8 @@
 \section{Design Language}
-
-The design language or sometimes called design vocabulary is the design guide lines for \projectname{}. Each object there is important in the application have gotten their own unique feel.
+The design language, which is also known as design vocabulary, is the design guidelines for \projectname{}. 
+The objects here will have an important role in the systems user interface, and their design language is therefore described here.
 
 \subsection{Color scheme}
-
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/color_schema.pdf}
@@ -11,18 +10,17 @@ The design language or sometimes called design vocabulary is the design guide li
     \label{fig:color_schema}
 \end{figure}
 
-The color schema seen in \figref{fig:color_schema} shows the colors which is used in the applications design.
+The color schema seen in \figref{fig:color_schema} shows the colors that are being used in the applications design. \fixme{hvorfor har vi valgt de farver fremfor orange og lyserød?}
 
 \subsection{Fonts}
-
-The family of fonts will be: Arial, Helvetica. These fonts have been selected because they are common both in Windows and Mac and therefore can be called browser safe \cite{common_fonts}.
+The family of fonts will be: Arial, Helvetica. 
+These fonts have been selected because they are common both in Windows and Mac and therefore they are browser safe \cite{common_fonts}, meaning that the system will look the same no matter what operating system the user is using.
 
 \subsection{Shapes}
-
-All boxes which is possible to interact with in the application have rounded corners. This was done because the interaction for the user should be simple and straight forward.
+All boxes that the user can interact with in the system, will be displayed with rounded corners.
+This was done to make the interaction with the boxes as simple and straight forward as possible for the user.
 
 \subsection{Layouts}
-
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/menu.pdf}
@@ -30,7 +28,9 @@ All boxes which is possible to interact with in the application have rounded cor
     \label{fig:menu_design}
 \end{figure}
 
-In \figref{fig:menu_design} the menu of the application is seen. The control menu point is active and therefore is represented with a gray color. Else the menu is black and with white spacers.
+In \figref{fig:menu_design} the menu of the application is seen. 
+In the figure, the bullet ``Control'' is active and therefore shown with a grey background color. 
+All other menues have a black background color and are seperated with white spaces.
 
 \begin{figure}[htb]
     \centering
@@ -39,7 +39,8 @@ In \figref{fig:menu_design} the menu of the application is seen. The control men
     \label{fig:search_bar_design}
 \end{figure}
 
-In \figref{fig:search_bar_design} the search bar of the application is seen. The ``search'' text will disappear when clicked and if the user types anything this will be shown in the search bar instead.
+In \figref{fig:search_bar_design} the search bar of the application is seen. 
+The ``search'' text will disappear when the bare is clicked, and if the user types anything this will be shown in the search bar instead.
 
 \begin{figure}[htb]
     \centering
@@ -47,8 +48,8 @@ In \figref{fig:search_bar_design} the search bar of the application is seen. The
     \caption{Table design for the application.}
     \label{fig:table_design}
 \end{figure}
-
-In \figref{fig:table_design} the general design for tables of the application is seen. Odd rows will be light blue and even rows will be blue.
+In \figref{fig:table_design} the general design for tables of the application is seen. 
+Odd rows will be light blue and even rows will be blue.
 
 \begin{figure}[htb]
     \centering
@@ -56,7 +57,6 @@ In \figref{fig:table_design} the general design for tables of the application is
     \caption{List design for the application.}
     \label{fig:list_design}
 \end{figure}
-
 The list design seen in \figref{fig:list_design} is the core list item in the application. This list can show more and less information depending on where the user clicks. All levels are represented in \figref{fig:list_design} where a dark blue tab item with a name is a user in the system, the blue is a drone and the light blue is the privilege for the selected drone.
 The list is made in such a way that the levels can be distinguished by the indent of the item.
 The boxes in \figref{fig:list_design} shows the privilege status of an item. There are three different states these boxes can be in

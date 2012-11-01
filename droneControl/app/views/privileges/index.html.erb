@@ -2,13 +2,15 @@
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
+    <th>Identifier</th>
+    <th>Description</th>
     <th></th>
   </tr>
 
 <% @privileges.each do |privilege| %>
   <tr>
+    <td><%= privilege.identifier%></td>
+    <td><%= truncate(privilege.description, :length => 30)%></td>
     <td><%= link_to 'Show', privilege %></td>
     <td><%= link_to 'Edit', edit_privilege_path(privilege) %></td>
     <td><%= link_to 'Destroy', privilege, method: :delete, data: { confirm: 'Are you sure?' } %></td>
