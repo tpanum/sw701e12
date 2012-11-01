@@ -3,12 +3,9 @@
 <div class="users list">
 	<h2>Users</h2>
 
-	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
-	<%= link_to("Add New User", {:action => 'new'}, :class => 'action new') %>
-
 	<table class="listing" summary="Users list">
 		<tr class="header">
-			<th>&nbsp;</th>
+			<th>Id</th>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Actions</th>
@@ -20,11 +17,15 @@
 				<td><%= user.first_name %></td>
 				<td><%= user.last_name %></td>
 				<td class="actions">
-					<%= link_to("Show", {:action => 'show', :id => user.id}, :class => 'action show') %>
-					<%= link_to("Edit", {:action => 'edit', :id => user.id}, :class => 'action edit') %>
-					<%= link_to("Delete", {:action => 'delete', :id => user.id}, :class => 'action delete') %>
+					<%= link_to 'Show', user %>
+      				<%= link_to 'Edit', edit_user_path(user) %>
+      				<%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
 				</td>
 			</tr>
 		<% end %>
 	</table>
+
+	<br />
+
+	<%= link_to 'New User', new_user_path %>
 </div>
