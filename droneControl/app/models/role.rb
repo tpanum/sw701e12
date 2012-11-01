@@ -10,7 +10,11 @@ class Role < ActiveRecord::Base
   def privileges
     if self.level_type == 1
       gpr = Role.where(:level_type => 0).limit(1).first
-      gpr.privileges | self._privileges unless gpr.nil?
+      unless gpr.nil?
+        gpr.privileges | self._privileges
+      else
+        self._privileges
+      end
     else
       self._privileges
     end

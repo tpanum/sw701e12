@@ -11,14 +11,12 @@
     <div class="role">
         <p>Title: <%= r.title %></p>
         <div class="privileges">
-            <% unless r.privileges.nil? %>
             <p>Privileges from Role:</p>
             <% r.privileges.each do |p| %>
             <div class="privilege">
                 <p>Identifier: <%= p.identifier %></p>
                 <p>Description: <%= p.description %></p>
             </div>
-            <% end %>
             <% end %>
         </div>
     </div>

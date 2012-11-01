@@ -12,6 +12,9 @@ class AccessController < ApplicationController
   end
 
   def login
+    unless session[:user_id].nil?
+      redirect_to(:action => 'menu')
+    end
   	#login form
   end
 
@@ -19,6 +22,13 @@ class AccessController < ApplicationController
   	authorized_user = User.authenticate(params[:email], params[:password])
 
   	if authorized_user
+      if params[:remember_email] == "1"
+        session[:_user_email] = params[:email]
+        session[:_remember_email] = true
+      else
+        session[:_user_email] = nil
+        session[:_remember_email] = false
+      end
   	  session[:user_id] = authorized_user.id
   	  session[:user_email] = authorized_user.email
 
