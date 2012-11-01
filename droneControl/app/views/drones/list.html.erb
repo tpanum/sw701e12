@@ -1,10 +1,7 @@
 <% @page_title = "Drones List" %>
 
 <div class="drones list">
-	<h2>Drpones</h2>
-
-	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
-	<%= link_to("Add New Drone", {:action => 'new'}, :class => 'action new') %>
+	<h2>Drones</h2>
 
 	<table class="listing" summary="drones list">
 		<tr class="header">
@@ -22,11 +19,15 @@
 				<td><%= drone.location %></td>
 				<td><%= drone.ip %></td>
 				<td class="actions">
-					<%= link_to("Show", {:action => 'show', :id => drone.id}, :class => 'action show') %>
-					<%= link_to("Edit", {:action => 'edit', :id => drone.id}, :class => 'action edit') %>
-					<%= link_to("Delete", {:action => 'delete', :id => drone.id}, :class => 'action delete') %>
+					<%= link_to 'Show', drone %>
+      				<%= link_to 'Edit', edit_drone_path(drone) %>
+      				<%= link_to 'Destroy', drone, method: :delete, data: { confirm: 'Are you sure?' } %>
 				</td>
 			</tr>
 		<% end %>
 	</table>
+
+	<br />
+
+	<%= link_to 'New Drone', new_drone_path %>
 </div>
