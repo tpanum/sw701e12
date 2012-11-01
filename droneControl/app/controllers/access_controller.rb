@@ -7,11 +7,11 @@ class AccessController < ApplicationController
   end
 
   def menu
-    render :layout => 'admin'
   	#display menu
   end
 
   def login
+    render :layout => 'login'
     unless session[:user_id].nil?
       redirect_to(:action => 'menu')
     end

@@ -3,19 +3,12 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
-		<title>Drone Control | <%= @page_title ||  'Admin Area' %></title>
+		<title><%= t(:projectname) %></title>
 		<%= stylesheet_link_tag('application', :media => 'all') %>
 		<%= javascript_include_tag "application" %>
   		<%= csrf_meta_tags %>
 	</head>
 	<body>
-		<header>
-			<div class="background">
-				<div id="toplogo"></div>
-				<%= render 'access/menu' %>
-			</div>
-			<div class="identity"><%= session[:user_email] %><div class="icon"></div></div>
-		</header>
 		<div id="main">
 			<% if !flash[:notice].blank? %>
 				<div class="notice">
