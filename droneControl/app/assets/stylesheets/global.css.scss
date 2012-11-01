@@ -65,6 +65,9 @@
     zoom:1;
 }
 
+a {
+	text-decoration: none;
+}
 
 body {
 	margin: 0;
@@ -155,6 +158,29 @@ header {
 			height: 40px;
 			margin: 0 0 0 10px;
 			background-position: 0 -1px;
+			float: left;
+		}
+		
+		#topmenu {
+			float:left;
+			height: 100%;
+			margin: 0 0 0 10px;
+			
+			a {
+				display:block;
+				float:left;
+				height: 100%;
+				margin: 0 10px;
+				font-size: 12px;
+				padding: 0 5px;
+				line-height: 3.6em;
+				color: #104659;
+				
+				&:hover {
+					background: #104659;
+					color: #fff;
+				}
+			}
 		}
 	}
 	
