@@ -10,9 +10,9 @@
       </ul>
     </div>
   <% end %>
-  <th>Identifier</th>
+  <%= label_tag(:identifier) %>
   <%= f.text_field(:identifier) %>
-  <th>Description</th>
+  <%= label_tag(:description) %>
   <%= f.text_area(:description) %>
 
   <div class="actions">
