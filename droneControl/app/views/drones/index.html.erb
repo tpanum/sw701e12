@@ -2,13 +2,6 @@
 
 <div class="drones list">
 	<h2>Drones</h2>
-<<<<<<< HEAD:droneControl/app/views/drones/index.html.erb
-
-	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
-	<%= link_to("Add New Drone", {:action => 'new'}, :class => 'action new') %>
-=======
->>>>>>> 5fdd12d2240fb4300ef819de1c600cd0319bd8f4:droneControl/app/views/drones/list.html.erb
-
 	<table class="listing" summary="drones list">
 		<tr class="header">
 			<th>&nbsp;</th>
@@ -25,21 +18,13 @@
 				<td><%= drone.location %></td>
 				<td><%= drone.ip %></td>
 				<td class="actions">
-<<<<<<< HEAD:droneControl/app/views/drones/index.html.erb
-					<%= link_to("Show", {:action => 'show', :id => drone.id}, :class => 'action show') %>
-					<%= link_to("Edit", {:action => 'edit', :id => drone.id}, :class => 'action edit') %>
-					<%= link_to 'Destroy', drone, method: :delete, data: { confirm: 'Are you sure?' } %>
-=======
 					<%= link_to 'Show', drone %>
       				<%= link_to 'Edit', edit_drone_path(drone) %>
       				<%= link_to 'Destroy', drone, method: :delete, data: { confirm: 'Are you sure?' } %>
->>>>>>> 5fdd12d2240fb4300ef819de1c600cd0319bd8f4:droneControl/app/views/drones/list.html.erb
 				</td>
 			</tr>
 		<% end %>
 	</table>
-
 	<br />
-
 	<%= link_to 'New Drone', new_drone_path %>
 </div>
