@@ -11,6 +11,9 @@ class UsersController < ApplicationController
   	@users = User.order("first_name ASC")
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
 
   def new
   	@user = User.new

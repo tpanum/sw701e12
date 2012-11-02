@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :password
   has_many :user_privileges
   has_many :privileges, :through => :user_privileges, :uniq => true
-  has_many :companies # DANGEROUS, TWO COMPANIES
+  has_many :owned_companies, :class_name => "Company"
   has_and_belongs_to_many :companies, :uniq => true
   has_and_belongs_to_many :roles, :uniq => true
 
