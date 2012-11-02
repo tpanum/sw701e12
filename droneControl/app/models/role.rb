@@ -4,8 +4,8 @@ class Role < ActiveRecord::Base
 
   has_many :company_roles
   has_many :companies, :through => :company_roles, :uniq => true
-  has_and_belongs_to_many :_privileges, :class_name => 'Privilege'
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :_privileges, :class_name => 'Privilege', :uniq => true
+  has_and_belongs_to_many :users, :uniq => true
 
   def privileges
     if self.level_type == 1

@@ -6,7 +6,7 @@ class Company < ActiveRecord::Base
   has_many :drones, :through => :company_drones, :uniq => true
   has_many :company_roles
   has_many :roles, :through => :company_roles, :uniq => true
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :users, :uniq => true
 
   after_create :create_company_role
   after_destroy :destroy_all_roles, :destroy_all_drones
