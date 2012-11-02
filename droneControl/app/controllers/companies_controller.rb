@@ -85,6 +85,29 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def users
+    @company = Company.find(params[:id])
+    @users_comp = @company.users
+    @users_all = User.find(:all, :conditions => ['id not in (?)', @users_comp.map(&:id)])
+  end
+
+  def companies_users
+    @company = Company.find(params[:id])
+
+
+    unless usera.nil?
+      respond_to do |format|
+        if @company.users << @usera
+          format.html { redirect_to @company, notice: 'Drone was successfully added to company.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "drones" }
+          format.json { render json: @company.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   def drones
     @company = Company.find(params[:id])
   end

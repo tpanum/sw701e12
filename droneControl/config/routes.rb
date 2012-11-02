@@ -47,7 +47,9 @@ DroneControl::Application.routes.draw do
   resources :companies do
     member do
       get :drones
+      get :users
       post :companies_drones
+      post :companies_users
     end
   end
   resources :roles do
