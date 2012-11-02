@@ -47,4 +47,17 @@ class RolesController < ApplicationController
     redirect_to(:action => 'index')
   end
 
+  def privileges
+    puts session[:user_id]
+    @user = User.find(session[:user_id])
+    if @user.has_privilege? 'super_admin'
+      @roles = Role.all
+    else
+      @roles = []
+      @user.companies.each do |c|
+        @roles |= c.roles
+      end
+    end
+  end
+
 end
