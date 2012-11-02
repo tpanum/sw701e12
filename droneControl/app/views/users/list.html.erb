@@ -14,8 +14,8 @@
 		<% @users.each do |user| %>
 			<tr>
 				<td><%= user.id %></td>
-				<td><%= user.first_name %></td>
-				<td><%= user.last_name %></td>
+				<td><%= user.full_name %></td>
+				<td><%= user.email %></td>
 				<td class="actions">
 					<%= link_to 'Show', user %>
       				<%= link_to 'Edit', edit_user_path(user) %>
