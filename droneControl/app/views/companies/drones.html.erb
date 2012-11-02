@@ -1,0 +1,14 @@
+<%= link_to("<< Back to Index", {:action => 'index'}, :class => 'back-link') %>
+
+<div class="add drone to company">
+	<h2>Add Drone to Company</h2>
+
+	<%= form_for(:companies_drones, :url => {:action => 'companies_drones', :id => @company.id}) do |f| -%>
+
+		<%= render(:partial => "addDrones", :locals => {:f => f}) %>
+
+		<div class="form-buttons">
+			<%= submit_tag("Add Drone") %>
+		</div>
+	<% end %>
+</div>

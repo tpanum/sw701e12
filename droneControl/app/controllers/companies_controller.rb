@@ -84,4 +84,24 @@ class CompaniesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def drones
+    @company = Company.find(params[:id])
+  end
+
+  def companies_drones
+    @company = Company.find(params[:id])
+    puts params.inspect
+    @drone = Drone.where(:name => params[:companies_drones][:drone_name]).limit(1).first
+
+    respond_to do |format|
+      if @company.drones << @drone
+        format.html { redirect_to @company, notice: 'Drone was successfully added to company.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "drones" }
+        format.json { render json: @company.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
