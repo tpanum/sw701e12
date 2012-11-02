@@ -93,15 +93,27 @@ class CompaniesController < ApplicationController
 
   def companies_users
     @company = Company.find(params[:id])
+    @user = User.find(params[:user_id])
 
-
-    unless usera.nil?
+    if params[:perform].eql?("add")
+      puts "succes"
       respond_to do |format|
-        if @company.users << @usera
-          format.html { redirect_to @company, notice: 'Drone was successfully added to company.' }
+        if @company.users << @user
+          format.html { redirect_to @company, notice: 'User was successfully added to company.' }
           format.json { head :no_content }
         else
-          format.html { render action: "drones" }
+          format.html { render action: "users" }
+          format.json { render json: @company.errors, status: :unprocessable_entity }
+        end
+      end
+    elsif params[:perform].eql?("remove")
+      puts "succes"
+      respond_to do |format|
+        if @company.users.delete(@user)
+          format.html { redirect_to @company, notice: 'User was successfully removed from company.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "users" }
           format.json { render json: @company.errors, status: :unprocessable_entity }
         end
       end
@@ -114,7 +126,6 @@ class CompaniesController < ApplicationController
 
   def companies_drones
     @company = Company.find(params[:id])
-    puts params.inspect
     @drone = Drone.where(:name => params[:companies_drones][:drone_name]).limit(1).first
 
     respond_to do |format|
