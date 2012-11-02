@@ -17,9 +17,9 @@
         <td><%= role.id %></td>
         <td><%= role.title %></td>
         <td class="actions">
-          <%= link_to("Show", {:action => 'show', :id => role.id}, :class => 'action show') %>
-          <%= link_to("Edit", {:action => 'edit', :id => role.id}, :class => 'action edit') %>
-          <%= link_to 'Delete', role, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to("", {:action => 'show', :id => role.id}, :class => 'show') %>
+          <%= link_to("", {:action => 'edit', :id => role.id}, :class => 'edit') %>
+          <%= link_to '', role, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete" %>
         </td>
       </tr>
     <% end %>
