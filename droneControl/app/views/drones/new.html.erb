@@ -1,17 +1,5 @@
-<% @page_title = "Create Drone" %>
+<h1>New role</h1>
 
-<%= link_to("<< Back to Index", {:action => 'index'}, :class => 'back-link') %>
+<%= render 'form' %>
 
-<div class="drone new">
-	<h2>Create Drone</h2>
-
-	<%= form_for(:drone, :url => {:action => 'create'}) do |f| %>
-		
-		<%= render(:partial => "form", :locals => {:f => f}) %>
-
-		<div class="form-buttons">
-			<%= submit_tag("Create Drone") %>
-		</div>
-	<% end %>
-
-</div>
+<%= link_to 'Back', drone_path %>
