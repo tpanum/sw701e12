@@ -5,13 +5,8 @@
 <div class="drone edit">
 	<h2>Update Drone</h2>
 
-	<%= form_for(:drone, :url => {:action => 'update', :id => @drone.id}) do |f| %>
-		
-		<%= render(:partial => "form", :locals => {:f => f}) %>
-
-		<div class="form-buttons">
-			<%= submit_tag("Update Drone") %>
-		</div>
+	<%= form_for(:drone, :url => {:action => 'update', :id => @drone.id}) do |f| %>		
+		<%= render(:partial => "form", :locals => {:f => f}) %>		
 	<% end %>
 
 </div>
