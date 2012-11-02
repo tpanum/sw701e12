@@ -245,3 +245,75 @@ footer {
 		text-align: center;
 	}
 }
+
+.listing {
+	
+	border-collapse:collapse;
+	width: 100%;
+	
+	th {
+		font-size: 11px;
+		text-align:left;
+		padding: 0 0 5px 5px;
+	}
+	
+	tr:nth-child(even){
+	 background: #EFEFEF;
+	 
+	}
+	
+	td {
+		padding: 4px 5px;
+		font-size: 13px;
+		
+		&.actions {
+		
+			a {
+				display: block;
+				width: 36px;
+				height: 24px;
+				border-radius: 4px;
+				float: left;
+				
+				&.show {
+					background: image-url('list_icons.png');
+					background-position: -1px 2px;
+					background-repeat: no-repeat;
+				}
+				
+				&.edit {
+					background: image-url('list_icons.png');
+					background-position: -40px 1px;
+				}
+				
+				&.delete {
+					background: image-url('list_icons.png');
+					background-position: -76px 1px;
+				}
+				
+				&:hover {
+					background-color:#ccc;
+				}
+				
+			}
+			
+		}
+	
+	}
+	
+}
+
+.button {
+    padding: 5px 8px;
+	border: 1px solid #C1C1C1;
+	background-image: -webkit-linear-gradient(top, #FDFDFD, #E8E8E8);
+	border-radius: 4px;
+	color: #666666;
+	font-size: 11px;
+	cursor: pointer;
+	text-align: center;
+	
+	&:hover {
+		background-image: -webkit-linear-gradient(top, #EFEFEF, #E5E5E5);
+	}
+}
