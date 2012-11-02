@@ -11,9 +11,10 @@ class AccessController < ApplicationController
   end
 
   def login
-    render :layout => 'login'
     unless session[:user_id].nil?
       redirect_to(:action => 'menu')
+    else  
+      render :layout => 'login'
     end
   	#login form
   end
