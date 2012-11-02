@@ -1,0 +1,42 @@
+<h1>Users in Company</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+
+<% @users_comp.each do |userc| %>
+  <tr>
+    <td><%= userc.id %></td>
+    <td><%= userc.full_name%></td>
+    <td class="actions">
+      <%= link_to 'Remove', companies_users_company_path(:user_id => userc.id, :perform => "remove"), :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<h1> Users not in Company</h1>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+
+<% @users_all.each do |usera| %>
+  <tr>
+    <td><%= usera.id %></td>
+    <td><%= usera.full_name%></td>
+    <td class="actions">
+      <%= link_to 'Add', companies_users_company_path(:user_id => usera.id, :perform => "add"), :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Company menu', companies_path %>
