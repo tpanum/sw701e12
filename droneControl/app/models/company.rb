@@ -3,9 +3,9 @@ class Company < ActiveRecord::Base
 
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   has_many :company_drones
-  has_many :drones, :through => :company_drones
+  has_many :drones, :through => :company_drones, :uniq => true
   has_many :company_roles
-  has_many :roles, :through => :company_roles
+  has_many :roles, :through => :company_roles, :uniq => true
   has_and_belongs_to_many :users
 
   after_create :create_company_role
@@ -13,7 +13,8 @@ class Company < ActiveRecord::Base
 
   private
   def create_company_role
-    r = Role.create(:title => "All", :level_type => 1)
+    role_name = self.name.gsub(" ", "_") + "_All"
+    r = Role.create(:title => role_name, :level_type => 1)
     self.roles << r
   end
 

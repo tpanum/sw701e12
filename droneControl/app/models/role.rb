@@ -3,7 +3,7 @@ class Role < ActiveRecord::Base
   # types are: 0 for GP, 1 for All, 2 for everything else
 
   has_many :company_roles
-  has_many :companies, :through => :company_roles
+  has_many :companies, :through => :company_roles, :uniq => true
   has_and_belongs_to_many :_privileges, :class_name => 'Privilege'
   has_and_belongs_to_many :users
 

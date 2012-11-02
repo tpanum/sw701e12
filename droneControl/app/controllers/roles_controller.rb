@@ -48,8 +48,8 @@ class RolesController < ApplicationController
   end
 
   def privileges
-    puts session[:user_id]
     @user = User.find(session[:user_id])
+    @privileges = Privilege.all
     if @user.has_privilege? 'super_admin'
       @roles = Role.all
     else

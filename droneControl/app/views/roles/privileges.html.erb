@@ -1,3 +1,7 @@
-<% @roles.each do |r| %>
-    <%= @r %>
-<% end %>
+<%= label_tag(:role) %>
+<%= select_tag(:role, options_for_select(@roles.collect {|r| r.title }), :size => [@roles.size, 2].max) %>
+
+<%= label_tag(:privilege) %>
+<%= select_tag(:privilege, options_for_select(@privileges.collect {|p| p.identifier }), :size => [@privileges.size, 2].max) %>
+
+<%= link_to 'Add Privilege', '' %>

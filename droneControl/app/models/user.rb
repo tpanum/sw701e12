@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :email, :first_name, :last_name, :password
   has_many :user_privileges
-  has_many :privileges, :through => :user_privileges
+  has_many :privileges, :through => :user_privileges, :uniq => true
   has_many :companies
   has_and_belongs_to_many :companies
   has_and_belongs_to_many :roles
@@ -47,7 +47,10 @@ class User < ActiveRecord::Base
   end
 
   def has_privilege? privilege
-    p_id = Privilege.find_by_identifier(privilege).id
+    p_object = Privilege.find_by_identifier(privilege)
+    return false if p_object.nil?
+
+    p_id = p_object.id
     p_user = UserPrivilege.where(:user_id => self.id, :privilege_id => p_id).limit(1).first
     if !p_user.nil?
       if p_user.flag == 1

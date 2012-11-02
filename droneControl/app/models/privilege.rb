@@ -3,5 +3,5 @@ class Privilege < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   has_many :drones
-  has_many :users, :through => :user_privileges
+  has_many :users, :through => :user_privileges, :uniq => true
 end
