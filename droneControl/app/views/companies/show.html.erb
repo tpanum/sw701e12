@@ -19,5 +19,14 @@
     <% end %>
 </div>
 
+<div class="roles">
+    <h4>Users</h4>
+    <% @company.users.each do |u| %>
+    <div class="users">
+        <p>Name: <%= u.full_name %></p>
+    </div>
+    <% end %>
+</div>
+
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
