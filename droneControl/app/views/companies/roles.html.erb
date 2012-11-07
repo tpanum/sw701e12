@@ -1,0 +1,29 @@
+<h1>Manage roles</h1>
+<h2>Roles in company</h2>
+
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+  </tr>
+
+<% @company.roles.each do |role| %>
+  <tr>
+    <td><%= role.id %></td>
+    <td><%= role.title%></td>
+    <td class="actions">
+      <%= link_to 'Delete', companies_roles_company_path(:perform => "delete", :role_id => role.id), :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= form_for(:companies_roles, :url => {:action => 'companies_roles', :id => @company.id, :perform => "create"}) do |f| -%>
+
+    <%= render(:partial => "addRole", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag("Create Role") %>
+    </div>
+  <% end %>
