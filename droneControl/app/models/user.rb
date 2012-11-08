@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :email, :first_name, :last_name, :password
   has_many :user_privileges
-  has_many :privileges, :through => :user_privileges, :class_name => "AffiliatePrivilege", :uniq => true
+  has_many :privileges, :through => :user_privileges, :class_name => "AffiliatePrivilege", :source => :affiliate_privilege, :uniq => true
   has_many :owned_companies, :class_name => "Company"
   has_and_belongs_to_many :companies, :uniq => true
   has_and_belongs_to_many :roles, :uniq => true
@@ -47,16 +47,34 @@ class User < ActiveRecord::Base
   end
 
   def has_privilege? privilege
-    p_object = Privilege.find_by_identifier(privilege)
+    enums = Privilege.type_enums
+
+    received_type = nil
+
+    enums.each do |e|
+      unless privilege[e.to_sym].nil?
+        raise "Two many affiliate arguements" unless received_type.nil?
+        received_type = e
+      end
+    end
+
+    aff = privilege[received_type.to_sym]
+    type = enums.index(received_type)
+    action = privilege[:action]
+
+    p_object = AffiliatePrivilege.where(:affiliate => aff).includes(:privilege).where("privileges.instance_type = ? AND privileges.identifier = ?", type, action).limit(1).first
+
     return false if p_object.nil?
 
     p_id = p_object.id
-    p_user = UserPrivilege.where(:user_id => self.id, :privilege_id => p_id).limit(1).first
+    p_user = UserPrivilege.where(:user_id => self.id, :affiliate_privilege_id => p_id).limit(1).first
+
+
     if !p_user.nil?
       if p_user.flag == 1
-        true
+        return true
       else
-        false
+        return false
       end
     end
 
