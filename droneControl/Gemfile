@@ -8,6 +8,7 @@ gem 'rails', '3.2.6'
 gem 'mysql2'
 gem 'daemons-rails'
 gem 'eventmachine'
+gem 'sht_rails', git: 'git://github.com/railsware/sht_rails.git'
 
 
 # Gems used only for assets and not required

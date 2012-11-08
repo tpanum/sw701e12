@@ -57,6 +57,14 @@ class RolesController < ApplicationController
       @user.companies.each do |c|
         @roles |= c.roles
       end
+      @roles |= @user.roles
+    end
+  end
+
+  def get_privileges
+    @role = Role.find(params[:id])
+    respond_to do |format|
+      format.json { render json: @role.privileges }
     end
   end
 
