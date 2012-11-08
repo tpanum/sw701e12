@@ -1,7 +1,13 @@
-<%= label_tag(:role) %>
-<%= select_tag(:role, options_for_select(@roles.collect {|r| r.title }), :size => [@roles.size, 2].max) %>
+<h3>Roles</h3>
+<% @roles.each do |r| %>
+<%= render "roles/list_item", :handlebars => r.as_json %>
+<% end %>
 
-<%= label_tag(:privilege) %>
-<%= select_tag(:privilege, options_for_select(@privileges.collect {|p| p.identifier }), :size => [@privileges.size, 2].max) %>
+<h3>Privileges</h3>
+<ul id="privilege_list">
+    <% @privileges.each do |p| %>
+    <%= render "privileges/list_item", :handlebars => p.as_json %>
+    <% end %>
+</ul>
 
 <%= link_to 'Add Privilege', '' %>

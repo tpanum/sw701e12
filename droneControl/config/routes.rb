@@ -60,6 +60,9 @@ DroneControl::Application.routes.draw do
     collection do
       get :privileges
     end
+    member do
+      get :get_privileges
+    end
   end
   resources :users
   resources :privileges

@@ -19,4 +19,7 @@ class Privilege < ActiveRecord::Base
   	["global","company","drone"]
   end
 
+  def as_json(options={})
+    super(options.merge(:only => [:id, :identifier, :description]))
+  end
 end

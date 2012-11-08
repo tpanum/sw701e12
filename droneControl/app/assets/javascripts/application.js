@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require notice
 //= require_tree .
+//= require handlebars
+//= require_tree ../../templates
+
