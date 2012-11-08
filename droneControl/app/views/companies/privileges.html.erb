@@ -1,0 +1,46 @@
+<h1>@company.name</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Identifier</th>
+    <th>Desription</th>
+    <th>Actions</th>
+  </tr>
+
+<% @role_all.privileges.each do |priv| %>
+  <tr>
+    <td><%= priv.id %></td>
+    <td><%= priv.identifier%></td>
+    <td><%= priv.description%></td>
+    <td class="actions">
+      <%= link_to 'Remove', companies_privileges_company_path(:privilege_id => priv.id, :perform => "remove", :role_id => @role_all.id), :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<h1> Privileges not in company</h1>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Identifier</th>
+    <th>Desription</th>
+    <th>Actions</th>
+  </tr>
+
+<% @priv_all.each do |priva| %>
+  <tr>
+    <td><%= priva.id %></td>
+    <td><%= priva.identifier%></td>
+    <td><%= priva.description%></td>
+    <td class="actions">
+      <%= link_to 'Add', companies_privileges_company_path(:privilege_id => priva.id, :perform => "add", :role_id => @role_all.id), :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Privilege menu', privileges_path %> 

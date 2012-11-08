@@ -57,17 +57,21 @@ Odd rows will be light blue and even rows will be blue.
     \caption{List design for the application.}
     \label{fig:list_design}
 \end{figure}
-The list design seen in \figref{fig:list_design} is the core list item in the application. This list can show more and less information depending on where the user clicks. All levels are represented in \figref{fig:list_design} where a dark blue tab item with a name is a user in the system, the blue is a drone and the light blue is the privilege for the selected drone.
-The list is made in such a way that the levels can be distinguished by the indent of the item.
-The boxes in \figref{fig:list_design} shows the privilege status of an item. There are three different states these boxes can be in
+The list design shown in \figref{fig:list_design} is designed to show a tree-structured list. 
+This example shows the relationship between drones, privileges and users, where it is possible to activate different privileges on a given drone for a given user. 
+Each type of element (user, drone and privilege) as separate colors to make it easier to get an overview of the list. \\
+
+Each privilege can have three different marks:
 
 \begin{itemize}
 	\item Not marked
 	\item Dotted
-	\item ticked
+	\item Ticked
 \end{itemize}
- 
-If a box is not marked like ``Drone 1337'' the user have no privileges for this drone. If a box is dotted the user have some privileges for this drone like ``Drone 42''. If a box is ticked the user have all privileges for this drone e.g. Drone 1.
+
+If no privileges are marked, as seen with ``Drone 1337'', the user has no privileges to access this drone.
+If a box is dotted, as seen with ``Drone 42'', the user s some privileges for this drone.
+And finally, if a box is ticked, as seen with ``Drone 1'', the user has all privileges for this drone.
 
 \begin{figure}[htb]
     \centering
@@ -76,5 +80,8 @@ If a box is not marked like ``Drone 1337'' the user have no privileges for this 
     \label{fig:button_design}
 \end{figure}
 
-The \projectname{} application have also gotten its own button design seen in \figref{fig:button_design}. There are three different groups of buttons and six buttons in total.
-These buttons is used to navigate the site, make a selection for add or remove or accepting or declining depending on the situation.
+The buttons used in \projectname{} has also gotten their own design to match the rest of the view.
+There are six buttons: 
+Back, Forth, More, Less, Yes, \& No. 
+These will be used in the user interface where appropriate. 
+They do not carry any functionality, but are merely standard buttons with nicer looks. 
