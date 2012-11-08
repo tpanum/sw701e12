@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030134256) do
+ActiveRecord::Schema.define(:version => 20121108091102) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(:version => 20121030134256) do
 
   add_index "actions", ["flight_action_relationship_id"], :name => "index_actions_on_flight_action_relationship_id"
   add_index "actions", ["instruction_id"], :name => "index_actions_on_instruction_id"
+
+  create_table "affiliate_privileges", :force => true do |t|
+    t.integer  "privilege_id"
+    t.integer  "affiliate"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -100,8 +107,9 @@ ActiveRecord::Schema.define(:version => 20121030134256) do
   create_table "privileges", :force => true do |t|
     t.string   "identifier"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "instance_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "privileges", ["identifier"], :name => "index_privileges_on_identifier"
@@ -129,13 +137,13 @@ ActiveRecord::Schema.define(:version => 20121030134256) do
 
   create_table "user_privileges", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "privilege_id"
-    t.integer  "flag",         :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "affiliate_privilege_id"
+    t.integer  "flag",                   :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
-  add_index "user_privileges", ["user_id", "privilege_id"], :name => "index_user_privileges_on_user_id_and_privilege_id"
+  add_index "user_privileges", ["user_id", "affiliate_privilege_id"], :name => "index_user_privileges_on_user_id_and_affiliate_privilege_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"
