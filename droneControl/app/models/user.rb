@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :email, :first_name, :last_name, :password
   has_many :user_privileges
-  has_many :privileges, :through => :user_privileges, :uniq => true
+  has_many :privileges, :through => :user_privileges, :class_name => "AffiliatePrivilege", :uniq => true
   has_many :owned_companies, :class_name => "Company"
   has_and_belongs_to_many :companies, :uniq => true
   has_and_belongs_to_many :roles, :uniq => true
