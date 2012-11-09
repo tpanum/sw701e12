@@ -15,7 +15,7 @@ class Privilege < ActiveRecord::Base
   	self.instance_type = v
   end
 
-  def type_enums
+  def self.type_enums
   	["global","company","drone"]
   end
 
