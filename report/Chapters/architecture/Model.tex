@@ -7,12 +7,14 @@ First the objects that need to be represented by the model are identified, and t
 The core functionality of the system is connecting users and drones.
 Therefore they represent the primary entities which must be represented in \projectname{}.
 A users' access to the system will need to be restricted.
-This restriction will be represented through privileges that grant a user access to system functionalities.
-However, granting privileges directly to a user is not the ideal case in most situations.
+This restriction will be represented through privileges that grant a user access to different system functionalities.
+However, granting privileges directly to a user is not the ideal case in most situations, as a lot of duplicate data can occur.
 The system will contain global privileges all users need access to.
 Assigning global privileges to each user individually is not an ideal solution.
 Therefore this will be handled via roles.
-A role will in \projectname{} be a set of privileges and assignable to multiple users. \\
+A role will in \projectname{} be a set of privileges and assignable to multiple users.
+When assigning a user to a role, the user will automatically get access to any privilege granted to that role.
+By doing it that way, a lot of privilege gratings can be saved by adding all users that needs the same privileges to a role. \\
 
 %A drone is controlled by sending a set of ordered instructions\fixme{ref to section when it is written} to the drone.
 %A log of flights made by the drone will need to be kept, to be able to recreate previous flights, and examine a flight that might have caused the drone to crash.
