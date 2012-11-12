@@ -68,4 +68,16 @@ class RolesController < ApplicationController
     end
   end
 
+  def add_users
+    @role = Role.find(params[:id])
+    @users = User.where(:id => params[:users])
+    @role.users << @users
+  end
+
+  def remove_users
+    @role = Role.find(params[:id])
+    @users = User.where(:id => params[:users])
+    @role.users.delete(@users)
+  end
+
 end

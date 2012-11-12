@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     $('.role').click(fetch_privileges_for_role);
 
-
 });
 
 function fetch_privileges_for_role() {

@@ -58,7 +58,6 @@ class UsersController < ApplicationController
 
   def search
     @users = User.where(:first_name => params[:query])
-    puts @users
     respond_to do |format|
       format.json { render json: @users }
     end

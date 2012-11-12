@@ -62,6 +62,7 @@ DroneControl::Application.routes.draw do
     end
     member do
       get :get_privileges
+      post :add_users
     end
   end
   resources :users do
