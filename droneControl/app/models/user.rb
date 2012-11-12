@@ -84,6 +84,12 @@ class User < ActiveRecord::Base
     self.roles.collect{|r| r.privileges.collect(&:id)}.flatten.include? p_id
   end
 
+  def as_json(options={})
+    json = super(options.merge(:only => [:id, :first_name, :last_name, :email]))
+    json[:full_name] = self.full_name
+    json
+  end
+
   private
   def create_hashed_password
   	unless password.blank?

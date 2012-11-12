@@ -2,12 +2,12 @@
 
 <%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
 
-<div class="user edit">
+<div class="user edit" data-id="<%= @role.id %>">
 	<h2>Update role</h2>
 
 	<div class="formwrapper">
 	<%= form_for(:role, :url => {:action => 'update', :id => @role.id}) do |f| %>
-		
+
 		<%= render(:partial => "form", :locals => {:f => f}) %>
 	<% end %>
 	<form class="users">
@@ -15,10 +15,6 @@
 			<li><div class="name">Bjarke<a class="delete">Remove</a></li>
 		</ul>
 		<input type="text" class="search_field" />
-		<ul class="search_results">
-			<li class="selected">Meebox</li>
-			<li>1st Sound</li>
-		</ul>
 	</form>
 	</div>
 
