@@ -5,14 +5,17 @@
 <div class="user edit">
 	<h2>Update role</h2>
 
+	<div class="formwrapper">
 	<%= form_for(:role, :url => {:action => 'update', :id => @role.id}) do |f| %>
 		
 		<%= render(:partial => "form", :locals => {:f => f}) %>
-
-		<div class="form-buttons">
-			<%= submit_tag("Update Role") %>
-		</div>
 	<% end %>
+	<form class="users">
+		<ul>
+			<li><a class="delete"></a><div class="name">Bjarke</li></li>
+		</ul>
+	</form>
+	</div>
 
 </div>
 

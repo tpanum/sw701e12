@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108091102) do
+ActiveRecord::Schema.define(:version => 20121109111002) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(:version => 20121108091102) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  create_table "affiliate_privileges_roles", :id => false, :force => true do |t|
+    t.integer "affiliate_privilege_id"
+    t.integer "role_id"
+  end
+
+  add_index "affiliate_privileges_roles", ["affiliate_privilege_id"], :name => "index_affiliate_privileges_roles_on_affiliate_privilege_id"
+  add_index "affiliate_privileges_roles", ["role_id"], :name => "index_affiliate_privileges_roles_on_role_id"
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -113,13 +121,6 @@ ActiveRecord::Schema.define(:version => 20121108091102) do
   end
 
   add_index "privileges", ["identifier"], :name => "index_privileges_on_identifier"
-
-  create_table "privileges_roles", :id => false, :force => true do |t|
-    t.integer "privilege_id"
-    t.integer "role_id"
-  end
-
-  add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id"
 
   create_table "roles", :force => true do |t|
     t.string   "title"

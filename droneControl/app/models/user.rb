@@ -58,7 +58,10 @@ class User < ActiveRecord::Base
       end
     end
 
+    received_type = "global" if received_type.nil?
+
     aff = privilege[received_type.to_sym]
+    aff ||= 0
     type = enums.index(received_type)
     action = privilege[:action]
 

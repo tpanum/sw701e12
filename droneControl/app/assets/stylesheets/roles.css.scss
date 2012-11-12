@@ -1,3 +1,20 @@
 // Place all the styles related to the Roles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user.edit {
+
+	.formwrapper{
+		width: 395px;
+
+		form {
+			float:left;
+
+			&.users {
+				margin-left: 10px;
+			}
+		}
+
+	}
+
+}
