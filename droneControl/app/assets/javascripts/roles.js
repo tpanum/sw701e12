@@ -66,12 +66,11 @@ function show_hints(resp) {
 function add_user(e) {
     if (e.keyCode == 13) {
         $.ajax({
-            url: '/roles/'+role_id+'/add_users',
+            url: '/roles/'+role_id+'/add_users.json',
             type: 'POST',
             data: {users: [selected_user]}
-        }).done(function(e) {
-            console.log("Test");
-        })
+        });
+
         return false;
     }
 }
