@@ -62,9 +62,15 @@ DroneControl::Application.routes.draw do
     end
     member do
       get :get_privileges
+      post :add_users
+      post :remove_users
     end
   end
-  resources :users
+  resources :users do
+    collection do
+      get :search
+    end
+  end
   resources :privileges
 
   # Sample resource route within a namespace:

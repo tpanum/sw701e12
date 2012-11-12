@@ -55,4 +55,11 @@ class UsersController < ApplicationController
   	flash[:notice] = "The user has been destroyed"
   	redirect_to(:action => 'list')
   end
+
+  def search
+    @users = User.where("first_name LIKE ?", "#{params[:query]}%").limit(3)
+    respond_to do |format|
+      format.json { render json: @users }
+    end
+  end
 end
