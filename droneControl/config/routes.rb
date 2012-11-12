@@ -64,7 +64,11 @@ DroneControl::Application.routes.draw do
       get :get_privileges
     end
   end
-  resources :users
+  resources :users do
+    collection do
+      get :search
+    end
+  end
   resources :privileges
 
   # Sample resource route within a namespace:

@@ -50,7 +50,7 @@ class RolesController < ApplicationController
   def privileges
     @user = User.find(session[:user_id])
     @privileges = Privilege.all
-    if @user.has_privilege? 'super_admin'
+    if @user.has_privilege? :action => 'super_admin'
       @roles = Role.all
     else
       @roles = []
