@@ -3,7 +3,7 @@ class RolesController < ApplicationController
   before_filter :confirm_logged_in
 
   def index
-    @roles = Role.order('title ASC')
+    @roles = Role.where(:level_type => [1,2]).order('title ASC')
   end
 
   def show
