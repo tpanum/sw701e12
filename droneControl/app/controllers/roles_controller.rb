@@ -72,12 +72,16 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
     @users = User.where(:id => params[:users])
     @role.users << @users
+    @output = 'true'
+    render('application/json', :layout => false)
   end
 
   def remove_users
     @role = Role.find(params[:id])
     @users = User.where(:id => params[:users])
     @role.users.delete(@users)
+    @output = 'true'
+    render('application/json', :layout => false)
   end
 
 end

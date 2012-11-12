@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @users = User.where(:first_name => params[:query])
+    @users = User.where("first_name LIKE ?", "#{params[:query]}%").limit(3)
     respond_to do |format|
       format.json { render json: @users }
     end
