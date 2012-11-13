@@ -10,12 +10,12 @@ class Privilege < ActiveRecord::Base
   end
 
   def type=(value)
-  	v = type_enums.index(value)
+  	v = self.type_enums.index(value)
   	raise "Type does not exist!" if v.nil?
   	self.instance_type = v
   end
 
-  def self.type_enums
+  def type_enums
   	["global","company","drone"]
   end
 

@@ -47,22 +47,19 @@ class RolesController < ApplicationController
     redirect_to(:action => 'index')
   end
 
-  def privileges
-    @user = User.find(session[:user_id])
-    @privileges = Privilege.all
-    if @user.has_privilege? :action => 'super_admin'
-      @roles = Role.all
-    else
-      @roles = []
-      @user.companies.each do |c|
-        @roles |= c.roles
-      end
-      @roles |= @user.roles
+  def add_privileges
+    @role = Role.find(params[:id])
+    @privileges = AffiliatePrivilege.where(:id => params[:privileges])
+    @role.privileges << @privileges
+    respond_to do |format|
+      format.json { render json: @role.privileges }
     end
   end
 
-  def get_privileges
+  def remove_privileges
     @role = Role.find(params[:id])
+    @privileges = AffiliatePrivilege.where(:id => params[:privileges])
+    @role.privileges.delete(@privileges)
     respond_to do |format|
       format.json { render json: @role.privileges }
     end

@@ -57,11 +57,9 @@ DroneControl::Application.routes.draw do
     end
   end
   resources :roles do
-    collection do
-      get :privileges
-    end
     member do
-      get :get_privileges
+      post :add_privileges
+      post :remove_privileges
       post :add_users
       post :remove_users
     end
