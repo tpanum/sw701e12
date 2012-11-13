@@ -1,0 +1,35 @@
+gst-launch tcpclientsrc host=172.25.26.153 port=8080  ! video/x-h264  !xvimagesink 
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! video/x-h264 ! h264parse ! ffdec_h264 ! filesink location=foo.mp4 async=false
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555  ! 'video/x-h264, width=400, height=200, framerate=(fraction)30/1"'  ! h264parse ! ffdec_h264 ! filesink location=foo.mp4 async=false
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 caps="width=400, height=200, framerate=(fraction)30/1" ! video/x-h264 ! ffdec_h264 ! autovideosink
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! 'video/x-h264, width=400, height=200, framerate=(fraction)30/1'  ! ffdec_h264 ! autovideosink
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink
+
+ env GST_PLUGIN_PATH=. gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink
+
+gst-launch -v tcpclientsrc host="192.168.1.1" port="5555" ! 'video/x-h264, stream-format=(string)byte-stream' ! decodebin ! filesink= async=false
+
+gst-launch -v tcpclientsrc host="192.168.1.1" port="5555" ! 'video/x-h264, stream-format=(string)byte-stream, width=640, height=360, framerate=(fraction)25/1' ! h264parse ! ffdec_h264 ! xvimagesink async=false
+
+gst-launch gst-plugin-path = "/home/esben/Hentede filer/libgstpave.so" tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink --gst-plugin-path = "/home/esben/Hentede filer/libgstpave.so"
+
+libtool --mode=link gcc `pkg-config --cflags --libs gstreamer-0.10` -o libgstpave gstpaveparse.c
+
+pkg-config --libs gstreamer-plugins-base-1.0 -Wl,--export-dynamic -pthread -lgstreamer-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lgthread-2.0 -lxml2 -lpthread -lz -lm -lglib-2.0
+
+
+
+
+
+Use this command to compile paveparse:  gcc -fPIC -shared -o libgstpave.so -I. `pkg-config --cflags gstreamer-0.10` gstpaveparse.c `pkg-config --libs gstreamer-0.10`
+
+Get paveparse from here: https://projects.ardrone.org/attachments/450/paveparse.zip
+
+Use this command to view video-feed: cd gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink --gst-plugin-path=.

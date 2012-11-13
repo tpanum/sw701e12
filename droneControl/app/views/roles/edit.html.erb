@@ -12,7 +12,9 @@
 	<% end %>
 	<form class="users">
 		<ul>
-			<li><div class="name">Bjarke<a class="delete">Remove</a></li>
+			<% @role.users.each do |u| %>
+				<%= render "roles/user_item", :handlebars => u.as_json %>
+			<% end %>
 		</ul>
 		<input type="text" class="search_field" />
 	</form>
