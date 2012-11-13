@@ -1,0 +1,21 @@
+<h1>Listing affiliate_privileges</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @affiliate_privileges.each do |affiliate_privilege| %>
+  <tr>
+    <td><%= link_to 'Show', affiliate_privilege %></td>
+    <td><%= link_to 'Edit', edit_affiliate_privilege_path(affiliate_privilege) %></td>
+    <td><%= link_to 'Destroy', affiliate_privilege, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Affiliate privilege', new_affiliate_privilege_path %>

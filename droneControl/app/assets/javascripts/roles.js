@@ -3,17 +3,20 @@ var search_results;
 var search_field;
 var search_result_items = new Array();
 var search_result_selected_index;
+var privilege_selected;
+var privilege_field;
 
 $(document).ready(function(){
     role_id = $('.user.edit').attr('data-id');
     search_field = $('.search_field');
     search_field.keyup(get_hints);
     search_field.keydown(keyboard_add_user);
+    privilege_field = $('form.privileges');
     $('.role').click(fetch_privileges_for_role);
     $('form.users ul li').each(function(i,v) {
         instantiate_user_item(v);
     });
-    $('form.privileges ul li').each(function(i,v) {
+    privilege_field.find('ul li').each(function(i,v) {
         instantiate_privilege_item(v);
     });
 });
@@ -106,30 +109,6 @@ function keyboard_add_user(e) {
     }
 }
 
-function add_user(id) {
-    $.ajax({
-        url: '/roles/'+role_id+'/add_users.json',
-        type: 'POST',
-        data: {users: [id]}
-    }).done(replace_user_list);
-
-    search_field.val('');
-
-    remove_search_results();
-}
-
-function replace_user_list(resp) {
-    var t = $('form.users ul');
-
-    t.html('');
-
-    $.each(resp, function(i, v) {
-        var content = $(SHT['roles/user_item'](v));
-        t.append(content);
-        instantiate_user_item(content);
-    });
-}
-
 function remove_search_results() {
     if (search_results !== undefined) {
         search_results.remove();
@@ -155,9 +134,35 @@ function instantiate_search_result(item) {
 
 function instantiate_privilege_item(item) {
     var t = $(item);
-    t.click(select_privilege);
+    t.find('.name').click(function() {
+        select_privilege(t);
+    });
     t.find('.delete').click(function() {
         remove_privilege(t);
+    });
+}
+
+function add_user(id) {
+    $.ajax({
+        url: '/roles/'+role_id+'/add_users.json',
+        type: 'POST',
+        data: {users: [id]}
+    }).done(replace_user_list);
+
+    search_field.val('');
+
+    remove_search_results();
+}
+
+function replace_user_list(resp) {
+    var t = $('form.users ul');
+
+    t.html('');
+
+    $.each(resp, function(i, v) {
+        var content = $(SHT['roles/user_item'](v));
+        t.append(content);
+        instantiate_user_item(content);
     });
 }
 
@@ -172,19 +177,53 @@ function remove_user(t) {
     })
 }
 
-function remove_privilege(t) {
-    t = $(t);
-    console.log("remove");
-    /*$.ajax({
-        url: '/roles/'+role_id+'/remove_users.json',
+function add_privilege(id) {
+    $.ajax({
+        url: '/roles/'+role_id+'/add_privileges.json',
         type: 'POST',
-        data: {users: [t.attr('data-id')]}
-    }).done(function(e) {
-        t.remove();
-    })*/
+        data: {privileges: [id]}
+    }).done(replace_privilege_list);
 }
 
-function select_privilege() {
-    console.log("select");
-    t = $(this);
+function replace_privilege_list(resp) {
+    var t = privilege_field.find('ul');
+
+    t.html('');
+
+    $.each(resp, function(i, v) {
+        var content = $(SHT['roles/privilege_item'](v));
+        t.append(content);
+        instantiate_privilege_item(content);
+    });
+}
+
+function remove_privilege(t) {
+    t = $(t);
+    $.ajax({
+        url: '/roles/'+role_id+'/remove_privileges.json',
+        type: 'POST',
+        data: {privileges: [t.attr('data-id')]}
+    }).done(function(e) {
+        t.remove();
+    })
+}
+
+function select_privilege(t) {
+    t = $(t);
+    if (privilege_selected !== undefined) {
+        privilege_selected.removeClass("selected");
+    }
+    privilege_selected = $(t);
+    privilege_selected.addClass("selected");
+    get_description_of_privilege(privilege_selected.attr('data-id'));
+}
+
+function get_description_of_privilege(privilege_id) {
+    $.ajax({
+        url: '/affiliate_privileges/'+privilege_id+'.json'
+    }).done(update_privilege_tooltip);
+}
+
+function update_privilege_tooltip(resp) {
+    privilege_field.find('.tooltip p').html(resp.description);
 }
