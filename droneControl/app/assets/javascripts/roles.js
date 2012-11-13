@@ -1,12 +1,18 @@
 var role_id;
 var search_results;
-var selected_user;
+var search_field;
+var search_result_items = new Array();
+var search_result_selected_index;
 
 $(document).ready(function(){
     role_id = $('.user.edit').attr('data-id');
-    $('.search_field').keyup(get_hints);
-    $('.search_field').keypress(add_user);
+    search_field = $('.search_field');
+    search_field.keyup(get_hints);
+    search_field.keydown(keyboard_add_user);
     $('.role').click(fetch_privileges_for_role);
+    $('form.users ul li').each(function(i,v) {
+        instantiate_user_item(v);
+    });
 });
 
 function fetch_privileges_for_role() {
@@ -31,46 +37,124 @@ function show_privileges(resp) {
     });
 }
 
-function get_hints() {
+function get_hints(e) {
     var t = $(this);
 
-    if (t.val().length > 0) {
+    if (e.keyCode != 40 && e.keyCode != 38) {
+        if (t.val().length > 0) {
 
-        $.ajax({
-            url: '/users/search.json',
-            data: {query: t.val()}
-        }).done(show_hints);
-    } else {
-        if (search_results !== undefined) {
-            search_results.remove();
-            search_results = undefined;
+            $.ajax({
+                url: '/users/search.json',
+                data: {query: t.val()}
+            }).done(show_hints);
+        } else {
+            remove_search_results();
         }
     }
 }
 
 function show_hints(resp) {
     var results = new Object();
-    resp[0]['selected'] = true;
-    selected_user = resp[0]['id'];
-    results['users'] = resp;
-    var content = $(SHT['roles/search_results'](results));
-    if (search_results === undefined) {
-        var t = $('form.users');
-        t.append(content);
-    } else {
-        search_results.replaceWith(content);
+    if (resp.length > 0) {
+        resp[0]['selected'] = true;
+        results['users'] = resp;
+        var content = $(SHT['roles/search_results'](results));
+        if (search_results === undefined) {
+            var t = $('form.users');
+            t.append(content);
+        } else {
+            search_results.replaceWith(content);
+        }
+        search_result_selected_index = 0;
+        search_result_items = new Array();
+        content.find('li').each(function(i,v) {
+            search_result_items.push($(v));
+            instantiate_search_result(v);
+        });
+        search_results = content;
     }
-    search_results = content;
 }
 
-function add_user(e) {
+function keyboard_add_user(e) {
+    console.log(e.keyCode);
     if (e.keyCode == 13) {
-        $.ajax({
-            url: '/roles/'+role_id+'/add_users.json',
-            type: 'POST',
-            data: {users: [selected_user]}
-        });
+        add_user(search_result_items[search_result_selected_index].attr('data-id'));
 
         return false;
+    } else if (e.keyCode == 38 || e.keyCode == 40) {
+        e.preventDefault();
+        console.log(search_result_items);
+        if (search_result_items.length > 0) {
+            search_result_items[search_result_selected_index].removeClass('selected');
+            if (e.keyCode == 38) {
+                // UP
+                if (search_result_selected_index > 0) {
+                    search_result_selected_index--;
+                }
+            }
+            else {
+                // DOWN
+                if (search_result_selected_index < search_result_items.length) {
+                    search_result_selected_index++;
+                }
+            }
+            search_result_items[search_result_selected_index].addClass('selected');
+        }
     }
+}
+
+function add_user(id) {
+    $.ajax({
+        url: '/roles/'+role_id+'/add_users.json',
+        type: 'POST',
+        data: {users: [id]}
+    }).done(replace_user_list);
+
+    search_field.val('');
+
+    remove_search_results();
+}
+
+function replace_user_list(resp) {
+    var t = $('form.users ul');
+
+    t.html('');
+
+    $.each(resp, function(i, v) {
+        var content = $(SHT['roles/user_item'](v));
+        t.append(content);
+        instantiate_user_item(content);
+    });
+}
+
+function remove_search_results() {
+    if (search_results !== undefined) {
+        search_results.remove();
+        search_results = undefined;
+        search_result_items = new Array();
+    }
+}
+
+function instantiate_user_item(item) {
+    var t = $(item);
+    t.click(remove_user);
+}
+
+function instantiate_search_result(item) {
+    var t = $(item);
+    var id = t.attr('data-id');
+    t.click(function() {
+        add_user(id);
+    });
+}
+
+function remove_user() {
+    t = $(this);
+    $.ajax({
+        url: '/roles/'+role_id+'/remove_users.json',
+        type: 'POST',
+        data: {users: [t.attr('data-id')]}
+    }).done(function(e) {
+        t.remove();
+    })
 }
