@@ -110,11 +110,24 @@
 		 	padding: 0;
 
 		 	li {
+		 		@extend .container;
 		 		border-radius: 5px;
 				background: #ccc;
-				padding: 5px;
+				padding: 0;
 				font-size: 13px;
 				margin: 5px;
+
+				.name {
+					width: 80%;
+					float:left;
+					padding: 5px;
+
+				}
+
+				.delete {
+					float:right;
+					margin: 5px 5px 0 0;
+				}
 
 				&.selected{
 					background-color: #104659;
