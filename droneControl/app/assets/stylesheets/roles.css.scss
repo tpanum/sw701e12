@@ -101,6 +101,33 @@
 			margin-top: -200px;
 			background: #fff;
 			border-color: #2E67B1;
+
+			-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  			-webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  			box-shadow:         3px 3px 5px 6px #ccc;
+
+  			.search_field{
+  				position:absolute;
+  				margin: 0;
+  				bottom: 0;
+  				background: transparent;
+  				border: 0;
+  				border-top: 1px solid #2E67B1;
+  				border-radius: 0;
+  				width: 100%;
+  				padding: 4px 0;
+  				text-indent: 8px;
+  				font-size: 13px;
+  			}
+
+  			ul {
+  				width: 100%;
+
+  				.selected {
+  					background-color: #104659;
+					color: #fff;
+  				}
+  			}
 		}
 
 		 ul {
