@@ -70,6 +70,7 @@ DroneControl::Application.routes.draw do
     end
   end
   resources :privileges
+  resources :affiliate_privileges
 
   # Sample resource route within a namespace:
   #   namespace :admin do
