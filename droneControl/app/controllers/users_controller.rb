@@ -55,4 +55,11 @@ class UsersController < ApplicationController
   	flash[:notice] = "The user has been destroyed"
   	redirect_to(:action => 'list')
   end
+
+  def search
+    @users = User.where("CONCAT(IFNULL(first_name,''), ' ', IFNULL(last_name,'')) LIKE ?", "#{params[:query]}%").order(:first_name).order(:last_name).limit(3)
+    respond_to do |format|
+      format.json { render json: @users }
+    end
+  end
 end

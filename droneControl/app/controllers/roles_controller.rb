@@ -3,7 +3,7 @@ class RolesController < ApplicationController
   before_filter :confirm_logged_in
 
   def index
-    @roles = Role.order('title ASC')
+    @roles = Role.where(:level_type => [1,2]).order('title ASC')
   end
 
   def show
@@ -50,7 +50,7 @@ class RolesController < ApplicationController
   def privileges
     @user = User.find(session[:user_id])
     @privileges = Privilege.all
-    if @user.has_privilege? 'super_admin'
+    if @user.has_privilege? :action => 'super_admin'
       @roles = Role.all
     else
       @roles = []
@@ -65,6 +65,24 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
     respond_to do |format|
       format.json { render json: @role.privileges }
+    end
+  end
+
+  def add_users
+    @role = Role.find(params[:id])
+    @users = User.where(:id => params[:users])
+    @role.users << @users
+    respond_to do |format|
+      format.json { render json: @role.users }
+    end
+  end
+
+  def remove_users
+    @role = Role.find(params[:id])
+    @users = User.where(:id => params[:users])
+    @role.users.delete(@users)
+    respond_to do |format|
+      format.json { render json: @role.users }
     end
   end
 

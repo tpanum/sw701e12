@@ -1,3 +1,75 @@
 // Place all the styles related to the Roles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user.edit {
+
+	.formwrapper{
+		width: 694px;
+		margin: 0 auto;
+
+		form {
+			float:left;
+			height: 200px;
+
+			&.users {
+				margin-left: 10px;
+				padding: 0;
+				height: 230px;
+				position: relative;
+
+				ul {
+					margin: 0 0 0 -40px;
+					
+					li {
+						border-radius: 5px;
+						background: #ccc;
+						padding: 5px;
+						font-size: 13px;
+						margin: 5px;
+
+						.delete {
+
+							float: right;
+						}
+					}
+				}
+
+				.search_field {
+					position:absolute;
+					bottom: 0;
+					border: 0;
+					margin: 0;
+					border-top: 1px solid #ccc;
+					width: 287px;
+					background: transparent;
+				}
+
+				.search_results {
+					position: absolute;
+					top: 100%;
+					border-bottom: 1px solid #ccc;
+					width: 240px;
+					border: 1px solid #ccc;
+					border-top: 0;
+					left: 50px;
+					border-radius: 0 0 5px 5px;
+
+					li {
+						font-size: 13px;
+						margin-left: -35px;
+						cursor:pointer;
+						
+						&.selected {
+							background-color: #104659;
+							color: #fff;
+						}
+					}
+				}
+
+			}
+		}
+
+	}
+
+}

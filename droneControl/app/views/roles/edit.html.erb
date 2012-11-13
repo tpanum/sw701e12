@@ -2,17 +2,23 @@
 
 <%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
 
-<div class="user edit">
+<div class="user edit" data-id="<%= @role.id %>">
 	<h2>Update role</h2>
 
+	<div class="formwrapper">
 	<%= form_for(:role, :url => {:action => 'update', :id => @role.id}) do |f| %>
-		
-		<%= render(:partial => "form", :locals => {:f => f}) %>
 
-		<div class="form-buttons">
-			<%= submit_tag("Update Role") %>
-		</div>
+		<%= render(:partial => "form", :locals => {:f => f}) %>
 	<% end %>
+	<form class="users">
+		<ul>
+			<% @role.users.each do |u| %>
+				<%= render "roles/user_item", :handlebars => u.as_json %>
+			<% end %>
+		</ul>
+		<input type="text" class="search_field" />
+	</form>
+	</div>
 
 </div>
 

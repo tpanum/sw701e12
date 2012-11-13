@@ -1,0 +1,5 @@
+<ul class="search_results">
+	{{#each users}}
+	<li {{#if selected}}class="selected"{{/if}} data-id="{{id}}">{{full_name}}</li>
+	{{/each}}
+</ul>

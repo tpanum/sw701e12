@@ -43,7 +43,11 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    self.first_name + ' ' + self.last_name
+    first = self.first_name
+    first ||= ''
+    last = self.last_name
+    last ||= ''
+    first + ' ' + last
   end
 
   def has_privilege? privilege
@@ -58,7 +62,10 @@ class User < ActiveRecord::Base
       end
     end
 
+    received_type = "global" if received_type.nil?
+
     aff = privilege[received_type.to_sym]
+    aff ||= 0
     type = enums.index(received_type)
     action = privilege[:action]
 
@@ -79,6 +86,12 @@ class User < ActiveRecord::Base
     end
 
     self.roles.collect{|r| r.privileges.collect(&:id)}.flatten.include? p_id
+  end
+
+  def as_json(options={})
+    json = super(options.merge(:only => [:id, :first_name, :last_name, :email]))
+    json[:full_name] = self.full_name
+    json
   end
 
   private
