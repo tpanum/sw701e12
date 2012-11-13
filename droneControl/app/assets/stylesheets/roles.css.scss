@@ -2,10 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.container:before,
+.container:after {
+    content:"";
+    display:table;
+}
+.container:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.container {
+    zoom:1;
+}
+
 .user.edit {
 
 	.formwrapper{
-		width: 694px;
+		@extend .container;
+		width: 654px;
 		margin: 0 auto;
 
 		form {
@@ -70,6 +84,51 @@
 			}
 		}
 
+	}
+
+	.privileges {
+		width: 654px;
+		padding: 0;
+		margin: 0 auto;
+
+		 ul {
+		 	width: 50%;
+		 	float: left;
+		 	margin: 0;
+		 	padding: 0;
+
+		 	li {
+		 		border-radius: 5px;
+				background: #ccc;
+				padding: 5px;
+				font-size: 13px;
+				margin: 5px;
+
+				&.selected{
+					background-color: #104659;
+					color: #fff;
+				}	
+		 	}
+		 }
+
+		 .tooltip {
+		 	width: 50%;
+		 	float: left;
+		 	border-left: 1px solid #ccc;
+		 	margin-left: -1px;
+		 	font-size: 13px;
+		 	height: 200px;
+
+		 	h3 {
+		 		margin: 10px 0 0 10px;
+		 	}
+
+		 	p {
+		 		font-style: italic;
+		 		margin: 10px 0 10px 10px;
+		 	}
+
+		 }
 	}
 
 }
