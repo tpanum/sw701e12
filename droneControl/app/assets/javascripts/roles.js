@@ -13,6 +13,9 @@ $(document).ready(function(){
     $('form.users ul li').each(function(i,v) {
         instantiate_user_item(v);
     });
+    $('form.privileges ul li').each(function(i,v) {
+        instantiate_privilege_item(v);
+    });
 });
 
 function fetch_privileges_for_role() {
@@ -137,7 +140,9 @@ function remove_search_results() {
 
 function instantiate_user_item(item) {
     var t = $(item);
-    t.click(remove_user);
+    t.find('.delete').click(function() {
+        remove_user(t);
+    });
 }
 
 function instantiate_search_result(item) {
@@ -148,8 +153,16 @@ function instantiate_search_result(item) {
     });
 }
 
-function remove_user() {
-    t = $(this);
+function instantiate_privilege_item(item) {
+    var t = $(item);
+    t.click(select_privilege);
+    t.find('.delete').click(function() {
+        remove_privilege(t);
+    });
+}
+
+function remove_user(t) {
+    t = $(t);
     $.ajax({
         url: '/roles/'+role_id+'/remove_users.json',
         type: 'POST',
@@ -157,4 +170,21 @@ function remove_user() {
     }).done(function(e) {
         t.remove();
     })
+}
+
+function remove_privilege(t) {
+    t = $(t);
+    console.log("remove");
+    /*$.ajax({
+        url: '/roles/'+role_id+'/remove_users.json',
+        type: 'POST',
+        data: {users: [t.attr('data-id')]}
+    }).done(function(e) {
+        t.remove();
+    })*/
+}
+
+function select_privilege() {
+    console.log("select");
+    t = $(this);
 }

@@ -80,4 +80,13 @@ class PrivilegesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search
+    @privileges = Company.find(1).roles.where(:level_type => 1).limit(1).first.privileges
+    @privileges -= Role.find(params[:role_id]).privileges unless params[:role_id].nil?
+    #@privileges -= User.find(params[:user_id]).privileges unless params[:user_id]
+    respond_to do |format|
+      format.json { render json: @privileges }
+    end
+  end
 end

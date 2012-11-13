@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
 
   def as_json(options={})
     json = super(options.merge(:only => [:id, :first_name, :last_name, :email]))
-    json[:full_name] = self.full_name
+    json["full_name"] = self.full_name
     json
   end
 

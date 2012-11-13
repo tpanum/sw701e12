@@ -12,4 +12,24 @@ class AffiliatePrivilege < ActiveRecord::Base
   	end
   end
 
+  def as_json(options={})
+    json = super(options.merge(:only => [:id, :affiliate, :privilege_id]))
+    json["identifier"] = self.identifier
+    json["description"] = self.description
+    json["type"] = self.type
+    json
+  end
+
+  def identifier
+    self.privilege.identifier
+  end
+
+  def description
+    self.privilege.description
+  end
+
+  def type
+    self.privilege.type
+  end
+
 end

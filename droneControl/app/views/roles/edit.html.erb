@@ -21,11 +21,13 @@
 	</div>
 	<form class="privileges">
 		<ul>
-			<li>Fly Drone 1</li>
+			<% @role.privileges.each do |p| %>
+				<%= render "roles/privilege_item", :handlebars => p.as_json %>
+			<% end %>
 		</ul>
 		<div class="tooltip">
 			<h3>Description</h3>
-			<p>This is a test text</p>
+			<p></p>
 		</div>
 	</form>
 
