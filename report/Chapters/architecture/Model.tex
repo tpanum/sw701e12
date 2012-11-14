@@ -6,7 +6,7 @@ The tables (and hence classes) has all been named according to the naming conven
 
 \subsection{Objects}
 \label{subsec:objects}
-The primary purpose of the system is to connect users and drones to allow the user to interact with a drone by either watching its video fee, controlling its movements or both.
+The primary purpose of the system is to connect users and drones to allow the user to interact with a drone by watching its video fee, controlling its movements or both.
 Therefore the users and drones are the primary objects that must be represented in \projectname{}. \\
 
 The system will contain the following objects and relationships:
@@ -19,8 +19,6 @@ Objects:
 	\item Privilege
 	\item Drone
 	\item Flightplan
-	\item Action
-	\item Instruction
 \end{itemize}
 
 The relationship between the objects can be seen in Figure~\ref{fig:UML_class_diagram}. 
@@ -39,43 +37,89 @@ The upper part of Figure~\ref{fig:UML_class_diagram} shows the relationship betw
 
 \subsubsection{User}
 It is not possible to interact with the system unless you are logged in as a user.
-Only a login-page will be visible when the system is visited as a guest.
-The system is designed to every individual having their own unique user, allowing the system to to show user-specific objects and allow user-specific access to different parts of the system. \\
+Only a login-page will be visible when the system is visited by a guest.
+The system is designed so that every individual has their own unique user, allowing the system to show user-specific objects and allow user-specific access to different parts of the system. \\
 
-A users access to the system will need to be restricted to make suer that any user only accesses what he is permitted too. 
+A users access to the system will need to be restricted to make sure that any user only accesses what he is permitted too. 
+This restriction is controlled by roles and privileges.
 The handling of roles and privileges will be done by the role-model. \\
 
-A user will be identified by his e-mail address which will work as the username.
+A user will be identified by his e-mail address which will work as the username and therefore be unique.
 Each user will also have a password, that is both salted and encrypted in the database, using the SHA-1 encryption algorithm. \\
 
 The user-object serves as the point of entrance for anyone who wishes to use the system, and combined with companies, roles and privileges dictate its options.
 
 
 \subsubsection{Company}
+\projectname{} is designed with the intent that multiple different clients can use the system.
+These clients could be different companies that in some way wishes one or more drones to surveil their premisses.
+One company may have several employees that they wish to provide with access to the system.
+The Company-object handles this relationship, allowing multiple users to be grouped together by a company.
+One User can be a member of several Company, and one Company can have many Users in it. 
+Therefore this is a many-to-many relationship, represented in the Companies\_users table. \\
 
-
-\subsubsection{Role}
-
-
-\subsubsection{Privilege}
+Roles and privileges can be assigned to a Company and inherited by its Users. 
+This is described in further details in the following sections. 
 
 
 \subsubsection{Drone}
+Along with Users, Drones are the most important Object in \projectname{}.
+An instance of a Drone in the system represents a physical drone somewhere in the field. 
+A drone-object itself does not contain much data nor functionality. 
+It simply represents a drone and is a point of connection between Users and controlling the Drone itself. \\
+
+The relationship between a User and a Drone is controlled by Privileges and Drones through Companies in most cases. \\
+
+The logging of when a drone takes of and lands is represented by the Flightplans table. 
 
 
 \subsubsection{Flightplan}
+Flightplans are used to log whenever a drone takes of and lands and which user is issuing the commands. 
+One drone can have many flight plans.
+One flight plan can have one drone. 
+Therefore this is a one-to-many relationship. 
 
 
-\subsubsection{Action}
+\subsubsection{Privilege}
+A privilege-object represents a privilege that can be granted to another object in the system. 
+Examples of privileges are:
+
+\begin{itemize}
+	\item Add a new user to the system
+	\item Edit the informations of a specific company
+	\item Watch the video feed from a specific drone
+	\item Control the movement of a specific drone
+\end{itemize}
+
+A privilege consists of three elements:
+
+\begin{itemize}
+	\item An action that it provides privilege to perform (such as any of the ones mentioned above)
+	\item An object that these can be applied on
+	\item An affiliation where the privilege is provided too. 
+\end{itemize}
+
+Privileges are not assigned to Users or Companies though, but referenced too by a Role.
 
 
-\subsubsection{Instruction}
+\subsubsection{Role}
+Roles are the glue that binds Users, Drones and system Privileges. 
+Consider a role as a collection of Privileges that are assigned to an object in the system. \\
 
+The system is designed with flexibility and scalability in mind, and the structure of roles and privileges are what provides those features. 
+This is how it works: \\
 
+An administrator creates a Role.
+Lets call this one ``Control Drone #4''.
+A number of privileges are assigned to this Role.
+It could be the following:
 
+\begin{itemize}
+	\item Watch the video feed from a specific drone
+	\item Control the movement of a specific drone
+\end{itemize}
 
-
-
+Those privileges are then linked to this Role and to the drone this concerns. 
 
 
 
