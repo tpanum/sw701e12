@@ -5,14 +5,15 @@ var search_result_items = new Array();
 var search_result_selected_index;
 var privilege_selected;
 var privilege_field;
+var search_box;
 
 $(document).ready(function(){
-    role_id = $('.user.edit').attr('data-id');
+    role_id = $('.role.edit').attr('data-id');
     search_field = $('.search_field');
     search_field.keyup(get_hints);
     search_field.keydown(keyboard_add_user);
     privilege_field = $('form.privileges');
-    $('.role').click(fetch_privileges_for_role);
+    $('.role.edit a.add_privilege').click(open_privilege_addition_box);
     $('form.users ul li').each(function(i,v) {
         instantiate_user_item(v);
     });
@@ -21,27 +22,12 @@ $(document).ready(function(){
     });
 });
 
-function fetch_privileges_for_role() {
-    var t = $(this);
-
-    $.ajax({
-        url: '/roles/'+get_role_id(t)+'/get_privileges.json',
-    }).done(show_privileges);
-}
-
 function get_role_id(role) {
     var t_id = $(role).attr('id');
     return t_id.substr(2, t_id.length);
 }
 
-function show_privileges(resp) {
-    var t = $('#privilege_list');
-    t.html('');
-    $.each(resp, function(i, v) {
-        var content = SHT['privileges/list_item'](v);
-        t.append(content);
-    });
-}
+/* USERS */
 
 function get_hints(e) {
     var t = $(this);
@@ -82,14 +68,12 @@ function show_hints(resp) {
 }
 
 function keyboard_add_user(e) {
-    console.log(e.keyCode);
     if (e.keyCode == 13) {
         add_user(search_result_items[search_result_selected_index].attr('data-id'));
 
         return false;
     } else if (e.keyCode == 38 || e.keyCode == 40) {
         e.preventDefault();
-        console.log(search_result_items);
         if (search_result_items.length > 0) {
             search_result_items[search_result_selected_index].removeClass('selected');
             if (e.keyCode == 38) {
@@ -100,7 +84,7 @@ function keyboard_add_user(e) {
             }
             else {
                 // DOWN
-                if (search_result_selected_index < search_result_items.length) {
+                if (search_result_selected_index < search_result_items.length-1) {
                     search_result_selected_index++;
                 }
             }
@@ -129,16 +113,6 @@ function instantiate_search_result(item) {
     var id = t.attr('data-id');
     t.click(function() {
         add_user(id);
-    });
-}
-
-function instantiate_privilege_item(item) {
-    var t = $(item);
-    t.find('.name').click(function() {
-        select_privilege(t);
-    });
-    t.find('.delete').click(function() {
-        remove_privilege(t);
     });
 }
 
@@ -175,6 +149,18 @@ function remove_user(t) {
     }).done(function(e) {
         t.remove();
     })
+}
+
+/* PRIVILEGE FUNCTIONS */
+
+function instantiate_privilege_item(item) {
+    var t = $(item);
+    t.find('.name').click(function() {
+        select_privilege(t);
+    });
+    t.find('.delete').click(function() {
+        remove_privilege(t);
+    });
 }
 
 function add_privilege(id) {
@@ -226,4 +212,55 @@ function get_description_of_privilege(privilege_id) {
 
 function update_privilege_tooltip(resp) {
     privilege_field.find('.tooltip p').html(resp.description);
+}
+
+
+/** ADD PRIVILEGES WITH BOX **/
+
+function open_privilege_addition_box() {
+    if (search_box == undefined) {
+        search_box = $(SHT['privileges/search_privileges_box']({}));
+
+        $('.role.edit').append(search_box);
+    }
+
+    search_box_field = search_box.find('.search_field');
+    console.log(search_box_field);
+
+    search_box_field.keyup(get_privilege_suggestions);
+
+    var press = jQuery.Event("keyup");
+    press.ctrlKey = false;
+    search_box_field.trigger(press);
+}
+
+function add_privileges_to_search(resp) {
+    var t = search_box.find('.listcontainer');
+
+    t.html('');
+
+    console.log(resp);
+
+    var content = $(SHT['privileges/search_privileges_box_list']({privileges: resp}));
+    content.find('li').click(add_privilege_to_role);
+    t.append(content);
+}
+
+function get_privilege_suggestions(e) {
+    var t = $(this);
+
+    if (e.keyCode != 40 && e.keyCode != 38) {
+        $.ajax({
+            url: '/privileges/search.json',
+            data: {role_id: role_id, query: t.val()}
+        }).done(add_privileges_to_search);
+    }
+}
+
+function add_privilege_to_role() {
+    var t = $(this);
+    search_box.remove();
+    search_box = undefined;
+
+    add_privilege(t.attr('data-id'));
 }
