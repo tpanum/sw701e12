@@ -224,10 +224,11 @@ function open_privilege_addition_box() {
         $('.role.edit').append(search_box);
     }
 
-    search_box_field = search_box.find('.search_field');
-    console.log(search_box_field);
+    var search_box_field = search_box.find('form .search_field');
 
     search_box_field.keyup(get_privilege_suggestions);
+
+    search_box.find('.mousehandler').click(hide_search_box);
 
     var press = jQuery.Event("keyup");
     press.ctrlKey = false;
@@ -238,8 +239,6 @@ function add_privileges_to_search(resp) {
     var t = search_box.find('.listcontainer');
 
     t.html('');
-
-    console.log(resp);
 
     var content = $(SHT['privileges/search_privileges_box_list']({privileges: resp}));
     content.find('li').click(add_privilege_to_role);
@@ -259,8 +258,14 @@ function get_privilege_suggestions(e) {
 
 function add_privilege_to_role() {
     var t = $(this);
-    search_box.remove();
-    search_box = undefined;
+
+    hide_search_box();
 
     add_privilege(t.attr('data-id'));
+}
+
+function hide_search_box() {
+
+    search_box.remove();
+    search_box = undefined;
 }
