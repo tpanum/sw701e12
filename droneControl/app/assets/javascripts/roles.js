@@ -13,6 +13,7 @@ $(document).ready(function(){
     search_field.keyup(get_hints);
     search_field.keydown(keyboard_add_user);
     privilege_field = $('form.privileges');
+    $('.role.edit a.add_privilege').click(open_privilege_addition_box);
     $('form.users ul li').each(function(i,v) {
         instantiate_user_item(v);
     });
@@ -67,14 +68,12 @@ function show_hints(resp) {
 }
 
 function keyboard_add_user(e) {
-    console.log(e.keyCode);
     if (e.keyCode == 13) {
         add_user(search_result_items[search_result_selected_index].attr('data-id'));
 
         return false;
     } else if (e.keyCode == 38 || e.keyCode == 40) {
         e.preventDefault();
-        console.log(search_result_items);
         if (search_result_items.length > 0) {
             search_result_items[search_result_selected_index].removeClass('selected');
             if (e.keyCode == 38) {
@@ -85,7 +84,7 @@ function keyboard_add_user(e) {
             }
             else {
                 // DOWN
-                if (search_result_selected_index < search_result_items.length) {
+                if (search_result_selected_index < search_result_items.length-1) {
                     search_result_selected_index++;
                 }
             }
@@ -219,15 +218,20 @@ function update_privilege_tooltip(resp) {
 /** ADD PRIVILEGES WITH BOX **/
 
 function open_privilege_addition_box() {
-    if (search_box === undefined) {
-        search_box = $(SHT['privileges/search_privileges_box'](v));
+    if (search_box == undefined) {
+        search_box = $(SHT['privileges/search_privileges_box']({}));
+
+        $('.role.edit').append(search_box);
     }
 
-    $.ajax({
-        url: '/privileges/search.json'
-        data: {role_id: role_id}
-    }).done(add_privileges_to_search);
-    $('.role.edit').append(search_box);
+    search_box_field = search_box.find('.search_field');
+    console.log(search_box_field);
+
+    search_box_field.keyup(get_privilege_suggestions);
+
+    var press = jQuery.Event("keyup");
+    press.ctrlKey = false;
+    search_box_field.trigger(press);
 }
 
 function add_privileges_to_search(resp) {
@@ -235,10 +239,28 @@ function add_privileges_to_search(resp) {
 
     t.html('');
 
+    console.log(resp);
+
     var content = $(SHT['privileges/search_privileges_box_list']({privileges: resp}));
+    content.find('li').click(add_privilege_to_role);
     t.append(content);
 }
 
-function get_privilege_suggestions() {
+function get_privilege_suggestions(e) {
+    var t = $(this);
 
+    if (e.keyCode != 40 && e.keyCode != 38) {
+        $.ajax({
+            url: '/privileges/search.json',
+            data: {role_id: role_id, query: t.val()}
+        }).done(add_privileges_to_search);
+    }
+}
+
+function add_privilege_to_role() {
+    var t = $(this);
+    search_box.remove();
+    search_box = undefined;
+
+    add_privilege(t.attr('data-id'));
 }
