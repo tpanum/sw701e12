@@ -101,6 +101,7 @@
 			margin-top: -200px;
 			background: #fff;
 			border-color: #2E67B1;
+			z-index: 3;
 
 			-moz-box-shadow:    3px 3px 5px 6px #ccc;
   			-webkit-box-shadow: 3px 3px 5px 6px #ccc;
@@ -185,9 +186,16 @@
 
 }
 
-.mousehandler {
-	background:#000;
-	width: 100%
+.boxwrapper {
+	width: 100%;
 	height:100%;
 	position:absolute;
+	top:0;
+	left:0;
+	z-index:2;
+
+	.mousehandler {
+		width: 100%;
+		height:100%;
+	}
 }
