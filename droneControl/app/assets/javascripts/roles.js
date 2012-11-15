@@ -37,7 +37,7 @@ function get_hints(e) {
 
             $.ajax({
                 url: '/users/search.json',
-                data: {query: t.val()}
+                data: {query: t.val(), role_id: role_id}
             }).done(show_hints);
         } else {
             remove_search_results();
