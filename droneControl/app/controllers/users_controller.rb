@@ -57,7 +57,11 @@ class UsersController < ApplicationController
   end
 
   def search
-    @users = User.where("CONCAT(IFNULL(first_name,''), ' ', IFNULL(last_name,'')) LIKE ?", "#{params[:query]}%").order(:first_name).order(:last_name).limit(3)
+    @role = Role.find(params[:role_id])
+    @users = []
+    @role.companies.each do |c|
+      @users |= c.users.where("CONCAT(IFNULL(first_name,''), ' ', IFNULL(last_name,'')) LIKE ?", "#{params[:query]}%").order(:first_name).order(:last_name).limit(3)
+    end
     respond_to do |format|
       format.json { render json: @users }
     end
