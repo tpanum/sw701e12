@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115095139) do
+ActiveRecord::Schema.define(:version => 20121119145458) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(:version => 20121115095139) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "session_key"
   end
 
   create_table "drones_privileges", :id => false, :force => true do |t|
@@ -138,6 +137,13 @@ ActiveRecord::Schema.define(:version => 20121115095139) do
 
   create_table "session_key_tasks", :force => true do |t|
     t.integer "drone_id"
+  end
+
+  create_table "session_keys", :force => true do |t|
+    t.string   "session_key"
+    t.integer  "drone_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "user_privileges", :force => true do |t|
