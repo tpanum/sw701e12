@@ -82,9 +82,18 @@ class PrivilegesController < ApplicationController
   end
 
   def search
-    @privileges = Company.find(4).roles.where(:level_type => 1).limit(1).first.privileges.includes(:privilege).where("privileges.identifier LIKE ?", "#{params[:query]}%")
-    #@privileges -= Role.find(params[:role_id]).privileges unless params[:role_id].nil?
-    #@privileges -= User.find(params[:user_id]).privileges unless params[:user_id]
+    @privileges = []
+    if !params[:role_id].nil?
+      @object = Role.find(params[:role_id])
+    elsif !params[:user_id].nil?
+      @object = User.find(params[:user_id])
+    end
+    unless @object.nil?
+      @object.companies.each do |c|
+        @privileges |= c.roles.where(:level_type => 1).limit(1).first.privileges.includes(:privilege).where("privileges.identifier LIKE ?", "#{params[:query]}%")
+      end
+      @privileges -= @object.privileges
+    end
     respond_to do |format|
       format.json { render json: @privileges }
     end

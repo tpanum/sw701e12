@@ -88,7 +88,11 @@ class CompaniesController < ApplicationController
   def users
     @company = Company.find(params[:id])
     @users_comp = @company.users
-    @users_all = User.find(:all, :conditions => ['id not in (?)', @users_comp.map(&:id)])
+    @query = @users_comp
+    unless @query.size > 0
+      @query = ''
+    end
+    @users_all = User.where('id NOT IN (?)', @query)
   end
 
   def companies_users

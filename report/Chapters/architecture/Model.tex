@@ -2,11 +2,11 @@
 In this section the model of \projectname{} will be presented and explained using the UML notation described in Section~\ref{section:uml_notation}.
 First the objects that need to be represented by the model are identified, and then their relationships are described. \\
 
-The tables (and hence classes) has all been named according to the naming conventions in Rails \citep{ror_naming_convention}.
+The tables (and hence classes) have all been named according to the naming conventions in Rails \citep{ror_naming_convention}.
 
 \subsection{Objects}
 \label{subsec:objects}
-The primary purpose of the system is to connect users and drones to allow the user to interact with a drone by watching its video fee, controlling its movements or both.
+The primary purpose of \projectname{} is to connect users and drones to allow the user to interact with a drone by watching its video feed, controlling its movements or both.
 Therefore the users and drones are the primary objects that must be represented in \projectname{}. \\
 
 The system will contain the following objects and relationships:
@@ -36,8 +36,8 @@ The upper part of Figure~\ref{fig:UML_class_diagram} shows the relationship betw
 
 
 \subsubsection{User}
-It is not possible to interact with the system unless you are logged in as a user.
-Only a login-page will be visible when the system is visited by a guest.
+Only users that are logged in with a valid username and password can interact with the system.
+If you are visiting the system as a guest and hence not logged in, only a login-page will be displayed. 
 The system is designed so that every individual has their own unique user, allowing the system to show user-specific objects and allow user-specific access to different parts of the system. \\
 
 A users access to the system will need to be restricted to make sure that any user only accesses what he is permitted too. 
@@ -81,6 +81,7 @@ Therefore this is a one-to-many relationship.
 
 
 \subsubsection{Privilege}
+\label{sec:privileges}
 A privilege-object represents a privilege that can be granted to another object in the system. 
 Examples of privileges are:
 
@@ -103,14 +104,46 @@ Privileges are not assigned to Users or Companies though, but referenced too by 
 
 
 \subsubsection{Role}
-Roles are the glue that binds Users, Drones and system Privileges. 
-Consider a role as a collection of Privileges that are assigned to an object in the system. \\
+Roles are the glue that binds Users, Drones and Privileges. 
+Consider a role as a collection of Privileges that are assigned to an object in the system.
+Roles can be assigned to:
 
+\begin{itemize}
+	\item Users -- in this case, it is the same as if the privileges were granted directly to the user.
+	\item Company -- in this case, the company administrator can assign users in the company to any of the assigned roles.
+\end{itemize}
+
+Roles are not the only way that a user can get a privilege granted, however. 
+Though a user can be granted all privileges in a role by getting assigned to it, a user is also able to be granted a privilege directly via the \verb+User_Privileges+ table.
+
+
+\subsection{Relationships}
 The system is designed with flexibility and scalability in mind, and the structure of roles and privileges are what provides those features. 
-This is how it works: \\
+As described before there are two ways a user can be granted a specific privilege. 
+These are by 1) getting the privilege granted directly via the \verb+User_Privileges+ table or 2) by being a member of a Role that via the \verb+Privileges_Roles+ table that has one or more privileges granted. 
+These will be explained in details in the following subsections. 
+
+
+\subsubsection{Users and Privileges}
+\label{sec:users_and_privileges}
+An administrator can grant a specific privilege directly to a user via the \verb+User_Privileges+ table. 
+This privilege is then affiliated with an object -- usually a Drone. 
+The privilege could also be a system functionality, however, as described in Section~\ref{sec:privileges}. \\
+
+This relationship is also used for exceptions.
+In an example where 5 Users U1, U2, U3, U4 and U5 are a member of a Role R1, we may have a situation where U2 is not suppose to have access to a given privilege P1 in R1. 
+Then a User-specific privilege is granted to U2 on P1, but with the ``exception''-flag marked.
+This is equal to blacklisting U2 from using privilege P1, providing the system with a lot of flexibility, as even though a group of Users are granted a number of privileges via a role, User-specific exceptions can be added to this setting. \\
+
+
+\subsubsection{Roles and Privileges}
+As mentioned before -- the reason that Roles can be used to assign Privileges to a User, is to make both the administration and data structure of users and privileges as simple and efficient as possible. 
+By allowing exceptions, full flexibility is still possible. \\
+
+This is how the relationship between Roles and Privileges works: \\
 
 An administrator creates a Role.
-Lets call this one ``Control Drone #4''.
+Lets call this Role ``Control Drone \#4''.
 A number of privileges are assigned to this Role.
 It could be the following:
 
@@ -119,7 +152,16 @@ It could be the following:
 	\item Control the movement of a specific drone
 \end{itemize}
 
-Those privileges are then linked to this Role and to the drone this concerns. 
+Those privileges are then linked to this Role and to the drone this concerns. \\
+
+Roles can be assigned with affiliation to both Users and Companies.
+Say a user \verb+U1+ needs access to Drone \#4. 
+User U1 then needs to either have the privilege directly granted as described in Section~\ref{sec:users_and_privileges} or be a member of the role ``Control Drone \#4''.
+
+
+\subsubsection{Privileges and Drones}
+
+
 
 
 
