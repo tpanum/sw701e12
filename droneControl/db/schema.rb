@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109111002) do
+ActiveRecord::Schema.define(:version => 20121115095139) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -135,6 +135,10 @@ ActiveRecord::Schema.define(:version => 20121109111002) do
   end
 
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id"
+
+  create_table "session_key_tasks", :force => true do |t|
+    t.integer "drone_id"
+  end
 
   create_table "user_privileges", :force => true do |t|
     t.integer  "user_id"

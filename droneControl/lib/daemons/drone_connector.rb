@@ -102,7 +102,6 @@ module Seskey_server
 end
 
 module Seskey_connector
-  $seskey = "invalid"
   def post_init
     send_data "{\"session\":\"true\"}"
   end
@@ -110,9 +109,9 @@ module Seskey_connector
   def receive_data data
     if is_json?(data)
       obj = JSON.parse(data)
-      $seskey = obj['sessionkey']
+      @seskey = obj['sessionkey'] unless obj['sessionkey'].nil?
+      self.close_connection unless @seskey.nil?
     end
-    EventMachine::stop_event_loop
   end
 
   def unbind
@@ -129,10 +128,21 @@ module Seskey_connector
 
 end
 
+def find_next_drone
+  task = SessionKeyTask.first
+  task.destroy
+  task.drone
+end
+
 while($running) do  
   EventMachine::run {
     EventMachine::start_server "0.0.0.0", 5124, Drone_connector
-    EventMachine::start_server "0.0.0.0", 5125, Seskey_server
+
+    while true do
+      drone = find_next_drone
+      EventMachine::connect drone.ip, 5125, Seskey_connector unless drone.nil?
+      sleep (1.0/10.0)
+    end
   }
   
   sleep (1)
