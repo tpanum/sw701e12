@@ -6,6 +6,8 @@ class Drone < ActiveRecord::Base
   has_many :companies, :through => :company_drones, :uniq => true
   has_and_belongs_to_many :privileges, :uniq => true
   has_many :users, :through => :user_drone_privileges
+  has_many :session_key_tasks
+  has_many :session_keys
 
   after_initialize :temp_company
   after_create :create_privileges
