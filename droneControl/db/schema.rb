@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119145458) do
+ActiveRecord::Schema.define(:version => 20121120123008) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -139,12 +139,15 @@ ActiveRecord::Schema.define(:version => 20121119145458) do
     t.integer "drone_id"
   end
 
-  create_table "session_keys", :force => true do |t|
+  create_table "sessions", :force => true do |t|
     t.string   "session_key"
     t.integer  "drone_id"
+    t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "sessions", ["drone_id"], :name => "index_sessions_on_drone_id"
 
   create_table "user_privileges", :force => true do |t|
     t.integer  "user_id"

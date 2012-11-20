@@ -5,8 +5,11 @@ require 'eventmachine'
 require 'socket'
 require 'json'
 require 'ipaddr'
+require 'timers'
 
+$timer = nil
 $drone = nil
+$masterSender = nil
 CONTROL_PORT = 5556
 NAV_PORT = 5554
 DRONE_IP = "192.168.1.1"
@@ -29,45 +32,48 @@ class SlaveServer
     end
 
     def receive_data data
-      begin
+      if is_json? data
         json = JSON.parse(data)
 
-        puts echoCommand(json)
+        unless json['action'].nil?
+          puts echoCommand(json)
 
-        case json['action']
-          when 'flight'
-            unless @flying
-              $drone.takeoff
-              puts 'TAKING OFF!'
-              @flying = true
-            else
-              $drone.land
-              puts 'LAND!'
-              @flying = false
-            end
-          when 'forward'
-            puts 'FORWARD'
-            $drone.forward
-          when 'backward'
-            puts 'BACKWARD'
-            $drone.backward
-          when 'left'
-            puts 'left'
-            $drone.left
-          when 'right'
-            puts 'FORWARD'
-            $drone.right
-          when 'camera'
-            @camera_channel = 1-@camera_channel
-            puts 'CAMERA CHANNEL '+(@camera_channel+1).to_s
-            $drone.camera @camera_channel+1
+          case json['action']
+            when 'flight'
+              unless @flying
+                $drone.takeoff
+                puts 'TAKING OFF!'
+                @flying = true
+              else
+                $drone.land
+                puts 'LAND!'
+                @flying = false
+              end
+            when 'forward'
+              puts 'FORWARD'
+              $drone.forward
+            when 'backward'
+              puts 'BACKWARD'
+              $drone.backward
+            when 'left'
+              puts 'left'
+              $drone.left
+            when 'right'
+              puts 'FORWARD'
+              $drone.right
+            when 'camera'
+              @camera_channel = 1-@camera_channel
+              puts 'CAMERA CHANNEL '+(@camera_channel+1).to_s
+              $drone.camera @camera_channel+1
+          end
+          $timer = Timers.new
+          $timer.after(10) {
+            $masterSender.sendSessionTerminate
+          }
         end
 
         response_message = "{\"battery_level\":\"#{$drone.get_battery_level}\"}"
         send_data response_message
-
-      rescue JSON::ParserError
-        puts "Too fast Bjarke, SLOWER!"
       end
     end
 
@@ -85,9 +91,21 @@ class SlaveServer
   end
 
   module Handshake
+    @slave_id = nil
+
+    def post_init
+      file = File.new("DO_NOT_REMOVE", "r")
+      @slave_id = file.gets
+      puts @slave_id
+      file.close
+    end
+
     def sendHello
-      slave_id = "XvBsDeRtA"
-      send_data("{\"slave_id\":\"#{slave_id}\"}")
+      send_data("{\"slave_id\":\"#{@slave_id}\"}")
+    end
+
+    def sendSessionTerminate
+      send_data("{\"session_terminate_by_name\":\"#{@slave_id}\"}")
     end
   end
 
@@ -247,10 +265,10 @@ class SlaveServer
           @key = rand(36**40).to_s(36)
           @respond = "{\"sessionkey\":\"#{@key}\"}"
         else
-          @respond = "{\"sessionkey\":\"invalid\"}"
+          @respond = "{\"sessionkey\":\"false\"}"
         end
       else
-        @respond = "{\"sessionkey\":\"invalid\"}"
+        @respond = "{\"sessionkey\":\"false\"}"
       end
       send_data @respond
     end
@@ -259,14 +277,14 @@ class SlaveServer
       puts "Sessionkey send"
     end
 
-    def is_json?(string)
-      begin
-        JSON.parse(string).all?
-      rescue JSON::ParserError
-        false
-      end
-    end
+  end
 
+  def is_json?(string)
+    begin
+      JSON.parse(string).all?
+    rescue JSON::ParserError
+      false
+    end
   end
 
   module NavDrone
@@ -454,8 +472,8 @@ EventMachine::run {
 
   listener = EventMachine::start_server '0.0.0.0', TCP_LISTEN_PORT, SlaveServer::EchoServer
 
-  masterSender = EventMachine::connect(SlaveServer::HOST, TCP_SEND_PORT, SlaveServer::Handshake)
-  masterSender.sendHello
+  $masterSender = EventMachine::connect(SlaveServer::HOST, TCP_SEND_PORT, SlaveServer::Handshake)
+  $masterSender.sendHello
 
   puts @local_ip
   droneNav = EventMachine.open_datagram_socket '0.0.0.0', NAV_PORT, SlaveServer::NavDrone

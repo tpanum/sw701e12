@@ -8,6 +8,12 @@ class DronesController < ApplicationController
 
   def show
     @drone = Drone.find(params[:id])
+    unless @drone.session.nil?
+      # The user should ONLY be able to watch the stream
+    else
+      Session.create(:user => User.find(session[:user_id]), :drone => @drone)
+      SessionKeyTask.create(:drone => @drone)
+    end
   end
 
 
