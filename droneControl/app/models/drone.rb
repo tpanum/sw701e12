@@ -1,5 +1,5 @@
 class Drone < ActiveRecord::Base
-  attr_accessible :ip, :name, :location, :description, :session_key
+  attr_accessible :ip, :name, :location, :description, :session
 
   has_many :flight_plans
   has_many :company_drones
@@ -7,7 +7,7 @@ class Drone < ActiveRecord::Base
   has_and_belongs_to_many :privileges, :uniq => true
   has_many :users, :through => :user_drone_privileges
   has_many :session_key_tasks
-  has_many :session_keys
+  has_one :session
 
   after_initialize :temp_company
   after_create :create_privileges

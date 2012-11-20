@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :owned_companies, :class_name => "Company"
   has_and_belongs_to_many :companies, :uniq => true
   has_and_belongs_to_many :roles, :uniq => true
+  has_many :sessions
 
   attr_accessor :password
 

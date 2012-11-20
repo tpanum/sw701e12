@@ -23,72 +23,49 @@ module Drone_connector
 
   #When a connection is established the following method is invoked
   def post_init
-    puts "-- someone connected to the echo server!"
   end
 
   def receive_data data
-    port, ip = Socket.unpack_sockaddr_in(get_peername)
-    url = "http://api.hostip.info/?ip="+ip
-    @xmldoc = open(url).read {|f|f.read}
-    doc = REXML::Document.new(@xmldoc)
-
-    doc.elements.each('//gml:name') do |c|
-      @loc = c.text
-    end
-
     if is_json?(data)
       obj = JSON.parse(data)
-      name = obj['slave_id']
-      drone = Drone.new(:ip => ip, :name => name, :description => "Red Leader", :location => @loc)
-      drone.save
-      puts name
-    end
 
-  end
+      if !obj['slave_id'].nil?
 
-  def unbind
-    puts "-- someone disconnected from the echo server!"
-  end
+        name = obj['slave_id']
+        drone = Drone.find_by_name(name).limit(1).first
+        unless drone.nil?
+          drone.session.destroy
+        else
+          port, ip = Socket.unpack_sockaddr_in(get_peername)
+          url = "http://api.hostip.info/?ip="+ip
+          @xmldoc = open(url).read {|f|f.read}
+          doc = REXML::Document.new(@xmldoc)
 
-  def is_json?(string)
-    begin
-      JSON.parse(string).all?
-    rescue JSON::ParserError
-      false
-    end
-  end
+          doc.elements.each('//gml:name') do |c|
+            @loc = c.text
+          end
 
-end
-
-module Seskey_server
-
-  $request = false
-  #When a connection is established the following method is invoked
-  def post_init
-    puts "connected to seskey server"
-  end
-
-  def receive_data data
-    puts "received seskey_request"
-    @seskey1 = "invalidFromDaemon"
-    if $request == false
-      $request = true
-      if is_json?(data)
-        obj = JSON.parse(data)
-        if obj['request'] == "true"
-            EventMachine::run {
-              em = EventMachine::connect obj['ip'], 5122, Seskey_connector
-              @seskey1 = $seskey
-            }
+          drone = Drone.new(:ip => ip, :name => name, :description => "Red Leader", :location => @loc)
+          drone.save
         end
+      elsif !obj['session_terminate_by_name'].nil?
+        name = obj['session_terminate_by_name']
+        drone = Drone.find_by_name(name).limit(1).first
+        unless drone.nil?
+          drone.session.destroy
+        else
+          puts "Received name of slave that has no drone"
+        end
+      else
+        puts "I have no idea what to do with this JSON"
       end
+    else
+      puts "Received invalid non-JSON data"
     end
-    $request = false
-    send_data "{\"sessionkey\":\"#{@seskey1}\"}"
+
   end
 
   def unbind
-
   end
 
   def is_json?(string)
@@ -100,6 +77,47 @@ module Seskey_server
   end
 
 end
+
+# module Seskey_server
+
+#   $request = false
+#   #When a connection is established the following method is invoked
+#   def post_init
+#     puts "connected to seskey server"
+#   end
+
+#   def receive_data data
+#     puts "received seskey_request"
+#     @seskey1 = "invalidFromDaemon"
+#     if $request == false
+#       $request = true
+#       if is_json?(data)
+#         obj = JSON.parse(data)
+#         if obj['request'] == "true"
+#             EventMachine::run {
+#               em = EventMachine::connect obj['ip'], 5122, Seskey_connector
+#               @seskey1 = $seskey
+#             }
+#         end
+#       end
+#     end
+#     $request = false
+#     send_data "{\"sessionkey\":\"#{@seskey1}\"}"
+#   end
+
+#   def unbind
+
+#   end
+
+#   def is_json?(string)
+#     begin
+#       JSON.parse(string).all?
+#     rescue JSON::ParserError
+#       false
+#     end
+#   end
+
+# end
 
 module Seskey_connector
   def initialize *args
@@ -115,8 +133,10 @@ module Seskey_connector
     if is_json?(data)
       obj = JSON.parse(data)
       @seskey = obj['sessionkey'] unless obj['sessionkey'].nil?
-      @drone.session_key = @seskey
-      @drone.save
+      unless obj['sessionkey'] == "false"
+        @drone.session.session_key = @seskey
+        @drone.save
+      end
       self.close_connection
     end
   end

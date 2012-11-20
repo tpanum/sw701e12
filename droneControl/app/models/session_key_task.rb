@@ -1,5 +1,5 @@
 class SessionKeyTask < ActiveRecord::Base
-    attr_accessible :drone_id
+    attr_accessible :drone
 
     belongs_to :drone
 end
