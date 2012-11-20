@@ -107,7 +107,7 @@ But the structure of the Privileges also allows for later expansion, providing t
 
 
 \subsubsection{Role}
-Roles are signed to bind multiple Privileges and Users using one component to save the administrators some work.
+Roles are designed to bind multiple Privileges and Users using one component to save the administrators some work.
 Consider a role as a collection of Privileges that are assigned to an object in the system.
 Roles can be assigned to:
 
@@ -165,11 +165,11 @@ User U1 then needs to either have the Privileges directly granted as described i
 \subsubsection{Privileges and granting of Privileges}
 Since it is possible to grant Privileges both directly to a User and via a Role, the same Privilege can be used in more than one context. 
 Therefore the \verb+Affiliation_Privileges+ table exists.
-This table links the granting of a Privilege with the actual Privilege. 
+This table links the granting of a Privilege with the actual Privilege and defines on which Object the Privilege applies. 
 The reason for having this table and not just link the two granting-tables \verb+User_Privileges+ and \verb+Privileges_Roles+ directly to the \verb+Privileges+ table, is that we try to avoid redundant data by having the data in the \verb+Privileges+ and \verb+Affiliation_Privileges+ table make up one instance of a privilege together.
-This is then granted to a User or a Role, who can then use the Privilege.
+This is then granted to a User or a Role, who can then use the Privilege. \\
 
-The system is designed so that any user can grant a privilege he already has to another user if he is permitted to. 
+The system is designed so that any User can grant a Privilege he already has already been granted to another User if he is permitted to. 
 This is controlled via a ``re-grantable'' flag which is set in either the \verb+User_Privileges+ table or the \verb+Privileges_Roles+ table.
 By marking this flag as ``true'', the User or Users that via a Role is granted the Privilege in question, can via an interface in the system re-grant the Privilege to other Users in the same Company. 
 
