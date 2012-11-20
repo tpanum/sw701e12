@@ -31,7 +31,7 @@ This figure also serves as the model for the whole system. \\
     \label{fig:UML_class_diagram}
 \end{figure}
 
-The follow section will analyse all the object types in the system, their relationships and why they are built as they are.
+The following section will analyze all the object types in the system, their relationships and why they are built as they are.
 The upper part of Figure~\ref{fig:UML_class_diagram} shows the relationship between users, companies and roles/privileges while the lower part of the figure shows the relationship between drones, roles/privileges and flight plans. 
 
 
@@ -45,16 +45,16 @@ This restriction is controlled by roles and privileges.
 The handling of roles and privileges will be done by the role-model. \\
 
 A user will be identified by his e-mail address which will work as the username and therefore be unique.
-Each user will also have a password, that is both salted and encrypted in the database, using the SHA-1 encryption algorithm. \\
+Each user will also have a password, that is both salted and hashed in the database, using the SHA-1 hashing algorithm. SHA-1 has been chosen as this is considered a strong hashing algorithm that has no current or known collisions. By using a salt, the password is secured against rainbow-tables.  \\
 
 The user-object serves as the point of entrance for anyone who wishes to use the system, and combined with companies, roles and privileges dictate its options.
 
 
 \subsubsection{Company}
 \projectname{} is designed with the intent that multiple different clients can use the system.
-These clients could be different companies that in some way wishes one or more drones to surveil their premisses.
+These clients could be different companies that in some way wishes one or more drones to surveil their premises.
 One company may have several employees that they wish to provide with access to the system.
-The Company-object handles this relationship, allowing multiple users to be grouped together by a company.
+The Company-object handles this relationship, allowing multiple users to be grouped together in a company.
 One User can be a member of several Company, and one Company can have many Users in it. 
 Therefore this is a many-to-many relationship, represented in the Companies\_users table. \\
 
@@ -63,9 +63,9 @@ This is described in further details in the following sections.
 
 
 \subsubsection{Drone}
-Along with Users, Drones are the most important Object in \projectname{}.
+Along with Users, Drones are the most important object in \projectname{}.
 An instance of a Drone in the system represents a physical drone somewhere in the field. 
-A drone-object itself does not contain much data nor functionality. 
+A Drone-object itself does not contain much data nor functionality. 
 It simply represents a drone and is a point of connection between Users and controlling the Drone itself. \\
 
 The relationship between a User and a Drone is controlled by Privileges and Drones through Companies in most cases. \\
@@ -82,7 +82,7 @@ Therefore this is a one-to-many relationship.
 
 \subsubsection{Privilege}
 \label{sec:privileges}
-A privilege-object represents a privilege that can be granted to another object in the system. 
+A Privilege-object represents a privilege that can be granted to another object in the system. 
 Examples of privileges are:
 
 \begin{itemize}
@@ -97,54 +97,57 @@ A privilege consists of three elements:
 \begin{itemize}
 	\item An action that it provides privilege to perform (such as any of the ones mentioned above)
 	\item An object that these can be applied on
-	\item An affiliation where the privilege is provided too. 
+	\item An affiliation where the privilege is granted too. 
 \end{itemize}
 
-Privileges are not assigned to Users or Companies though, but referenced too by a Role.
+Privileges can both be assigned directly to a user or assigned along with other privileges using a Role. \\
+
+\projectname{} comes with a number of predefined Privileges that can be granted across the system as the administrator wishes.
+But the structure of the Privileges also allows for later expansion, providing the system with scalability as more Privileges can be added to the system later without changing any of the source code of the system.
 
 
 \subsubsection{Role}
-Roles are the glue that binds Users, Drones and Privileges. 
+Roles are signed to bind multiple Privileges and Users using one component to save the administrators some work.
 Consider a role as a collection of Privileges that are assigned to an object in the system.
 Roles can be assigned to:
 
 \begin{itemize}
-	\item Users -- in this case, it is the same as if the privileges were granted directly to the user.
-	\item Company -- in this case, the company administrator can assign users in the company to any of the assigned roles.
+	\item Users -- in this case, it is the same as if the Privileges were granted directly to the User, only this way multiple Privileges can be assigned to a User at once.
+	\item Company -- in this case, the Company administrator can assign Users in the Company to any of the assigned Roles.
 \end{itemize}
 
-Roles are not the only way that a user can get a privilege granted, however. 
-Though a user can be granted all privileges in a role by getting assigned to it, a user is also able to be granted a privilege directly via the \verb+User_Privileges+ table.
+As mentioned above, Roles are not the only way that a user can get a privilege granted, however. 
+Though a User can be granted all Privileges in a Role by getting assigned to it, a User is also able to be granted a Privilege directly via the \verb+User_Privileges+ table.
 
 
 \subsection{Relationships}
-The system is designed with flexibility and scalability in mind, and the structure of roles and privileges are what provides those features. 
-As described before there are two ways a user can be granted a specific privilege. 
-These are by 1) getting the privilege granted directly via the \verb+User_Privileges+ table or 2) by being a member of a Role that via the \verb+Privileges_Roles+ table that has one or more privileges granted. 
+The system is designed with flexibility and scalability in mind, and the structure of Roles and Privileges are what provides those features. 
+As described before there are two ways that a User can be granted a specific Privilege. 
+These are by 1) getting the Privilege granted directly via the \verb+User_Privileges+ table or 2) by being a member of a Role that via the \verb+Privileges_Roles+ table that has one or more Privileges granted. 
 These will be explained in details in the following subsections. 
 
 
 \subsubsection{Users and Privileges}
 \label{sec:users_and_privileges}
-An administrator can grant a specific privilege directly to a user via the \verb+User_Privileges+ table. 
-This privilege is then affiliated with an object -- usually a Drone. 
-The privilege could also be a system functionality, however, as described in Section~\ref{sec:privileges}. \\
+An administrator can grant a specific Privilege directly to a user via the \verb+User_Privileges+ table. 
+This Privilege is then affiliated with an object -- usually a Drone. 
+The Privilege could also be a system functionality, however, as described in Section~\ref{sec:privileges}. \\
 
 This relationship is also used for exceptions.
-In an example where 5 Users U1, U2, U3, U4 and U5 are a member of a Role R1, we may have a situation where U2 is not suppose to have access to a given privilege P1 in R1. 
-Then a User-specific privilege is granted to U2 on P1, but with the ``exception''-flag marked.
-This is equal to blacklisting U2 from using privilege P1, providing the system with a lot of flexibility, as even though a group of Users are granted a number of privileges via a role, User-specific exceptions can be added to this setting. \\
+In an example where five Users: U1, U2, U3, U4 and U5 are a member of a Role: R1, we may have a situation where U2 is not suppose to have access to a given Privilege P1 in R1. 
+Then a User-specific Privilege is granted to U2 on P1, but with the ``exception''-flag marked.
+This is equal to blacklisting U2 from using Privilege P1, providing the system with a lot of flexibility, as even though a group of Users are granted a number of Privileges via a role, User-specific exceptions can be added to this setting. \\
 
 
 \subsubsection{Roles and Privileges}
-As mentioned before -- the reason that Roles can be used to assign Privileges to a User, is to make both the administration and data structure of users and privileges as simple and efficient as possible. 
+As mentioned before -- the reason that Roles can be used to assign Privileges to a User, is to make both the administration and data structure of Users and Privileges as simple and efficient as possible. 
 By allowing exceptions, full flexibility is still possible. \\
 
 This is how the relationship between Roles and Privileges works: \\
 
 An administrator creates a Role.
 Lets call this Role ``Control Drone \#4''.
-A number of privileges are assigned to this Role.
+A number of Privileges are assigned to this Role.
 It could be the following:
 
 \begin{itemize}
@@ -152,16 +155,61 @@ It could be the following:
 	\item Control the movement of a specific drone
 \end{itemize}
 
-Those privileges are then linked to this Role and to the drone this concerns. \\
+Those Privileges are then linked to this Role and to the Drone this concerns. \\
 
 Roles can be assigned with affiliation to both Users and Companies.
 Say a user \verb+U1+ needs access to Drone \#4. 
-User U1 then needs to either have the privilege directly granted as described in Section~\ref{sec:users_and_privileges} or be a member of the role ``Control Drone \#4''.
+User U1 then needs to either have the Privileges directly granted as described in Section~\ref{sec:users_and_privileges} or be a member of the role ``Control Drone \#4''.
+
+
+\subsubsection{Privileges and granting of Privileges}
+Since it is possible to grant Privileges both directly to a User and via a Role, the same Privilege can be used in more than one context. 
+Therefore the \verb+Affiliation_Privileges+ table exists.
+This table links the granting of a Privilege with the actual Privilege. 
+The reason for having this table and not just link the two granting-tables \verb+User_Privileges+ and \verb+Privileges_Roles+ directly to the \verb+Privileges+ table, is that we try to avoid redundant data by having the data in the \verb+Privileges+ and \verb+Affiliation_Privileges+ table make up one instance of a privilege together.
+This is then granted to a User or a Role, who can then use the Privilege.
+
+The system is designed so that any user can grant a privilege he already has to another user if he is permitted to. 
+This is controlled via a ``re-grantable'' flag which is set in either the \verb+User_Privileges+ table or the \verb+Privileges_Roles+ table.
+By marking this flag as ``true'', the User or Users that via a Role is granted the Privilege in question, can via an interface in the system re-grant the Privilege to other Users in the same Company. 
+
+
+%Note: Alle brugere kan videregrante et privilege hvis de har tilladelse til det. Det er et flag som sætes i user_privileges og privileges_roles, som tillader alle der har dette privilegie til at videregrante det. Husk at beskrive hvordan et privilege og et affiliation privilege til sammen giver et grant-able privilegie
 
 
 \subsubsection{Privileges and Drones}
+With \projectname{} in its current form, most Privileges that are granted will have an connected with a Drone. 
+Privileges and its a affiliations are linked in the \verb+Affiliation_Privileges+ table. 
+This is also where Drones are linked to any granted privilege. \\
+
+As described earlier, Drones are the current object-type implemented in the system.
+However, the structure and model of the system allows for later expansion, connection new objects such as stationary cameras or any other type of object to the system.
+The \verb+Affiliation_Privileges+ has a third field named \verb+object_id+.
+This field links the Privilege, the granting of it and the Object that this granting is valid for. \\
+
+An example could be linking Privilege P1, User U1 and Drone D1. 
+Say P1 is the privilege for watching the video feed of a drone. 
+Then the user U1 will have access to watch the video feed of Drone D1. 
 
 
+\subsubsection{Drones and Flight plans}
+Every time a Drone takes of or lands, it is logged to the database. 
+This action is logged into the \verb+Flight_plans+ table. 
+Each flight plan is unique and associated to only one Drone. \\
+
+The reason for keeping this log is to enable the users of the system to later analyze the action history of any given Drone. 
+
+
+\subsubsection{Drones and Companies}
+The \verb+Company_drones+ table defines a relationship between a Drone and a Company. 
+
+The administrator of each Company defines the Roles in that Company. 
+In doing so, he defines which Privileges that are granted in every Role.
+These Privileges are linked to a (Drone)-object. 
+The system must make sure that any Company administrator cannot link a Privilege with a Object that is not within his control. \\
+
+This relationship defines which Drones are available to each Company.
+When a Company administrator adds new Roles (and hence Privileges), he is only able to associate it with Drones that are connected to the Company in question. 
 
 
 
