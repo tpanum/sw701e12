@@ -166,7 +166,15 @@ User U1 then needs to either have the Privileges directly granted as described i
 Since it is possible to grant Privileges both directly to a User and via a Role, the same Privilege can be used in more than one context. 
 Therefore the \verb+Affiliation_Privileges+ table exists.
 This table links the granting of a Privilege with the actual Privilege. 
-The reason for having this table and not just link the two granting-tables \verb+User_Privileges+ and \verb+Privileges_Roles+ is that in the case a privilege changes, one common link between the link and its affiliations exists, making it easier to maintain the system. 
+The reason for having this table and not just link the two granting-tables \verb+User_Privileges+ and \verb+Privileges_Roles+ directly to the \verb+Privileges+ table, is that we try to avoid redundant data by having the data in the \verb+Privileges+ and \verb+Affiliation_Privileges+ table make up one instance of a privilege together.
+This is then granted to a User or a Role, who can then use the Privilege.
+
+The system is designed so that any user can grant a privilege he already has to another user if he is permitted to. 
+This is controlled via a ``re-grantable'' flag which is set in either the \verb+User_Privileges+ table or the \verb+Privileges_Roles+ table.
+By marking this flag as ``true'', the User or Users that via a Role is granted the Privilege in question, can via an interface in the system re-grant the Privilege to other Users in the same Company. 
+
+
+%Note: Alle brugere kan videregrante et privilege hvis de har tilladelse til det. Det er et flag som sætes i user_privileges og privileges_roles, som tillader alle der har dette privilegie til at videregrante det. Husk at beskrive hvordan et privilege og et affiliation privilege til sammen giver et grant-able privilegie
 
 
 \subsubsection{Privileges and Drones}
