@@ -32,9 +32,9 @@ module Drone_connector
       if !obj['slave_id'].nil?
 
         name = obj['slave_id']
-        drone = Drone.find_by_name(name).limit(1).first
+        drone = Drone.where(:name => name).limit(1).first
         unless drone.nil?
-          drone.session.destroy
+          drone.session.destroy unless drone.session.nil?
         else
           port, ip = Socket.unpack_sockaddr_in(get_peername)
           url = "http://api.hostip.info/?ip="+ip
@@ -132,10 +132,13 @@ module Seskey_connector
   def receive_data data
     if is_json?(data)
       obj = JSON.parse(data)
-      @seskey = obj['sessionkey'] unless obj['sessionkey'].nil?
-      unless obj['sessionkey'] == "false"
-        @drone.session.session_key = @seskey
-        @drone.save
+      unless obj['sessionkey'].nil?
+        @seskey = obj['sessionkey']
+        if @seskey != "invalid"
+
+          @drone.session.session_key = @seskey unless @drone.session.nil?
+          @drone.session.save
+        end
       end
       self.close_connection
     end

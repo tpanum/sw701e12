@@ -20,8 +20,9 @@ class Drone < ActiveRecord::Base
   end
 
   def create_privileges
-  	self.privileges << Privilege.create(:identifier => "fly_drone_" + self.name)
-  	self.privileges << Privilege.create(:identifier => "view_drone_" + self.name)
+    # Fix if self.name is NIL
+  	# self.privileges << Privilege.create(:identifier => "fly_drone_" + self.name)
+  	# self.privileges << Privilege.create(:identifier => "view_drone_" + self.name)
   end
 
   def drop_privileges
