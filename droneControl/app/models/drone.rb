@@ -4,7 +4,6 @@ class Drone < ActiveRecord::Base
   has_many :flight_plans
   has_many :company_drones
   has_many :companies, :through => :company_drones, :uniq => true
-  has_and_belongs_to_many :privileges, :uniq => true
   has_many :users, :through => :user_drone_privileges
   has_many :session_key_tasks
   has_one :session
@@ -20,15 +19,14 @@ class Drone < ActiveRecord::Base
   end
 
   def create_privileges
-    # Fix if self.name is NIL
-  	# self.privileges << Privilege.create(:identifier => "fly_drone_" + self.name)
-  	# self.privileges << Privilege.create(:identifier => "view_drone_" + self.name)
+    privileges = Privilege.where(:instance_type => Privilege.type_enums.index("drone"))
+    privileges.each do |p|
+      AffiliatePrivilege.create(:privilege => p, :affiliate => self.id)
+    end
   end
 
   def drop_privileges
-  	self.privileges.each do |p|
-      p.destroy
-  	end
+    AffiliatePrivilege.where(:affiliate => self.id).includes(:privilege).where("privileges.instance_type = ?", Privilege.type_enums.index("drone")).destroy_all
   end
 
   def move_privileges

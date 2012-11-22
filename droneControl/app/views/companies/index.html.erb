@@ -1,27 +1,29 @@
-<h1>Listing companies</h1>
+<% @page_title = "Users List" %>
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Owner</th>
-    <th>Actions</th>
-  </tr>
+<div class="companies list">
+  <h2>Companies</h2>
 
-<% @companies.each do |company| %>
-  <tr>
-    <td><%= company.id %></td>
-    <td><%= company.name %></td>
-    <td><%= company.owner.full_name unless company.owner.nil? %></td>
-    <td class="actions">
-      <%= link_to 'Show', company %>
-      <%= link_to 'Edit', edit_company_path(company) %>
-      <%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
-<% end %>
-</table>
+  <table id="companylist" class="listing" summary="Companies list">
+    <tr class="header">
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Actions</th>
+    </tr>
 
-<br />
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.name %></td>
+        <td><%= unless company.owner.full_name.blank? then company.owner.full_name else render "globals/undefined" end %></td>
+        <td class="actions">
+          <%= link_to '', company, :class => "show" %>
+          <%= link_to '', edit_company_path(company), :class => "edit" %>
+          <%= link_to '', company, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 
-<%= link_to 'New Company', new_company_path %>
+  <br />
+
+  <%= link_to 'New Company', new_company_path, :class => "button" %>
+</div>

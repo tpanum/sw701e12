@@ -13,20 +13,15 @@ class Company < ActiveRecord::Base
 
   private
   def create_company_role
-    role_name = self.name.gsub(" ", "_") + "_All"
-    r = Role.create(:title => role_name, :level_type => 1)
-    self.roles << r
+    # role_name = self.name.gsub(" ", "_") + "_All"
+    self.roles << Role.create(:title => "All", :level_type => 1)
   end
 
   def destroy_all_roles
-    roles.each do |r|
-      r.destroy
-    end
+    roles.destroy_all
   end
 
   def destroy_all_drones
-    drones.each do |d|
-      d.destroy
-    end
+    drones.destroy_all
   end
 end

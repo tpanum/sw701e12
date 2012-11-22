@@ -1,8 +1,9 @@
 class AffiliatePrivilege < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :privilege, :affiliate
   belongs_to :privilege
   has_many :user_privileges
   has_many :users, :through => :user_privileges, :uniq => true
+  has_and_belongs_to_many :roles, :uniq => true
 
   before_save :check_if_global
 
