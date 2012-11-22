@@ -1,5 +1,13 @@
-<h1>New role</h1>
+<div class="drone_wrapper">
+	<form id="drone_form">
+		<%= label_tag(:serial) %>
+		<input type="text" class="query" />
+		<%= submit_tag "Find drone", :class => "button" %>
+	</form>
+	<div id="drone_info">
+		<%= render "drones/found_drone", :handlebars => {"companies" => [{"name" => "Test","id" => "1"},{"name" => "Test2","id" => "2"}]} %>
+	</div>
 
-<%= render 'form' %>
+</div>
 
-<%= link_to 'Back', drone_path %>
+<%= link_to 'Back', drones_path, :class => "button back" %>

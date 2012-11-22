@@ -1,0 +1,24 @@
+<form class="dronetable">
+	<table>
+		<tr>
+			<th>IP</th>
+			<td>{{drone.ip}}</td>
+		</tr>
+		<tr>
+			<th>Location</th>
+			<td>{{drone.location}}</td>
+		</tr>
+		<tr>
+			<td>
+				<a class="button">Link to</a>
+			</td>
+			<td>
+				<select class="button">
+				{{#each companies}}
+				  <option value="{{id}}">{{name}}</option>
+				 {{/each}}
+				</select>
+			</td>
+		</tr>
+	</table>
+</form>

@@ -260,6 +260,11 @@ footer {
 		text-align:left;
 		padding: 0 0 5px 5px;
 	}
+
+	.undefined {
+		font-style: italic;
+		color: #ccc;
+	}
 	
 	tr:nth-child(even){
 	 background: #EFEFEF;

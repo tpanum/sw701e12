@@ -2,7 +2,7 @@
 
 <div class="drones list">
 	<h2>Drones</h2>
-	<table class="listing" summary="drones list">
+	<table id ="dronelist" class="listing" summary="drones list">
 		<tr class="header">
 			<th>Name</th>
 			<th>Location</th>
@@ -16,13 +16,13 @@
 				<td><%= unless drone.location.blank? then drone.location else render "globals/undefined" end %></td>
 				<td><%= unless drone.ip.blank? then drone.ip else render "globals/undefined" end %></td>
 				<td class="actions">
-					<%= link_to 'Show', drone %>
-      				<%= link_to 'Edit', edit_drone_path(drone) %>
-      				<%= link_to 'Destroy', drone, method: :delete, data: { confirm: 'Are you sure?' } %>
+					<%= link_to '', drone, :class => "show" %>
+      				<%= link_to '', edit_drone_path(drone), :class => "edit" %>
+      				<%= link_to '', drone, method: :delete, :class => "delete", data: { confirm: 'Are you sure?' } %>
 				</td>
 			</tr>
 		<% end %>
 	</table>
 	<br />
-	<%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
+	<%= link_to("Add drone", new_drone_path, :class => 'button') %><br />
 </div>

@@ -1,3 +1,28 @@
 // Place all the styles related to the drones controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#dronelist {
+	td:nth-child(4){
+	width: 15%;
+	}
+}
+
+.dronetable {
+
+
+	td {
+		width: 50%;
+		text-align: right;
+	}
+
+	th {
+		width: 50%;
+		text-align: left;
+	}
+
+	select {
+		width: 100%;
+		height: 25px;
+	}
+}
