@@ -3,12 +3,7 @@ class UsersController < ApplicationController
   before_filter :confirm_logged_in
 
   def index
-  	list
-  	render('list')
-  end
-
-  def list
-  	@users = User.order("first_name ASC")
+    @users = User.order("first_name ASC")
   end
 
   def show

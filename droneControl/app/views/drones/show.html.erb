@@ -1,6 +1,6 @@
 
 <h2><%= @drone.name %> at <%= @drone.location %></h2>
 
-<%= swf_tag('something', :flashvars => {:ip => "1234" }) %>
+<%= swf_tag('something', :flashvars => {:ip => "1234", sessionkey => "some_key"}) %>
 
 <%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>

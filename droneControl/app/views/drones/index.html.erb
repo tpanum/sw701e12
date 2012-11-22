@@ -4,7 +4,6 @@
 	<h2>Drones</h2>
 	<table class="listing" summary="drones list">
 		<tr class="header">
-			<th>&nbsp;</th>
 			<th>Name</th>
 			<th>Location</th>
 			<th>IP</th>
@@ -13,7 +12,6 @@
 
 		<% @drones.each do |drone| %>
 			<tr>
-				<td><%= drone.id %></td>
 				<td><%= drone.name %></td>
 				<td><%= drone.location %></td>
 				<td><%= drone.ip %></td>
