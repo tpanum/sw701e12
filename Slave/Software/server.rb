@@ -16,6 +16,7 @@ DRONE_IP = "192.168.1.1"
 MULTICAST_IP = "224.1.1.1"
 TCP_LISTEN_PORT = 5123
 TCP_SEND_PORT = 5124
+TCP_SESSION_REQUEST_PORT = 5125
 
 u = UDPSocket.new
 u.connect DRONE_IP, 1
@@ -23,7 +24,7 @@ u.connect DRONE_IP, 1
 u.close
 
 class SlaveServer
-  HOST = "172.25.21.23"
+  HOST = "172.25.19.246"
   module EchoServer
 
     def post_init
@@ -254,10 +255,10 @@ class SlaveServer
   module Session_server
 
     def post_init
-      puts "Sessionkey requested"
     end
 
     def receive_data data
+      puts "data : "+data
       if is_json?(data)
         obj = JSON.parse(data)
         session = obj['session']
@@ -265,26 +266,18 @@ class SlaveServer
           @key = rand(36**40).to_s(36)
           @respond = "{\"sessionkey\":\"#{@key}\"}"
         else
-          @respond = "{\"sessionkey\":\"false\"}"
+          @respond = "{\"sessionkey\":\"invalid\"}"
         end
       else
-        @respond = "{\"sessionkey\":\"false\"}"
+        @respond = "{\"sessionkey\":\"invalid\"}"
       end
+      puts "Send session key: \"#{@key}\""
       send_data @respond
     end
 
     def unbind
-      puts "Sessionkey send"
     end
 
-  end
-
-  def is_json?(string)
-    begin
-      JSON.parse(string).all?
-    rescue JSON::ParserError
-      false
-    end
   end
 
   module NavDrone
@@ -463,6 +456,14 @@ class SlaveServer
   end
 end
 
+def is_json?(string)
+  begin
+    JSON.parse(string).all?
+  rescue JSON::ParserError
+    false
+  end
+end
+
 
 EventMachine::run {
   drone = EventMachine.open_datagram_socket '0.0.0.0', CONTROL_PORT, SlaveServer::Drone
@@ -482,5 +483,5 @@ EventMachine::run {
   droneNav.set_sock_opt(Socket::IPPROTO_IP, Socket::IP_ADD_MEMBERSHIP, ip)
   droneNav.send_initial_message
 
-  EventMachine::start_server "0.0.0.0", 5122, SlaveServer::Session_server
+  EventMachine::start_server "0.0.0.0", TCP_SESSION_REQUEST_PORT, SlaveServer::Session_server
 }

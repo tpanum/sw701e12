@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'daemons-rails'
 gem 'eventmachine'
 gem 'sht_rails', git: 'git://github.com/railsware/sht_rails.git'
+gem 'swfobject-rails'
 
 
 # Gems used only for assets and not required
