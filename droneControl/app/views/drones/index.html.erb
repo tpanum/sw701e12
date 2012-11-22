@@ -12,7 +12,7 @@
 
 		<% @drones.each do |drone| %>
 			<tr>
-				<td><%= unless drone.name.blank? then  else render "globals/undefined" end %></td>
+				<td><%= unless drone.name.blank? then drone.name else render "globals/undefined" end %></td>
 				<td><%= unless drone.location.blank? then drone.location else render "globals/undefined" end %></td>
 				<td><%= unless drone.ip.blank? then drone.ip else render "globals/undefined" end %></td>
 				<td class="actions">
