@@ -1,5 +1,35 @@
-<h1>New role</h1>
+<div class="drone_wrapper">
+	<form>
+		<%= label_tag(:serial) %>
+		<input type="text" />
+		<%= submit_tag "Find drone", :class => "button" %>
+	</form>
+	<form class="dronetable">
+		<table>
+			<tr>
+				<th>IP</th>
+				<td>120.0.0.1</td>
+			</tr>
+			<tr>
+				<th>Location</th>
+				<td>Hjørring</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="button">Link to</a>
+				</td>
+				<td>
+					<select class="button">
+					  <option value="volvo">Volvo</option>
+					  <option value="saab">Saab</option>
+					  <option value="mercedes">Mercedes</option>
+					  <option value="audi">Audi</option>
+					</select>	
+				</td>
+			</tr>
+		</table>
+	</form>
 
-<%= render 'form' %>
+</div>
 
-<%= link_to 'Back', drone_path %>
+<%= link_to 'Back', drones_path, :class => "button" %>
