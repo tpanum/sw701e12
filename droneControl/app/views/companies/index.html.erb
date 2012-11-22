@@ -1,4 +1,4 @@
-<% @page_title = "Users List" %>
+<% @page_title = "Companies List" %>
 
 <div class="companies list">
   <h2>Companies</h2>
@@ -12,7 +12,7 @@
 
     <% @companies.each do |company| %>
       <tr>
-        <td><%= company.name %></td>
+        <td><%= unless company.name.blank? then company.name else render "globals/undefined" end %></td>
         <td><%= unless company.owner.full_name.blank? then company.owner.full_name else render "globals/undefined" end %></td>
         <td class="actions">
           <%= link_to '', company, :class => "show" %>

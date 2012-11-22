@@ -1,27 +1,32 @@
-<h1>Listing privileges</h1>
+<% @page_title = "Privileges List" %>
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Identifier</th>
-    <th>Description</th>
-    <th>Actions</th>
-  </tr>
+<div class="privileges list">
+  <h2>Privileges</h2>
 
-<% @privileges.each do |privilege| %>
-  <tr>
-    <td><%= privilege.id %></td>
-    <td><%= privilege.identifier %></td>
-    <td><%= truncate(privilege.description, :length => 30) %></td>
-    <td class="actions">
-      <%= link_to 'Show', privilege %>
-      <%= link_to 'Edit', edit_privilege_path(privilege) %>
-      <%= link_to 'Destroy', privilege, method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
-<% end %>
-</table>
+  <table id="privilegelist" class="listing" summary="Privileges list">
+    <tr class="header">
+      <th>Identifier</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
 
-<br />
+    <% @privileges.each do |privilege| %>
+      <tr>
+        <td><%= unless privilege.identifier.blank? then privilege.identifier else render "globals/undefined" end %></td>
+        <td><%= unless privilege.description.blank? then privilege.description else render "globals/undefined" end %></td>
+        <td><%= unless privilege.type.blank? then privilege.type else render "globals/undefined" end %></td>
+        <td class="actions">
+          <%= link_to '', privilege, :class => "show" %>
+          <%= link_to '', edit_privilege_path(privilege), :class => "edit" %>
+          <%= link_to '', privilege, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 
-<%= link_to 'New Privilege', new_privilege_path %>
+  <br />
+
+  <%= link_to 'New Privilege', new_privilege_path, :class => "button" %>
+</div>
+

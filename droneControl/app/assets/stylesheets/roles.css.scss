@@ -15,6 +15,12 @@
     zoom:1;
 }
 
+#rolelist {
+	td:nth-child(2){
+		width: 15%;
+	}
+}
+
 .role.edit {
 
 	.formwrapper{

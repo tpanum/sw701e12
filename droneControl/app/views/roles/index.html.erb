@@ -1,27 +1,28 @@
-<% @page_title = "Role List" %>
+<% @page_title = "Roles List" %>
 
-<div class="role list">
+<div class="roles list">
   <h2>Roles</h2>
 
-  <%= link_to("<< Back to Menu", {:controller => 'admin'}, :class => 'back-link') %><br />
-  <%= link_to("Add New Role", {:action => 'new'}, :class => 'action new') %>
-
-  <table class="listing" summary="Role list">
+  <table id="rolelist" class="listing" summary="Roles list">
     <tr class="header">
-      <th>Id</th>
       <th>Title</th>
       <th>Actions</th>
     </tr>
+
     <% @roles.each do |role| %>
       <tr>
-        <td><%= role.id %></td>
-        <td><%= role.title %></td>
+        <td><%= unless role.title.blank? then role.title else render "globals/undefined" end %></td>
         <td class="actions">
-          <%= link_to("", {:action => 'show', :id => role.id}, :class => 'show') %>
-          <%= link_to("", {:action => 'edit', :id => role.id}, :class => 'edit') %>
+          <%= link_to '', role, :class => "show" %>
+          <%= link_to '', edit_role_path(role), :class => "edit" %>
           <%= link_to '', role, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete" %>
         </td>
       </tr>
     <% end %>
   </table>
+
+  <br />
+
+  <%= link_to 'New Role', new_role_path, :class => "button" %>
 </div>
+
