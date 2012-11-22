@@ -160,7 +160,10 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 	}
 
 	private boolean DangerOfAny() {
-		if ((getReceptiveFieldCellValue(marioEgoRow + 2, marioEgoCol + 1) == 0 && getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + 1) == 0) ||
+		if (	(
+					getReceptiveFieldCellValue(marioEgoRow + 2, marioEgoCol + 1) == 0 && 
+					getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + 1) == 0
+				) ||
 				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
 				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 2) != 0 ||
 				getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != 0 ||
@@ -170,7 +173,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-
 	private boolean ObstructionAhead() {
 		if (
 				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol + 1) == -24 ||
@@ -189,7 +191,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-	
 	private boolean ObstructionBehind() {
 		if (
 				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol - 1) == -24 ||
@@ -205,20 +206,22 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-
 	private boolean EnemyAboveRight() {
-		if (getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 1) != 0 || 
+		if (	(getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 1) != 0 &&
+				getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 1) != 3) || 
 				
-				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 1) != 0 ||
+				(getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 1) != 0 &&
+				getEnemiesCellValue(marioEgoRow - 2, marioEgoCol + 1) != 3) ||
 
-				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 1) != 0) {
+				(getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 1) != 0 &&
+				getEnemiesCellValue(marioEgoRow - 3, marioEgoCol + 1) != 3)) {
 			System.out.println("Above Right");
+			
 			return true;
 		} else {
 			return false;
 		}
 	}
-
 	private boolean EnemyBelowLeft() {
 		if (getEnemiesCellValue(marioEgoRow, marioEgoCol - 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow, marioEgoCol - 2) != 0 ||
@@ -249,7 +252,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-
 	private boolean EnemyBelow() {
 		if (getEnemiesCellValue(marioEgoRow, marioEgoCol) != 0 || 
 				getEnemiesCellValue(marioEgoRow + 1, marioEgoCol) != 0 ||
@@ -263,7 +265,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-	
 	private boolean EnemyAhead() {
 		if (getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow - 1, marioEgoCol + 2) != 0 || 
@@ -278,7 +279,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-
 	private boolean EnemyBelowRight() {
 		if (getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != 0 || 
 				getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != 0 ||
@@ -309,7 +309,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 			return false;
 		}
 	}
-	
 	private boolean CoinBehind() {
 		if (getReceptiveFieldCellValue(marioEgoRow, marioEgoCol - 1) == 2 ||
 				getReceptiveFieldCellValue(marioEgoRow, marioEgoCol - 2) == 2 ||
@@ -330,7 +329,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 		}
 		return false;
 	}
-	
 	private boolean CoinBelow() {
 		if (getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol) == 2 ||
 				
@@ -340,7 +338,6 @@ public class BadAssAgent extends BasicMarioAIAgent implements Agent {
 		}
 		return false;
 	}
-	
 	private boolean CoinAbove() {
 		if (getReceptiveFieldCellValue(marioEgoRow, marioEgoCol) == 2 ||
 				
