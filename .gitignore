@@ -21,7 +21,7 @@
 .DS_STORE
 
 # Ignore yml files
-*.yml
+database.yml
 
 # LaTeX
 master.pdf
