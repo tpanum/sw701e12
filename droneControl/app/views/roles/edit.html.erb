@@ -1,15 +1,12 @@
 <% @page_title = "Edit Role: #{@role.title}" %>
 
-<%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
-
 <div class="role edit" data-id="<%= @role.id %>">
-	<h2>Update role</h2>
+	<h2>Update Role</h2>
 
 	<div class="formwrapper">
-	<%= form_for(:role, :url => {:action => 'update', :id => @role.id}) do |f| %>
+	<%= render 'form' %>
 
-		<%= render(:partial => "form", :locals => {:f => f}) %>
-	<% end %>
+
 	<form class="users">
 		<ul>
 			<% @role.users.each do |u| %>
@@ -31,7 +28,9 @@
 		</div>
 	</form>
 
-	<a class="add_privilege" style="margin-left:72px; margin-top: 10px;">Add privilege</a>
+	<br />
+	<a class="add_privilege button" style="margin-left:72px; margin-top: 10px;">Add privilege</a>
 
 </div>
 
+<%= link_to "Back", roles_path, :class => 'button back' %>

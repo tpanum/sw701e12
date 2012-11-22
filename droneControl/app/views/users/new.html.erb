@@ -1,17 +1,10 @@
 <% @page_title = "Create User" %>
 
-<%= link_to("<< Back to List", {:action => 'list'}, :class => 'back-link') %>
-
 <div class="user new">
 	<h2>Create User</h2>
 
-	<%= form_for(:user, :url => {:action => 'create'}) do |f| %>
-		
-		<%= render(:partial => "form", :locals => {:f => f}) %>
-
-		<div class="form-buttons">
-			<%= submit_tag("Create User") %>
-		</div>
-	<% end %>
+	<%= render 'form' %>
 
 </div>
+
+<%= link_to "Back", users_path, :class => 'button back' %>

@@ -1,12 +1,10 @@
 <% @page_title = "Edit Drone: #{@drone.name} at #{@drone.location}" %>
 
-<%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
-
 <div class="drone edit">
 	<h2>Update Drone</h2>
 
-	<%= form_for(:drone, :url => {:action => 'update', :id => @drone.id}) do |f| %>		
-		<%= render(:partial => "form", :locals => {:f => f}) %>		
-	<% end %>
+	<%= render 'form' %>
 
 </div>
+
+<%= link_to "Back", drones_path, :class => 'button back' %>
