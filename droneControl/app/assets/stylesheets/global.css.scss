@@ -315,7 +315,7 @@ footer {
 .button {
     padding: 5px 8px;
 	border: 1px solid #C1C1C1;
-	background-image: -webkit-linear-gradient(top, #FDFDFD, #E8E8E8);
+	background: -webkit-linear-gradient(top, #FDFDFD, #E8E8E8);
 	border-radius: 4px;
 	color: #666666;
 	font-size: 11px;
@@ -323,6 +323,14 @@ footer {
 	text-align: center;
 	
 	&:hover {
-		background-image: -webkit-linear-gradient(top, #EFEFEF, #E5E5E5);
+		background: -webkit-linear-gradient(top, #EFEFEF, #E5E5E5);
+	}
+
+	& .back {
+		background-image: image-url('back_for.png');
+		width: 16px;
+		height: 13px;
+		float: left;
+		background-position: -10px -7px;
 	}
 }
