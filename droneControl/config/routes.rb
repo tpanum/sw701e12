@@ -46,6 +46,7 @@ DroneControl::Application.routes.draw do
   resources :drones do
     collection do
       get :get_information
+      post :link_drone_to_company
     end
   end
   resources :companies do

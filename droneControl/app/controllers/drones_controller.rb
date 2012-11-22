@@ -67,4 +67,14 @@ class DronesController < ApplicationController
       format.json { render json: {"drone" => @drone, "companies" => @companies} }
     end
   end
+
+  def link_drone_to_company
+    @drone = Drone.find(params[:drone_id])
+    @company = Company.find(params[:company_id])
+    @drone.companies << @company
+    @drone.save
+
+    flash[:notice] = "Drone linked to #{@company.name}"
+    redirect_to(:action => 'index')
+  end
 end
