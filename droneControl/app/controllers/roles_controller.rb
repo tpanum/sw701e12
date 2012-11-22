@@ -3,7 +3,9 @@ class RolesController < ApplicationController
   before_filter :confirm_logged_in
 
   def index
-    @roles = Role.where(:level_type => [1,2]).order('title ASC')
+    @companies = User.find(session[:user_id]).companies | User.find(session[:user_id]).owned_companies
+
+    @roles = Role.where(:level_type => 2).includes(:companies).where("companies.id IN (?)", @companies)
   end
 
   def show
