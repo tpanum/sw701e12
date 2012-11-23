@@ -1,23 +1,25 @@
-<form class="dronetable">
+<form class="dronetable" action="/drones/link_drone_to_company" method="POST">
+	<input name="authenticity_token" type="hidden" value="{{auth_token}}" />
+	<input name="drone_id" type="hidden" value="{{drone.id}}" />
 	<table>
 		<tr>
 			<th>IP</th>
-			<td>{{ip}}</td>
+			<td>{{drone.ip}}</td>
 		</tr>
 		<tr>
 			<th>Location</th>
-			<td>{{location}}</td>
+			<td>{{drone.location}}</td>
 		</tr>
 		<tr>
 			<td>
-				<a class="button">Link to</a>
+				<input type="submit" value="Link to" class="button" />
 			</td>
 			<td>
-				<select class="button">
+				<select name="company_id" class="button">
 				{{#each companies}}
 				  <option value="{{id}}">{{name}}</option>
 				{{/each}}
-				</select>	
+				</select>
 			</td>
 		</tr>
 	</table>

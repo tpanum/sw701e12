@@ -1,6 +1,9 @@
-<h1>Editing privilege</h1>
+<% @page_title = "Edit Privilege: #{@privilege.type}_#{@privilege.identifier}" %>
 
-<%= render 'form' %>
+<div class="privilege edit">
+    <h2>Update Privilege</h2>
 
-<%= link_to 'Show', @privilege %> |
-<%= link_to 'Back', privileges_path %>
+    <%= render 'form' %>
+</div>
+
+<%= link_to "Back", privileges_path, :class => 'button back' %>

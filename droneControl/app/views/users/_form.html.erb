@@ -1,17 +1,28 @@
-<table>
-	<tr>
-		<td>Email</td>
-		<td><%= f.text_field(:email) %></td>
-	</tr>
-	</tr>
-		<td>Password</td>
-		<td><%= f.password_field(:password) %></td>
-	</tr>
-	<tr>
-		<td>Firstname</td>
-		<td><%= f.text_field(:first_name) %></td>
-	</tr>
-		<td>Lastname</td>
-		<td><%= f.text_field(:last_name) %></td>
-	</tr>
-</table>
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= label_tag(:email) %>
+  <%= f.text_field(:email) %>
+
+  <%= label_tag(:password) %>
+  <%= f.text_field(:password) %>
+
+  <%= label_tag(:first_name) %>
+  <%= f.text_field(:first_name) %>
+
+  <%= label_tag(:last_name) %>
+  <%= f.text_field(:last_name) %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

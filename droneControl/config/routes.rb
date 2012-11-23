@@ -43,7 +43,12 @@ DroneControl::Application.routes.draw do
   #     end
   #   end
 
-  resources :drones
+  resources :drones do
+    collection do
+      get :get_information
+      post :link_drone_to_company
+    end
+  end
   resources :companies do
     member do
       get :drones

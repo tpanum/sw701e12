@@ -1,12 +1,12 @@
 <div class="drone_wrapper">
-	<form>
+	<form id="drone_form">
 		<%= label_tag(:serial) %>
-		<input type="text" />
+		<input type="text" class="query" />
 		<%= submit_tag "Find drone", :class => "button" %>
 	</form>
-	
+	<div id="drone_info">
+	</div>
 
 </div>
 
 <%= link_to 'Back', drones_path, :class => "button back" %>
-
