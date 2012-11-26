@@ -10,6 +10,10 @@ class Company < ActiveRecord::Base
   after_create :create_company_role
   after_destroy :destroy_all_roles, :destroy_all_drones
 
+  def privileges
+    self.roles.where(:level_type => 1).limit(1).first.privileges
+  end
+
   private
   def create_company_role
     # role_name = self.name.gsub(" ", "_") + "_All"

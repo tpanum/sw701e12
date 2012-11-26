@@ -2,7 +2,7 @@ class Drone < ActiveRecord::Base
   attr_accessible :ip, :name, :location, :description, :session
 
   has_many :flight_plans
-  belong_to :company
+  belongs_to :company
   has_many :users, :through => :user_drone_privileges
   has_many :session_key_tasks
   has_one :session
@@ -15,6 +15,10 @@ class Drone < ActiveRecord::Base
     self.company = nil
     self.description = nil
     self.save
+  end
+
+  def privileges
+    AffiliatePrivilege.where(:affiliate => self.id).includes(:privilege).where("privileges.instance_type = ?", Privilege.type_enums.index("drone"))
   end
 
   private
@@ -32,10 +36,10 @@ class Drone < ActiveRecord::Base
   def move_privileges
     if self.company_id_changed?
       unless self.company_id_was.nil?
-        Company.find(self.company_id_was).roles.where(:level_type => 1).limit(1).first.privileges.delete self.privileges
+        Company.find(self.company_id_was).privileges.delete self.privileges
       end
       unless self.company.nil?
-        self.company.roles.where(:level_type => 1).limit(1).first.privileges << self.privileges
+        self.company.privileges << self.privileges
       end
     end
   end
