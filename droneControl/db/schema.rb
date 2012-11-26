@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120123008) do
+ActiveRecord::Schema.define(:version => 20121126115250) do
 
   create_table "actions", :force => true do |t|
     t.integer  "duration"
@@ -53,15 +53,6 @@ ActiveRecord::Schema.define(:version => 20121120123008) do
 
   add_index "companies_users", ["company_id", "user_id"], :name => "index_companies_users_on_company_id_and_user_id"
 
-  create_table "company_drones", :force => true do |t|
-    t.integer  "company_id"
-    t.integer  "drone_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "company_drones", ["company_id", "drone_id"], :name => "index_company_drones_on_company_id_and_drone_id"
-
   create_table "company_roles", :force => true do |t|
     t.integer  "company_id"
     t.integer  "role_id"
@@ -76,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20121120123008) do
     t.string   "location"
     t.string   "name"
     t.text     "description"
+    t.integer  "company_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
