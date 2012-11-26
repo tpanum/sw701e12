@@ -33,19 +33,25 @@ module Drone_connector
 
         name = obj['slave_id']
         drone = Drone.where(:name => name).limit(1).first
+
+        port, ip = Socket.unpack_sockaddr_in(get_peername)
+        url = "http://api.hostip.info/?ip="+ip
+        @xmldoc = open(url).read {|f|f.read}
+        doc = REXML::Document.new(@xmldoc)
+
+        doc.elements.each('//gml:name') do |c|
+          @loc = c.text
+        end
+
         unless drone.nil?
+          if drone.ip != ip
+            drone.ip = ip
+            drone.location = @loc
+            drone.save
+          end
           drone.session.destroy unless drone.session.nil?
         else
-          port, ip = Socket.unpack_sockaddr_in(get_peername)
-          url = "http://api.hostip.info/?ip="+ip
-          @xmldoc = open(url).read {|f|f.read}
-          doc = REXML::Document.new(@xmldoc)
-
-          doc.elements.each('//gml:name') do |c|
-            @loc = c.text
-          end
-
-          drone = Drone.new(:ip => ip, :name => name, :description => "Red Leader", :location => @loc)
+          drone = Drone.new(:ip => ip, :name => name, :description => nil, :location => @loc)
           drone.save
         end
       elsif !obj['session_terminate_by_name'].nil?

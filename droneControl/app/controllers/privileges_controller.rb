@@ -90,7 +90,7 @@ class PrivilegesController < ApplicationController
     end
     unless @object.nil?
       @object.companies.each do |c|
-        @privileges |= c.roles.where(:level_type => 1).limit(1).first.privileges.includes(:privilege).where("privileges.identifier LIKE ?", "#{params[:query]}%")
+        @privileges |= c.privileges.includes(:privilege).where("privileges.identifier LIKE ?", "#{params[:query]}%")
       end
       @privileges -= @object.privileges
     end

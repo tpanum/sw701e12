@@ -52,9 +52,9 @@ class DronesController < ApplicationController
   end
 
   def destroy
-    Drone.find(params[:id]).destroy
+    Drone.find(params[:id]).unlink
 
-    flash[:notice] = "The Drone has been destroyed"
+    flash[:notice] = "The Drone has been unlinked"
     redirect_to(:action => 'index')
   end
 
@@ -71,10 +71,10 @@ class DronesController < ApplicationController
   def link_drone_to_company
     @drone = Drone.find(params[:drone_id])
     @company = Company.find(params[:company_id])
-    @drone.companies << @company
+    @drone.company = @company
     @drone.save
 
-    flash[:notice] = "Drone linked to #{@company.name}"
+    flash[:notice] = "Drone linked to #{@drone.company.name}"
     redirect_to(:action => 'index')
   end
 end

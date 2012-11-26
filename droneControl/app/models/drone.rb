@@ -2,22 +2,26 @@ class Drone < ActiveRecord::Base
   attr_accessible :ip, :name, :location, :description, :session
 
   has_many :flight_plans
-  has_many :company_drones
-  has_many :companies, :through => :company_drones, :uniq => true
+  belongs_to :company
   has_many :users, :through => :user_drone_privileges
   has_many :session_key_tasks
   has_one :session
 
-  after_initialize :temp_company
   after_create :create_privileges
   after_destroy :drop_privileges
-  before_save :check_amount_companies, :move_privileges
+  before_save :move_privileges
 
-  private
-  def check_amount_companies
-    raise "Too many companies" if self.companies.size > 1
+  def unlink
+    self.company = nil
+    self.description = nil
+    self.save
   end
 
+  def privileges
+    AffiliatePrivilege.where(:affiliate => self.id).includes(:privilege).where("privileges.instance_type = ?", Privilege.type_enums.index("drone"))
+  end
+
+  private
   def create_privileges
     privileges = Privilege.where(:instance_type => Privilege.type_enums.index("drone"))
     privileges.each do |p|
@@ -30,25 +34,13 @@ class Drone < ActiveRecord::Base
   end
 
   def move_privileges
-    @temp_companies ||= []
-    self.companies ||= []
-    if ((@temp_companies | self.companies) - (@temp_companies & self.companies)).size > 0
-      unless @temp_companies.nil?
-        # Delete privileges of drone from @temp_companies
-        @temp_companies.each do |c|
-          c.roles.where(:level_type => 1).limit(1).first.privileges.delete self.privileges
-        end
+    if self.company_id_changed?
+      unless self.company_id_was.nil?
+        Company.find(self.company_id_was).privileges.delete self.privileges
       end
-      unless self.companies.nil?
-        # Add privileges of drone to self.companies
-        self.companies.each do |c|
-          c.roles.where(:level_type => 1).limit(1).first.privileges << self.privileges
-        end
+      unless self.company.nil?
+        self.company.privileges << self.privileges
       end
     end
-  end
-
-  def temp_company
-    @temp_companies = self.companies
   end
 end
