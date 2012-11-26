@@ -1,5 +1,29 @@
+@import "global.css.scss";
+
 #companylist {
     td:nth-child(3){
         width: 15%;
     }
+}
+
+#company_edit_menu {
+
+	@extend .container;
+
+	border: 1px solid #ccc;
+	padding: 5px 0;
+	border-radius: 4px;
+	display:inline-block;
+	margin: 0 auto;
+
+
+
+	a {
+		margin: 0 5px;
+	}
+}
+
+.centerwrapper {
+	width: 100%;
+	text-align: center;
 }
