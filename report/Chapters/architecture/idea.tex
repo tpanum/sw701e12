@@ -38,5 +38,17 @@ Therefore, this must be a part of the architecture already now.
 
 
 \subsection{Communication between a Drone and the web service}
+Since the AR Drones are broadcasting their own WIFI network that one can connect to, instead of being able to connect to an existing WIFI network, them implementation is sort of backwards. 
+This means that the Drone is not able to connect directly to the web service. 
 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/technical_structure.pdf}
+    \caption{Illustration of the relationship between Drones and the end User}
+    \label{fig:Technical_Structure}
+\end{figure}
 
+Figure~\ref{fig:Technical_Structure} shows the architecture of the physical elements (drones, servers and users) and is also an example with one user and three drones, each located at three different locations.
+Due to the AR Drones nature where they broadcast a WIFI that a client must connect to, each location has a ``Slave''-server that connects to a Drones WIFI. 
+Each client then communicates with the ``Master''-server (which is also hosting the web service), which a user can connect to via his Internet Browser. 
+That means that the communications flow from the user to the drone will be as displayed in Figure~\ref{fig:Technical_Structure}.
