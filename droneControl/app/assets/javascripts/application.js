@@ -16,4 +16,5 @@
 //= require_tree .
 //= require handlebars
 //= require_tree ../../templates
+//= require swfobject
 
