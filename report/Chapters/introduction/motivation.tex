@@ -1,7 +1,3 @@
-This student report is written as part of a learning project. Therefore we must comply with the study regulation.
-The study regulation states that the main focus of this semester's project is to gain knowledge of, and develop, Internet applications, -agents, or -services.
-The goal is thus to create an Internet application that provides a service with focus on agent technologies, scalability and data intensity.
-
 \section{Motivation}
 When a crime occurs documentation is often needed in order to convict the person(s) responsible and to receive repairs from an insurance company for the damages suffered.
 Documentation can be eye witnesses, forrensic evidence, or video surveillance.
@@ -11,9 +7,9 @@ Video surveillance is however always obtainable, but it is far from a perfect so
 \subsection{Video Surveillance}
 Video surveillance is widely used to obtain documentation or evidence of a crime, or as a preventive tool.
 As an example there is one camera for every 32 people in the United Kingdom\citep{london_camera_surveillance}.
-This number includes both cameras installed by the government to surveil London, but also cameras installed by businnes to secure their property.
+This number includes both cameras installed by the government, but also cameras installed by businesses to secure their property.
 The high number of cameras is partially attributed to the high need for surveillance to prevent e.g. terrorist attacks in London, but additionally due to the technical difficulties of video surveillance.
-A typical video surveillance solution consists of a set of cameras connected via cables to a ``command station''
+A typical video surveillance solution consists of a set of cameras connected via cables to a ``command station''.
 Video cameras are mounted on a fixed location, and can therefore only surveil an area limited by their field of view, see Figure~\ref{fig:camera_properties}, and the environment in which it is placed.
 
 \begin{figure}[htb]
@@ -32,7 +28,7 @@ Properly surveilling large areas, in particular outdoor changing environments, i
 %Should a break-in occur a definitive proof of such must often be presented in order for insurances to cover potential losses.
 %Similarly video footage or witnesses is in most cases required in order to convict a person of a burglary.
 %One solution to the problem is to have mounted video cameras.
-Video cameras have a limited field of view, both in terms of vision and range, and only within this field of view is the quality high enough be usable as documentation.
+The problem with outdoor surveillance originates in video cameras' limited field of view.
 This limitation can make it difficult and resource intensive to surveil large areas.
 The resource intensitivity stems from the amount of hardware required to surveil, referring to both cameras, and the cables needed to connect the surveillance system.
 The difficulty in surveilling the areas comes from the nature of an outdoor environment.
@@ -50,8 +46,6 @@ The figures referenced in this section show the same area with a different surve
 In a regular camera solution mounted cameras are used.
 These cameras surveil a limited area, and in order to cover a larger area, multiple cameras are needed.
 With multiple cameras multiple areas are surveilled simultaneously.
-A limitation with a regular camera setup, is that the cameras are stationary.
-This means a cameras field of view can be limited by physical objects.
 As an example in Figure~\ref{fig:refular_camera_setup} it can be seen how an object placed in a cameras field of view can create a blind spot in an area normally covered by a camera.
 \begin{figure}[htb]
     \centering
@@ -92,7 +86,7 @@ A possible solution is to switch from fixed cameras to movable cameras.
 A movable camera is one capable of moving freely in the environment it is to surveil.
 This can be achieved with the use of drones with an onboard camera.
 A drone in this context is a pilotless aircraft controlled via remote controll.
-Drones capable of moving freely in an environment is capable of surveilling a larger area with fewer cameras, than a traditional setup, and they remove the problem with blind spots.
+Drones moving freely in an environment are capable of surveilling a larger area with fewer cameras, than a traditional setup, and they remove the problem with blind spots.
 The need for cables is also removed by using drones, as they are typically controlled using wireless internet technologies or radio waves\fixme{source}.
 
 \subsection{Internet Technologies in a Surveillance Perspective}
@@ -100,7 +94,7 @@ With the development and standardization of network technologies, video surveill
 The digitization of video surveillance is important as it e.g. makes it faster to examine a video recording, and video cameras can be programmed to trigger alarms when they detect movement.
 Video recordings are examined faster as it is easy to skip through digital data compared to the analog data which would be stored on e.g. a VHS cassette.
 The programming of video cameras is possible due to the data being digital. 
-It is possible to apply algorithms to examine the digital Sdata, which could e.g. identify license plates.
+It is possible to apply algorithms to examine the digital data, which could e.g. identify license plates.
 The digitization allows for the use of the internet.
 The internet makes it possible to interconnect surveillance solution, that enables features such as backup or long distance observing.
 
