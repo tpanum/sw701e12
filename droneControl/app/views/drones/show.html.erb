@@ -1,6 +1,8 @@
 
 <h2><%= @drone.name %> at <%= @drone.location %></h2>
 
-<%= swf_tag('something', :flashvars => {:ip => "1234", sessionkey => "some_key"}) %>
+<div id="drone_app"></div>
+
+<%= swf_tag('drone_app', {:flashvars => {:server_ip => @drone.ip, :session_key => @drone.session.session_key}, :size => "640x480", :version => '10.0'}) %>
 
 <%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
