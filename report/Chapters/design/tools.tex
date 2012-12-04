@@ -1,0 +1,107 @@
+\section{Tools}
+The problem domain dictates that the proposed solution will consist of web development and server-side scripting.
+The development platform will therefore consist of two parts.
+Firstly the setup including the operating system of the server must be decided, and secondly the programming language for the application must be decided.
+
+\subsection{Server operating system}
+There are two major operating system families to choose from, which each has some potential operating systems beneath them:
+
+\begin{itemize}
+    \item Windows Server family
+        \begin{itemize}
+            \item Windows Server 2003
+            \item Windows Server 2008
+            \item Windows Server 2012
+        \end{itemize}
+    \item UNIX family
+        \begin{itemize}
+            \item Linux
+                \begin{itemize}
+                    \item Debian/Ubuntu
+                    \item Fedora
+                    \item CentOS/RedHat
+                    \item Various other distributions of Linux
+                \end{itemize}
+            \item BSD
+            \item Mac OSX Server
+        \end{itemize}
+\end{itemize}
+
+We have chosen to use Linux Debian due to the following reasons:
+
+\begin{itemize}
+    \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
+    \item It is easy to get started on the project, as installation of the programs needed is simple.
+    \item Linux Debian is open-source and does not require a license to install or use.
+    \item Linux Debian is one of the most well-seen operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. Linux Debian has a huge community that continuously updates and maintains it.
+\end{itemize}
+
+It is important to underline that any of the listed operating systems are fully capable of handling any task needed in this project.
+Operating systems are often chosen based on a personal preference for- or experience with a given operating system.
+%Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
+The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
+
+\subsection{Programming language}
+Our choice to use Linux Debian as operating system on the servers limits the possible choices for programming languages.
+Programming languages such as .NET that are not natively written to work on other platforms than Windows Server are discarded as we do not consider emulating tools such as Wine a reliable solution. \\
+
+We have some requirements to the programming language that we want to use.
+These are:
+
+\begin{itemize}
+    \item It must support object oriented programming
+    \item It must have native MySQL libraries
+    \item It must be open-source and have an active community to ensure continuous bug-fixing etc. or be a corporate language that is professionally maintained.
+\end{itemize}
+
+This leaves us with a number of options that we have narrowed down to the ones we already have little to some knowledge about or experience with.
+These are:
+\begin{itemize}
+    \item Java
+    \item Python
+    \item Ruby
+    \item Perl
+    \item PHP
+\end{itemize}
+
+Just as when you are choosing which operating system to use, choosing which programming language to use can be considered a bit ``religious''.
+All of the above are able to output a program with similar functionality that runs on a Linux Debian server.\\
+
+The language we have chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
+The reasons why we have chosen Ruby and Ruby on rails follows.
+First are some of the advantages by using Ruby and Ruby on Rails:
+
+\begin{itemize}
+    \item Ruby is easy to install server-side.
+    \item Ruby can be used as a server-side scripting language.
+    \item Rails provide an easy-to-use framework for web-development with Ruby.
+\end{itemize}
+
+Ruby is a object oriented scripting language.
+Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
+
+Ruby on Rails \emph{[Rails]} is a open-source web framework for Ruby that is optimized to make programming as easy and efficient as possible.
+Rails provide a set of advantages through its built-in features, such as native support for the MVC model and Active Records.
+%that enables us to be more efficient and write better quality code.
+Rails also has build in features that make it easier to be multiple programmers working on the same project.
+An example is ``Migrations'', which is Rails' way of handling databases.
+Instead of having one big shared database that each developer connects to, to make sure that everybody is always working on an updated database, Rails uses migrations to save changes to the databases.
+When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
+This will initialize a part of Rails that updates the developers local database.
+If he makes some changes to the database, he simply makes a new migration document, pushes it to the repository and the rest of the team can get the updated version of the database by running the migration.\\
+
+%This is one of the features of Rails that helped us to make the decision to use it. \\
+
+Keeping in mind that this is a student project, Ruby is also a natural choice as we in the group have little to no knowledge of how Ruby works.
+This is a great opportunity for us to lean how to use another programming language. \\
+
+We know that we will be communicating long distance with the drone.
+We define ``Long Distance'' in this context as communication between two computer devices that are not on the same LAN.
+This will require some sort of server or gateway between the web application and the drone.
+We also already know that we have to build some web application and server side scripting which both requires some soft of hosting.
+Both aspects also work very well with Ruby and Rails.
+
+
+
+
+%We have decided to use Linux Debian for this purpose, as Linux provides a lot of useful and built-in features for hosting both web applications, server side scripting and databases.
