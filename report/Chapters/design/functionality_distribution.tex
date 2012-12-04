@@ -4,7 +4,8 @@ While Section~\ref{sec:application_structure} covered the overall structure of t
 
 The Master is the users only way into the system. 
 This access will always be via the users local web browser, where he sees the web system for \projectname{}.
-This web system and the database containing all informations about the system, drones, users etc. will be located on the Master. \\
+This web system and the database containing all informations about the system, drones, users etc. will be located on the Master. 
+The Master is responsible for providing these services and coordinating the communication between the users and drones via the Slaves. \\
 
 A Slave is needed for every drone in the field, as the drones are not capable of long-distance communication. 
 Therefore, in order to communicate with any drone, the communication must be channeled through its assigned Slave. 
