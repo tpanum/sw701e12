@@ -11,18 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126115250) do
-
-  create_table "actions", :force => true do |t|
-    t.integer  "duration"
-    t.integer  "flight_action_relationship_id"
-    t.integer  "instruction_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "actions", ["flight_action_relationship_id"], :name => "index_actions_on_flight_action_relationship_id"
-  add_index "actions", ["instruction_id"], :name => "index_actions_on_instruction_id"
+ActiveRecord::Schema.define(:version => 20121204131539) do
 
   create_table "affiliate_privileges", :force => true do |t|
     t.integer  "privilege_id"
@@ -72,22 +61,6 @@ ActiveRecord::Schema.define(:version => 20121126115250) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "drones_privileges", :id => false, :force => true do |t|
-    t.integer "drone_id"
-    t.integer "privilege_id"
-  end
-
-  add_index "drones_privileges", ["drone_id", "privilege_id"], :name => "index_drones_privileges_on_drone_id_and_privilege_id"
-
-  create_table "flight_action_relationships", :force => true do |t|
-    t.integer  "rank"
-    t.integer  "flight_plan_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "flight_action_relationships", ["flight_plan_id"], :name => "index_flight_action_relationships_on_flight_plan_id"
-
   create_table "flight_plans", :force => true do |t|
     t.string   "name"
     t.integer  "drone_id"
@@ -96,12 +69,6 @@ ActiveRecord::Schema.define(:version => 20121126115250) do
   end
 
   add_index "flight_plans", ["drone_id"], :name => "index_flight_plans_on_drone_id"
-
-  create_table "instructions", :force => true do |t|
-    t.string   "AT_command"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "privileges", :force => true do |t|
     t.string   "identifier"

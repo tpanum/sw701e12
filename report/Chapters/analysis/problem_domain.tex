@@ -1,20 +1,20 @@
-\section{Problem Domain}
-The problem domain for the application is surveillance of large outdoor areas.
-The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this. \label{problem_domain}
+\section{Problem Domain}\label{problem_domain}
+The problem domain for the application is video surveillance of large outdoor areas.
+The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this. 
+
+Video surveillance with the posed solution has a set of challenges which must be considered.
 
 The main problems present in the problem domain is as follows:
 \begin{itemize}
-	\item Wireless short-distance and wired long-distance communication with a drone via TCP and/or UDP. This includes controlling the drone.
+	\item Wireless short-distance and wired long-distance communication with a drone. This includes controlling the drone.
 	%We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
-	\item Wireless short-distance and wired long-distance video streaming via TCP and/or UDP. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances. 
+	\item Wireless short-distance and wired long-distance video streaming. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances. 
 	%\item Interaction with the drone will be handled through a web application. It is already decided that the user must be able to control the drone via a web application. Therefore we need to look into how one can do this, knowing that the web is a state-less environment. 
 	\item Permissions- and access control in the web application. Includes both access to the system and access to specific drones.
 	\item Scalability - the system must be scalable in terms of users and drones.
 \end{itemize}
 
-These are all areas that needs study to be understood before a solution that solves the problem can be constructed, as this will build on these principles.
-
-The superficial requirements of \projectname{} are:
+The superficial requirements for \projectname{} are:
 
 \begin{itemize}
 	\item A user must be able to login to the system.
@@ -24,4 +24,4 @@ The superficial requirements of \projectname{} are:
 	\item The system must support multiple drones and users. 
 \end{itemize}
 
-These requirements are the base line for the use cases, which will be used to define the final requirements of the system. 
+These requirements are the base line for the use cases, which will be used to define the functionality of the system. 
