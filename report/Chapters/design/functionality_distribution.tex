@@ -1,1 +1,13 @@
 \section{Functionality distribution}
+
+While Section~\ref{sec:application_structure} covered the overall structure of this application, this section will cover how the functionality is divided between the Master and the Slaves in the system. \\
+
+The Master is the users only way into the system. 
+This access will always be via the users local web browser, where he sees the web system for \projectname{}.
+This web system and the database containing all informations about the system, drones, users etc. will be located on the Master. \\
+
+A Slave is needed for every drone in the field, as the drones are not capable of long-distance communication. 
+Therefore, in order to communicate with any drone, the communication must be channeled through its assigned Slave. 
+This Slave is responsible for keeping contact with the drone and communicate directly with it via its API's. 
+
+
