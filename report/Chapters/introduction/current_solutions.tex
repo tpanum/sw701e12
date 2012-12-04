@@ -1,28 +1,30 @@
 \section{Current solutions}
 This section will discuss the current solutions used for video surveillance.
 The strengths and weaknesses of each solution will be covered.
-The figures referenced in this section show the same area with a different surveillance setup to make them comparable.
+The figures referenced in this section show the same area with a different surveillance setup to make them comparable. \\
 
-
-In a regular camera solution mounted cameras are used.
+In a regular camera solution, mounted cameras are used.
 These cameras surveil a limited area, and in order to cover a larger area, multiple cameras are needed.
 With multiple cameras multiple areas are surveilled simultaneously.
 A limitation with a regular camera setup, is that the cameras are stationary.
 This means a cameras field of view can be limited by physical objects.
-As an example in Figure~\ref{fig:refular_camera_setup} it can be seen how an object placed in a cameras field of view can create a blind spot in an area normally covered by a camera.
+As an example in Figure~\ref{fig:refular_camera_setup} it can be seen how an object placed in a cameras field of view can create a blind spot in an area normally covered by a camera. \\
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/regular_camera_setup.pdf}
     \caption{An Example of a Regular Camera Setup}
     \label{fig:refular_camera_setup}
 \end{figure}
-The red star in Figure ~\ref{fig:refular_camera_setup} represents a critical object, that needs to be observed.
+
+The red star in Figure ~\ref{fig:refular_camera_setup} represents a critical object, that needs to be observed. \\
 
 In a photo sensor solution the perimeter of the surveilled area is covered by both cameras and photo sensors.
 The purpose of the setup is to detect if anything enters the area, and then activate the cameras to capture it on video, as seen in Figure~\ref{fig:photo_sensor}.
 A photo sensor solution can be used in combination with a regular camera solution, to surveil both the interior and the perimeter of an area.
 The advantage of a photo sensor setup is that the cameras surveilling the perimeter are only activated if the sensors are triggered, ensuring video footage is only recorded when it is needed.
-The disadvantage is that the cameras are still stationary, meaning the a large amount of cameras are required to surveil a large area.
+The disadvantage is that the cameras are still stationary, meaning the a large amount of cameras are required to surveil a large area. \\
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/light_sensor.pdf}
@@ -30,21 +32,14 @@ The disadvantage is that the cameras are still stationary, meaning the a large a
     \label{fig:photo_sensor}
 \end{figure}
 
-This solution centers around having a dome camera with a long field of view in the center.
+The next solution centers around having a dome camera with a long field of view in the center.
 The perimeter is then divided into zones, by fx. light sensors.
 When a zone have detected an entry, the dome camera is rotated towards that zone to observe the area.
-Compared to the two previous solution, the dome camera solution is limited to only observe a specific subarea at a time, as seen in Figure~\ref{fig:drone_sensor}.
+Compared to the two previous solution, the dome camera solution is limited to only observe a specific subarea at a time, as seen in Figure~\ref{fig:drone_sensor}. \\
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/drome_sensor.pdf}
     \caption{A Dome Setup}
     \label{fig:drone_sensor}
 \end{figure}
-
-As mentioned in Section~\ref{sec:video_surveillance} the main problems with surveillance is the ammount of hardware required, particularly cables, and the limited field of view of cameras.
-A possible solution is to switch from fixed cameras to movable cameras.
-A movable camera is one capable of moving freely in the environment it is to surveil.
-This can be achieved with the use of drones with an onboard camera.
-A drone in this context is a pilotless aircraft controlled via remote controll.
-Drones capable of moving freely in an environment is capable of surveilling a larger area with fewer cameras, than a traditional setup, and they remove the problem with blind spots.
-The need for cables is also removed by using drones, as they are typically controlled using wireless internet technologies or radio waves\fixme{source}.
