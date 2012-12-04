@@ -24,21 +24,12 @@ The architecture is scalable because when a new drone is added it is controlled 
     \label{fig:system_architecture}
 \end{figure}
 
-\subsection{Master M}
-
 The system only uses one M. This is also the bottleneck of the system. If M crashes all S's and B's will have to wait for M to come back up.
-
 One alternative could be running with more M's and in that way scale out.
-
-\subsection{Slave S}
 
 There is always one S for each drone connected to the system. In this way the system is scaled out. This ensures that any S is not likely to become a bottleneck.
 This was done because the drone uses wireless network which is short ranged and the drone is the host which means that the server needs one wireless connection for each drone it have to transmit to.
-
-
 One alternative could be only running with one S and just scale it up. The problem with this is the server will need a wireless connection for each drone it have to control and it have to be in range.
-
-\subsection{Daemons}
 
 Daemons is a background process on a Linux system.
 Daemons is used when it is needed that a process is running at all times. In \projectname{} there are both the session key system which both resides on M and S and a policy file system for Adobe Flash on S. Both of these processes needs to be running at all times for the user to interact with the drone on S.
