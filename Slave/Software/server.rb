@@ -9,6 +9,7 @@ require 'timers'
 
 $timer = nil
 $drone = nil
+$key = nil
 $masterSender = nil
 CONTROL_PORT = 5556
 NAV_PORT = 5554
@@ -36,41 +37,43 @@ class SlaveServer
       if is_json? data
         json = JSON.parse(data)
 
-        unless json['action'].nil?
-          puts echoCommand(json)
+        if !json['session_key'].nil? && json['session_key'] == $key
+          unless json['action'].nil?
+            puts echoCommand(json)
 
-          case json['action']
-            when 'flight'
-              unless @flying
-                $drone.takeoff
-                puts 'TAKING OFF!'
-                @flying = true
-              else
-                $drone.land
-                puts 'LAND!'
-                @flying = false
-              end
-            when 'forward'
-              puts 'FORWARD'
-              $drone.forward
-            when 'backward'
-              puts 'BACKWARD'
-              $drone.backward
-            when 'left'
-              puts 'left'
-              $drone.left
-            when 'right'
-              puts 'FORWARD'
-              $drone.right
-            when 'camera'
-              @camera_channel = 1-@camera_channel
-              puts 'CAMERA CHANNEL '+(@camera_channel+1).to_s
-              $drone.camera @camera_channel+1
+            case json['action']
+              when 'flight'
+                unless @flying
+                  $drone.takeoff
+                  puts 'TAKING OFF!'
+                  @flying = true
+                else
+                  $drone.land
+                  puts 'LAND!'
+                  @flying = false
+                end
+              when 'forward'
+                puts 'FORWARD'
+                $drone.forward
+              when 'backward'
+                puts 'BACKWARD'
+                $drone.backward
+              when 'left'
+                puts 'left'
+                $drone.left
+              when 'right'
+                puts 'FORWARD'
+                $drone.right
+              when 'camera'
+                @camera_channel = 1-@camera_channel
+                puts 'CAMERA CHANNEL '+(@camera_channel+1).to_s
+                $drone.camera @camera_channel+1
+            end
+            $timer = Timers.new
+            $timer.after(10) {
+              $masterSender.sendSessionTerminate
+            }
           end
-          $timer = Timers.new
-          $timer.after(10) {
-            $masterSender.sendSessionTerminate
-          }
         end
 
         response_message = "{\"battery_level\":\"#{$drone.get_battery_level}\"}"
@@ -107,6 +110,7 @@ class SlaveServer
 
     def sendSessionTerminate
       send_data("{\"session_terminate_by_name\":\"#{@slave_id}\"}")
+      $key = nil
     end
   end
 
@@ -139,26 +143,26 @@ class SlaveServer
     end
 
     def axis_reset
-        @phi, @theta, @yaw, @gaz = 0, 0, 0, 0
+      @phi, @theta, @yaw, @gaz = 0, 0, 0, 0
     end
 
     def config_ids(session_id, user_id, application_id)
-        push format_cmd *configids(session_id, user_id, application_id)
+      push format_cmd *configids(session_id, user_id, application_id)
     end
 
     def format_cmd(cmd, data = nil)
-        "#{cmd}=#{next_seq},#{data}\r"
+      "#{cmd}=#{next_seq},#{data}\r"
     end
 
     def next_seq
-        @seq = @seq.nil? ? 1 : @seq + 1
+      @seq = @seq.nil? ? 1 : @seq + 1
     end
 
     def push(msg)
-        unless msg.empty?
-          puts 'Message sent : '+msg
-          send_datagram(msg, @drone_ip, @drone_control_port)
-        end
+      unless msg.empty?
+        puts 'Message sent : '+msg
+        send_datagram(msg, @drone_ip, @drone_control_port)
+      end
     end
 
     def float2int(float)
@@ -187,14 +191,14 @@ class SlaveServer
     end
 
     def land
-        @drone_state = 0
-        state_msg
+      @drone_state = 0
+      state_msg
     end
 
     def takeoff
-        ftrim
-        @drone_state = REF_FLYING
-        state_msg
+      ftrim
+      @drone_state = REF_FLYING
+      state_msg
     end
 
     def ftrim
@@ -263,15 +267,15 @@ class SlaveServer
         obj = JSON.parse(data)
         session = obj['session']
         unless session.nil?
-          @key = rand(36**40).to_s(36)
-          @respond = "{\"sessionkey\":\"#{@key}\"}"
+          $key = rand(36**40).to_s(36)
+          @respond = "{\"sessionkey\":\"#{$key}\"}"
         else
           @respond = "{\"sessionkey\":\"invalid\"}"
         end
       else
         @respond = "{\"sessionkey\":\"invalid\"}"
       end
-      puts "Send session key: \"#{@key}\""
+      puts "Send session key: \"#{$key}\""
       send_data @respond
     end
 
