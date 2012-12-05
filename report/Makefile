@@ -36,7 +36,7 @@ pdf-old:
 clean:
 		@echo Riveting fable, comrade
 		@echo Removing all excess files ...
-		@rm -rf *.aux *.log *.bbl *.blg *.toc *.lof *.lot *~ *.bmt *.mtc1 *.log *.out *.lox
+		@rm -rf *.aux *.log *.bbl *.blg *.toc *.lof *.lot *~ *.bmt *.mtc1 *.log *.out *.lox *.lol
 		@rm -rf *.mtc* *.ps
 		@rm -rf *.maf *.thm
 
@@ -61,7 +61,7 @@ c:
 		$(PDFLATEX)	$(DOC) #> /dev/null
 		
 		@echo Removing all excess files ...
-		@rm -rf *.aux *.log *.bbl *.blg *.toc *.lof *.lot *~ *.bmt *.mtc1 *.log *.out *.lox
+		@rm -rf *.aux *.log *.bbl *.blg *.toc *.lof *.lot *~ *.bmt *.mtc1 *.log *.out *.lox *.lol
 		@rm -rf *.mtc* *.ps
 		@rm -rf *.maf *.thm
 		
