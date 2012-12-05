@@ -1,5 +1,8 @@
 \section{Acceptance Tests}
-
+%Hvad er formÂlet med acceptance tests
+%Hvordan er de linket til Use cases
+%Link til design
+Use cases are typically associated with a set acceptance tests, which must be passed in order for the use case to be fully implemented.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{ | l | l | p{6cm} | }
@@ -9,36 +12,36 @@
 	%%%%%%%%%%% OBS! %%%%%%%%%%%
 	%%%%%%%%%%%      %%%%%%%%%%%
 	% Inden tallene Êndres, skal der lige g√∏res opm√¶rksom p√• det, da de bruges andre steder.
-	1 & 1 & As a user I want to be able to login into the system.\\ \hline
-	2 & 2 & As a user, when I am logged in, I want content shown based on my privileges. \\ \hline
-	3 & 3 & As a user I want to pilot a specific drone.\\ \hline
-	4 & 3 & As a user I want to view the video feed of a specific drone. \\ \hline
-	5 & 4 & As a user I want to be able to grant or revoke other users the privileges that I am an admin of. \\ \hline
-	6 & 5 & As a user with rights I want to change the settings for a specific drone. \\ \hline
-	7 & 6 & As a user I want to be able to add and remove a drone to a company. \\ \hline
-	8 && As a user I want an overview of all drones my privileges grant me access to.\\ \hline
-	9 && As a user I want to be able to log out.  \\ \hline
-	10 && As a user with rights I want to be able to create and edit users.  \\ \hline
-	11 && As a user with rights I want to be able to create a new company.  \\ \hline
-	12 && As an owner of a company, I want to be able to edit the company.  \\ \hline
-	13 && As a user I want to be able to edit privileges, that I am allowed to edit, for another user.  \\ \hline
-	14 && As a user I want to be able to become a customer.  \\ \hline
-	15 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	16 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	17 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	18 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	19 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	20 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	21 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	22 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	23 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	24 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	25 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	26 && As a user I want to be able to add and remove privileges from a role that i am an admin of.  \\ \hline
-	27 && As a user I want to be able to add roles to users within the company I am allowed to do so.  \\ 
+	1 & 1 & The user is provided with a username and password form, that gives visual feedback based on the users action (logging in, failed attempt).\\ \hline
+	2 & 2 & The user, after performing a valid login, is only shown content according to his privileges. \\ \hline
+	3 & 3 & The user with is shown a page based on his privileges with an interface that allows him to pilot a specific drone.\\ \hline
+	4 & 3 & On the page where the user is shown an interface to pilot a specific drone as described in acceptance test \#3, he is also shown a window that contains the video feed from the drone. \\ \hline
+	5 & 4 & The user is shown a page with a window that allows him to see the video feed from a specific drone that he has been granted privileges to view the video feed from. \\ \hline
+	6 & 5 & The user can successfully grant or revoke a privilege to another user. \\ \hline
+	7 & 6 & The user is able to change the name of the drone. \\ \hline
+	8 & 7 & The user is able to link a drone to a company.\\ \hline
+	9 & 7 & The user is able to unlink a drone from a company.  \\ \hline
+	10 & 8 & The user is presented with a concise list of available drones.  \\ \hline
+	11 & 9 & The user is able to press a link to logout of the system.  \\ \hline
+	12 & 10 & The user with rights is able to create a new user via an interface.  \\ \hline
+	13 & 10 & The user with rights is able to edit an existing user via an interface.  \\ \hline
+	14 & 10 & The user with rights is able to deactivate an existing user via an interface.  \\ \hline
+	15 & 10 & The user with rights is able to activate an existing user via an interface.  \\ \hline
+	16 & 11 & The user is able to create a company via an interface.  \\ \hline
+	17 & 11 & The user with rights is able to remove a company.  \\ \hline
+	18 & 12 & The user is able to add users to the company.   \\ \hline
+	19 & 12 & The user is able to remove users from the company.  \\ \hline
+	20 & 12 & The user is able to add new roles to the company.  \\ \hline
+	21 & 12 & The user is able to edit existing roles in the company.  \\ \hline
+	22 & 12 & The user is able to remove existing roles from a company.  \\ \hline
+	23 & 13 & The user with rights is able to grant his own privileges to another user within the same company.  \\ \hline
+	24 & 13 & The user with rights is able to remove privileges from other users within the same company that he is able to grant them.  \\ \hline
+	25 & 14 & The user is able to register as a user.  \\ \hline
+	26 & 15 & The user with rights can add users to roles.  \\ \hline
+	27 & 15 & The user with rights can remove users from roles.  \\ 
   \hline  
 \end{tabular}
 \caption{Use Cases}
-\label{tab:use_cases}
+\label{tab:acceptance_tests}
 \end{center}
 \end{figure}
