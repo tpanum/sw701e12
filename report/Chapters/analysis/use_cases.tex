@@ -1,6 +1,6 @@
 \section{Use cases}
 The functionality of the system will be defined through use cases, describing how a user of the system would desire to interact with the system.
-Each use case must be associated with an acceptance test, which must be passed in order for the use case to have been fully implemented.
+The use cases are derived from the requirements in described in Section~\ref{sec:problem_domain}.
 The use cases can be seen in Table~\ref{tab:use_cases}.\\
 
 \begin{figure}[H]
@@ -35,7 +35,6 @@ The use cases can be seen in Table~\ref{tab:use_cases}.\\
 \end{center}
 \end{figure}
 
-
 The use cases define a set of objects which must be present in \projectname{} in order for the use cases to be implementable.
 These objects are \textit{users}, \textit{drones}, \textit{companies}, \textit{roles}, and \textit{privileges}.
 Everybody using \projectname{} are classified as \textit{users}, including customers, owners of companies, system admins etc.
@@ -43,7 +42,6 @@ However as reflected in the use cases \textit{users} will not have unrestricted 
 Access to the system will be restricted through \textit{privileges}.
 As defined in use case \#8 privileges grants access to functionality, meaning a \textit{user} will not have access to anything by default.
 A \textit{drone} refer to a physical drone.
-A \textit{user} can interact with a drone if he has a privilege that allows him to do so.
 \textit{Companies} is used a grouping of associated \textit{users}, \textit{drones}, and \textit{roles}.
 As an example a company might purchase a set of drones for surveilling their property.
 The company would need a set users for its employees, a set of privileges granting access to its drones.

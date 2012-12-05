@@ -1,30 +1,51 @@
-\section{Problem Domain}\label{problem_domain}
+\section{Problem Domain}\label{sec:problem_domain}
+%Hvilke overvejelser skal der gøres omkring den wireless connection
+%Hvilke overvejelser skal der gøres omkring at gemme videoen ned
+%Hvilke overvejelser skal der gøres jurisik i forhold til overvågning
+%Hvilke overvejelser skal der gøres omkring sikkerhed i systemet og person følsom data
+%Hvad er hovedpunkterne i problem domain
+%Hvilke krav stiller de til løsningen
 The problem domain for the application is video surveillance of large outdoor areas.
 The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this. 
 
 Video surveillance using drones has a set of challenges which must be considered.
-A stable connection to the drone must be available at all times to control it and receive its video feed.
-The connection will be wireless, and it must be reliable within a predefined distance.
-The drone will
+A stable connection to the drone must be available at all times to control it.
+This is an issue as a large outdoor areas requires the connection to be stable on a long range.
+Additionally the connection must be compatible with a web interface.\fxfatal{Dårlig sætning, men vigtigt den type connection vi bruger er kompatibel med en webløsning enten direkte eller ved brug at et API eller SDK}.
 
-The main problems present in the problem domain is as follows:
+It must also be considered how to store the video.
+It can be stored directly on the drone, or it can be stored externally.
+Storing it on the drone increasses the hardware requirements for the drone, as it must be ensured the dats is not lost should the drone crash.
+The alternative is to stream the video feed via the connection to the drone and store it externally.
+This reduces the requirements to the drone, but increases the requirements to the connection as the video feed must be usable.
+
+There are two legal aspects to consider with regards to video surveillance.
+Their source is that video surveillance deals with sensitive information.
+An affect of this is that there are some legal issues to consider with such a system.
+Firstly there are laws which limits the areas on is allowed to video surveil\fxfatal{source:https://www.retsinformation.dk/Forms/r0710.aspx?id=105112}.
+This is not an issue for video surveillance with stationary cameras, as they are simply placed in location that ensure they do not violate these laws.
+With moveable cameras it is not trivial to ensure the video surveillance is done within the given laws.
+Furthermore the system must be secure.
+In this context secure means that access to the sensitive information restricted, both internally and externally
+ 
+The main problems present in the problem domain are therfore as follows:
 \begin{itemize}
 	\item Wireless short-distance and wired long-distance communication with a drone. This includes controlling the drone.
 	%We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
-	\item Wireless short-distance and wired long-distance video streaming. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances. 
+	\item Wireless short-distance and wired long-distance video streaming. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances.
 	%\item Interaction with the drone will be handled through a web application. It is already decided that the user must be able to control the drone via a web application. Therefore we need to look into how one can do this, knowing that the web is a state-less environment. 
 	\item Permissions- and access control in the web application. Includes both access to the system and access to specific drones.
 	\item Scalability - the system must be scalable in terms of users and drones.
 \end{itemize}
 
-The superficial requirements for \projectname{} are:
+From these problems a set of requirements for \projectname{} can be derived:
 
 \begin{itemize}
 	\item A user must be able to login to the system.
-	\item The system must have security measures in place to make sure any user only sees what he is permitted to. 
+	\item The system must have security measures in place to make sure any user only sees what he is permitted to.
 	\item A drone must be able to send its video feed to the web service.
-	\item A drone must be controllable from the web service. 
-	\item The system must support multiple drones and users. 
+	\item A drone must be controllable from the web service.
+	\item The system must support multiple drones and users.
 \end{itemize}
 
 These requirements are the base line for the use cases, which will be used to define the functionality of the system. 
