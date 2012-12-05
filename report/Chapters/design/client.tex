@@ -1,1 +1,34 @@
+
 \section{Client}
+Any client accesses the system via his Internet-browser, which is the only way into the system for the clients. 
+The reason why we have chosen that the users interaction with the system is via his Internet-browser instead of a client application is the following:
+
+\begin{itemize}
+	\item There must be support for full platform independence
+	\item It must be able to run on virtually any hardware, so no resource-intensive operations can run on the client PC
+\end{itemize}
+
+A Java program is also platform independent and can be made to not require many resources to run. 
+However, as we want \projectname{} to run as seamlessly as possible on as many different platforms as possible, we do not want to force the user to install i.e. Java in order to get started.
+Therefore the client-side of \projectname{} will be accessible via an Internet-browser. \\
+
+When using an Internet-browser, all functionality i.e. is usually processed server-side, meaning that the browser simply displays a result that was computed remotely. 
+However, there are some possibilities for processing some of the user-experience client-side in an Internet-browser. 
+This is usually done via Javascript, which we will take advantage of in \projectname{}. \\
+
+One of the tools that helps making the web interface more user-friendly and resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}. 
+AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way. 
+This approach has several advantages:
+
+\begin{itemize}
+	\item Content on the interface can be updated without page-reload. This is normally not possible with web-development, as the web is stateless.
+	\item It saves resources server-side, as only the specific parts needed will be calculated and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
+\end{itemize}
+
+These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users. \\
+
+The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements. 
+This is not natively supported by an Internet-browser, so Flash will be used for this purpose. 
+Flash is also platform-independent and will be run as a plugin in the clients Internet-browser.
+The flash-application which is run through the clients Internet-browser will be able to connect directly to the slave for the drone in question, making it possible to view the video feed and send actions directly.
+
