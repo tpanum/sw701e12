@@ -6,7 +6,8 @@
 %Hvad er hovedpunkterne i problem domain
 %Hvilke krav stiller de til løsningen
 The problem domain for the application is video surveillance of large outdoor areas.
-The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this. 
+The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this.
+The solution will be used commercially by different businesses that may each have several different areas or locations that needs to be survelied.  \\
 
 Video surveillance using drones has a set of challenges which must be considered.
 A stable connection to the drone must be available at all times to control it.
@@ -15,7 +16,7 @@ Additionally the connection must be compatible with a web interface.\fxfatal{Dår
 
 It must also be considered how to store the video.
 It can be stored directly on the drone, or it can be stored externally.
-Storing it on the drone increasses the hardware requirements for the drone, as it must be ensured the dats is not lost should the drone crash.
+Storing it on the drone increases the hardware requirements for the drone, as it must be ensured the data is not lost should the drone crash.
 The alternative is to stream the video feed via the connection to the drone and store it externally.
 This reduces the requirements to the drone, but increases the requirements to the connection as the video feed must be usable.\\
 
@@ -24,11 +25,11 @@ Their source is that video surveillance deals with sensitive information.
 An affect of this is that there are some legal issues to consider with such a system.
 Firstly there are laws which limits the areas on is allowed to video surveil\fxfatal{source:https://www.retsinformation.dk/Forms/r0710.aspx?id=105112}.
 This is not an issue for video surveillance with stationary cameras, as they are simply placed in location that ensure they do not violate these laws.
-With moveable cameras it is not trivial to ensure the video surveillance is done within the given laws.
+With movable cameras it is not trivial to ensure the video surveillance is done within the given laws. 
 Furthermore the system must be secure.
 In this context secure means that access to the sensitive information restricted, both internally and externally\\
  
-The main problems present in the problem domain are therfore as follows:
+The main problems present in the problem domain are therefore as follows:\\
 \begin{itemize}
 	\item Wireless short-distance and wired long-distance communication with a drone. This includes controlling the drone.
 	%We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
@@ -38,7 +39,7 @@ The main problems present in the problem domain are therfore as follows:
 	\item Scalability - the system must be scalable in terms of users and drones.
 \end{itemize}
 
-From these problems a set of requirements for \projectname{} can be derived:
+From these problems a set of requirements for \projectname{} can be derived:\\
 
 \begin{itemize}
 	\item A user must be able to login to the system.
