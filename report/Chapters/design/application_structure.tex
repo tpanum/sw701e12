@@ -11,7 +11,7 @@ This means that singleton server solutions are vulnerable to DoS, through HTTP r
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/server_solutions.pdf}
-    \caption{Server Solutions to \projectname{}}
+    \caption{Illustration of a singleton and distributed server solution.}
     \label{fig:server_solutions}
 \end{figure}
 
@@ -29,29 +29,31 @@ This leads to the structure shown in Figure~\ref{fig:antenna_structure}.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth]{gfx/antenna_structure.pdf}
-    \caption{Antenna Structure to \projectname{}}
+    \includegraphics[width=0.5\textwidth]{gfx/antenna_structure.pdf}
+    \caption{Antenna structure.}
     \label{fig:antenna_structure}
 \end{figure}
 
-If all communication with the drones goes through \deno{M}, this would create a single point of failure.
+If all \deno{B}'s communication with the drones goes through \deno{M}, this would create a single point of failure.
 This means that, if \deno{M} crashes at any point, all communication with the drones will be disabled.
 Providing the antennas with processing power and opportunity to communicate directly with the user would solve this issue, since communication would not go through \deno{M}.
 If an antenna crashes only the drones connected to that antenna would be disconnected, leaving the drones connected to other antennas untouched.
 This could be achieved by distributing some of the communication from \deno{M}.
 This is solved by combining the antennas with distributed processing units, which will be denoted as Slaves or \deno{S}, as shown in Figure~\ref{fig:slave_structure}.
 
+As \deno{S} has a dynamic network position relative to \deno{M}, this enforces that \deno{B} is not able to communicate directly with \deno{S} before getting network information about \deno{S} from \deno{M}. This communication is illustrated by a dashed line in Figure~\ref{fig:slave_structure}.
+
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth]{gfx/slave_structure.pdf}
-    \caption{Slave Structure of \projectname{}}
+    \includegraphics[width=0.5\textwidth]{gfx/slave_structure.pdf}
+    \caption{Slave structure.}
     \label{fig:slave_structure}
 \end{figure}
 
 The acceptance tests, e.g. 18, 25, 26 in Table~\ref{tab:acceptance_tests2}, enforces a constraint that requires \deno{M} to be able to store data based of the interaction of the user.
 As requests can happen asynchronously, this makes it ideal to use a database denoted \deno{DB}, due to its transaction system in order to ensure no data loss.
 
-The response output of \deno{M} needs to be dynamic based on the user, \ref{}, which requires \deno{M} to be capable of processing data and store it in the database.
+The response output of \deno{M} needs to be dynamic based on the user, e.g. Acceptance test 2 in Table~\ref{tab:acceptance_tests1}, which requires \deno{M} to be capable of processing data and store it in the database.
 The processing unit that creates the dynamic response will be denoted \deno{W}.
 The communication with the drones are handled by another processing unit, denoted \deno{D}.
 If \deno{W} were to handle requests from \deno{S} and \deno{B}, this would increase the load on \deno{W}.
@@ -60,8 +62,8 @@ The resource management could be to constrain processing power for each process,
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth]{gfx/daemon_structure.pdf}
-    \caption{Daemon Structure of \projectname{}}
+    \includegraphics[width=0.5\textwidth]{gfx/daemon_structure.pdf}
+    \caption{Daemon structure.}
     \label{fig:daemon_structure}
 \end{figure}
 
