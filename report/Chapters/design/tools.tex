@@ -33,11 +33,11 @@ We have chosen to use Linux Debian due to the following reasons:
     \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
     \item It is easy to get started on the project, as installation of the programs needed is simple.
     \item Linux Debian is open-source and does not require a license to install or use.
-    \item Linux Debian is one of the most well-seen operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. Linux Debian has a huge community that continuously updates and maintains it.
+    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. Linux Debian has a huge community that continuously updates and maintains it.
 \end{itemize}
 
 It is important to underline that any of the listed operating systems are fully capable of handling any task needed in this project.
-Operating systems are often chosen based on a personal preference for- or experience with a given operating system.
+Operating systems are often chosen based on personal preferences or experience with a given operating system.
 %Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
 The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
 
@@ -80,8 +80,8 @@ First are some of the advantages by using Ruby and Ruby on Rails:
 Ruby is a object oriented scripting language.
 Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
 
-Ruby on Rails \emph{[Rails]} is a open-source web framework for Ruby that is optimized to make programming as easy and efficient as possible.
-Rails provide a set of advantages through its built-in features, such as native support for the MVC model and Active Records.
+Ruby on Rails \emph{[Rails]} is a open-source web framework for Ruby optimized to make programming as easy and efficient as possible.
+Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
 %that enables us to be more efficient and write better quality code.
 Rails also has build in features that make it easier to be multiple programmers working on the same project.
 An example is ``Migrations'', which is Rails' way of handling databases.
@@ -101,25 +101,46 @@ This will require some sort of server or gateway between the web application and
 We also already know that we have to build some web application and server side scripting which both requires some soft of hosting.
 Both aspects also work very well with Ruby and Rails.
 
-\subsection{Streaming Tools}
+\subsection{Streaming Tools}\label{sec:tools_streaming}
 %Hvad skal vi opnå med streaming
 %Hvilke tilgange kan der tages til at løse problemet
 %Hvilke løsningsmuligheder findes i den valgte tilgang
 %Hvilke tools er valgt og hvorfor
 %Hvordan er toolsne kombineret
-The video feed send by the drone to \deno{S} must forwarded to the users browser.
+The video feed send by the drone to \deno{S} is to be forwarded to the users browser.
 The stream is to be displayed in a Flash application.
-A Flash application is capable of reading and displaying a video streams send via Real Time Messaging Protocol\textit{(RTMP)}\fxfatal{source}.
+A Flash application is capable of reading and displaying video streams send via Real Time Messaging Protocol\textit{(RTMP)}\fxfatal{source}.
 Each S must therefore contain functionality capable of reading the drones stream and forward it via RTMP to the Flash application running in the users browser.
 
 As mentioned in Section~\ref{sec:design_slave} developing a streaming solution from scratch is outside the scope of the project.
 The streaming is therefore as a result to be handled using tools.
 The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
+\\
 
 There are two approaches to handling this.
 One is using a tool capable of reading the drones video feed and broadcast a RTMP feed.
 The other is one using two tools.
 A tool which reads the drones feeds and forwards it to a rtmp server.
+Both solution depends on a tool capable of decoding the PaVE headers the drones video feed is encoded with, see Appendi~\ref{app:ar_drone_specification}.
+
+FFmpegg is a multimedia framework capable of recording, and converting audio and video.
+FFmpeg contain a multimedia streaming server called FFserver.
+FFserver is made for live broadcasts and is capable of decoding and enconding a large set of video formats.
+It is however incapable of decoding the unique PaVE headers the drones video feed is encoded with.
+Therefore FFmpeg cannot be used for reading the drones video feed, as it is unable to decode the drones video feed.
+
+Gstreamer is multimedia framework built arround pipelines.
+A pipeline in this context is a set plugin the video feed is send through and processed by.
+Gstreamer is not capable of outputting a readable RTMP stream.
+It is however capable of sending a rtmp feed to a RTMP server.
+Gstreamer is not natively capable of decoding PaVE header.
+There does however exist a plugin for gstreamer developed by the AR Drone community which enables to properly parse the PaVE headers.
+The plugin is named paveparse.
+
+As FFmpeg is not capable of reading drones' video feed Gstreamer will be used to read and restream the drones video feed. 
+
+
+
 
 
 
