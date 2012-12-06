@@ -10,20 +10,18 @@ The solution investigated in this report is to use a drone with a camera instead
 The solution will be used commercially by different businesses that may each have several different areas or locations that needs to be survelied.  \\
 
 Video surveillance using drones has a set of challenges which must be considered.
-A stable connection to the drone must be available at all times to control it.
-This is an issue as a large outdoor areas requires the connection to be stable on a long range.
+The connection to the drone must be stable at all times to make it controlable.
+The large outdoor areas makes it a requirement the connection is stable at long range.
 Additionally the connection must be compatible with a web interface.\fxfatal{Dårlig sætning, men vigtigt den type connection vi bruger er kompatibel med en webløsning enten direkte eller ved brug at et API eller SDK}.\\
 
-It must also be considered how to store the video.
+For video surveillance to be usefull the video must be stored.
 It can be stored directly on the drone, or it can be stored externally.
 Storing it on the drone increases the hardware requirements for the drone, as it must be ensured the data is not lost should the drone crash.
 The alternative is to stream the video feed via the connection to the drone and store it externally.
 This reduces the requirements to the drone, but increases the requirements to the connection as the video feed must be usable.\\
 
 There are two legal aspects to consider with regards to video surveillance.
-Their source is that video surveillance deals with sensitive information.
-An affect of this is that there are some legal issues to consider with such a system.
-Firstly there are laws which limits the areas on is allowed to video surveil\fxfatal{source:https://www.retsinformation.dk/Forms/r0710.aspx?id=105112}.
+Firstly there are laws which limits the areas on which it is allowed to video surveil\fxfatal{source:https://www.retsinformation.dk/Forms/r0710.aspx?id=105112}.
 This is not an issue for video surveillance with stationary cameras, as they are simply placed in location that ensure they do not violate these laws.
 With movable cameras it is not trivial to ensure the video surveillance is done within the given laws. 
 Furthermore the system must be secure.
