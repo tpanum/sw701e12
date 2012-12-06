@@ -1,7 +1,12 @@
 \section{Application Structure}
 \label{sec:application_structure}
 
-Web applications have a single point of entry, a hostname, that is translated into an IP address. The IP address points to a server, which then handles HTTP requests. This means that a server solution is needed. Server solutions can either be a singleton or a distributed with multiple servers. Singleton server solutions are based on having one server that handles all incoming requests. This means that singleton server solutions are vulnerable to DoS, through HTTP requests, but provides consistency.
+Web applications have a single point of entry, a hostname, that is translated into an IP address.
+The IP address points to a server, which then handles HTTP requests (requests) from users, these users will be denoted as Browser or \deno{B}.
+This means that a server solution is needed.
+Server solutions can either be a singleton or a distributed with multiple servers.
+Singleton server solutions are based on having one server that handles all incoming requests.
+This means that singleton server solutions are vulnerable to DoS, through HTTP requests, but provides consistency.
 
 \begin{figure}[htb]
     \centering
@@ -10,24 +15,54 @@ Web applications have a single point of entry, a hostname, that is translated in
     \label{fig:server_solutions}
 \end{figure}
 
-Distributed server solutions contain several servers possibly on several locations, meaning that DoS will be harder to perform, since there is no single point of failure. However, this solution cannot ensure consistency and adds complexity. The two solutions are graphically displayed in Figure~\ref{fig:server_solutions}. A singleton solution has been chosen due to; consistency and simplicity. This singleton solution will be denoted as Master or \deno{M}.
+Distributed server solutions contain several servers possibly on several locations, meaning that DoS will be harder to perform, since there is no single point of failure.
+However, this solution cannot ensure consistency and adds complexity.
+The two solutions are graphically displayed in Figure~\ref{fig:server_solutions}.
+A singleton solution has been chosen due to; consistency and simplicity.
+This singleton solution will be denoted as Master or \deno{M}.
 
-The application is required to handle communication with drones, as defined by Acceptance test[3]. In case of the communication being disabled, this might end up with a drone crash. The technical limitations of antennas for digital wireless communication, sets a constraint for the availability of drones. Assuming there exists no antenna to cover the physical area of our problem domain, it is necessary to have a distributed antenna setup in order to cover the whole physical area of the problem domain. This leads to the structure shown in Figure~\ref{fig:antenna_structure}.
+The application is required to handle communication with drones, as defined by Acceptance test 3 in Table~\ref{tab:acceptance_tests1}.
+In case of the communication being disabled, this might end up with a drone crash.
+The technical limitations of antennas for digital wireless communication, sets a constraint for the availability of drones.
+Assuming there exists no antenna to cover the physical area of our problem domain, it is necessary to have a distributed antenna setup in order to cover the whole physical area of the problem domain.
+This leads to the structure shown in Figure~\ref{fig:antenna_structure}.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/antenna_structure.pdf}
-    \caption{Antenna Solutions to \projectname{}}
-    \label{fig:antenna_solutions}
+    \caption{Antenna Structure to \projectname{}}
+    \label{fig:antenna_structure}
 \end{figure}
 
-If all communication with the drones goes through \deno{M}, this would create a single point of failure. This means that, if \deno{M} crashes at any point, all communication with the drones will be disabled. Providing the antennas with processing power and opportunity to communicate directly with the user would solve this issue, since communication would not go through \deno{M}. If an antenna crashes only the drones connected to that antenna would be disconnected, leaving the drones connected to other antennas untouched. This could be achieved by distributing some of the communication from \deno{M}. This is solved by combining the antennas with distributed processing units, which will be denoted as Slaves or \deno{S}, as shown in Figure~\ref{slave_structure}.
+If all communication with the drones goes through \deno{M}, this would create a single point of failure.
+This means that, if \deno{M} crashes at any point, all communication with the drones will be disabled.
+Providing the antennas with processing power and opportunity to communicate directly with the user would solve this issue, since communication would not go through \deno{M}.
+If an antenna crashes only the drones connected to that antenna would be disconnected, leaving the drones connected to other antennas untouched.
+This could be achieved by distributing some of the communication from \deno{M}.
+This is solved by combining the antennas with distributed processing units, which will be denoted as Slaves or \deno{S}, as shown in Figure~\ref{fig:slave_structure}.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth]{gfx/slave_structure.pdf}
     \caption{Slave Structure of \projectname{}}
     \label{fig:slave_structure}
+\end{figure}
+
+The acceptance tests, e.g. 18, 25, 26 in Table~\ref{tab:acceptance_tests2}, enforces a constraint that requires \deno{M} to be able to store data based of the interaction of the user.
+As requests can happen asynchronously, this makes it ideal to use a database denoted \deno{DB}, due to its transaction system in order to ensure no data loss.
+
+The response output of \deno{M} needs to be dynamic based on the user, \ref{}, which requires \deno{M} to be capable of processing data and store it in the database.
+The processing unit that creates the dynamic response will be denoted \deno{W}.
+The communication with the drones are handled by another processing unit, denoted \deno{D}.
+If \deno{W} were to handle requests from \deno{S} and \deno{B}, this would increase the load on \deno{W}.
+By creating multiple request handlers, it is possible to have a process for each. \deno{W}, \deno{DB}, and \deno{S} are processes, seen in Figure~\ref{fig:daemon_structure}, which improves resource management.
+The resource management could be to constrain processing power for each process, or distribute the processes on individual machines.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/daemon_structure.pdf}
+    \caption{Daemon Structure of \projectname{}}
+    \label{fig:daemon_structure}
 \end{figure}
 
 % The architecture of \projectname{} differs from other web applications due to the fact that there exists two different type of servers.
