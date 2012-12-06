@@ -1,0 +1,24 @@
+In this section the technical description of the AR Drone 2.0 Parrot will be presented as it influences the design of \projectname{}.
+The source for this section is the AR Drone 2.0 Parrot SDK.\fxfatal{ref til source når den er i bibtex}
+
+The AR Drone has its own wireless network that one must connect to in order to control it.
+It will always have the ip \verb+192.168.1.1+.
+Communication with the drone is done using this IP through three ports:
+\begin{itemize}
+	\item 5554: The drone sends out information on this port to its clients. This information is e.g. its status(\textit{flying}, \textit{landed} etc.), and its speed. The information send from the drone is reffered to as \textit{navdata}.
+	\item 5555: The drone sends out a video stream on this port via TCP.
+	\item 5556: The drone is controlled and configured by sending \textit{AT commands} to it on this port via UDP.
+\end{itemize}
+ 
+AT commands are text strings, which refer to a specific function call in the drones library, as such parameters are send to the drone along with the command.
+The most important AT commands are:
+\begin{itemize}
+	\item \verb+AT*FTRIM+ - configures the drones notion of a horizontal plane. Drone must be on ground when the command is send.
+	\item \verb+AT*REF+ - Take off, land, and emergency stop command. Takes an integer value as argument.
+	\item \verb+AT*PCMD+ - Controls the drone. Takes 5 arguments: a flag, and four integer values which defines the drones movement. When a \verb+PCMD+ command is received the drone sets its control values to those received and then resets them. For consistent movements the drone must receive at least 30 packets per second. 
+\end{itemize}
+
+The video stream send by the drone on port 5555 is encoded in the H.264 format.
+Network video streaming is done by sending the video frames individually.
+Each video frame has a custom header containing metadata on the frame.
+The stream send by the drone uses a unique header PaVE \textit{(Parrot Video Encapsulation}.
