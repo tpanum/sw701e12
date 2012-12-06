@@ -101,6 +101,27 @@ This will require some sort of server or gateway between the web application and
 We also already know that we have to build some web application and server side scripting which both requires some soft of hosting.
 Both aspects also work very well with Ruby and Rails.
 
+\subsection{Streaming Tools}
+%Hvad skal vi opnå med streaming
+%Hvilke tilgange kan der tages til at løse problemet
+%Hvilke løsningsmuligheder findes i den valgte tilgang
+%Hvilke tools er valgt og hvorfor
+%Hvordan er toolsne kombineret
+The video feed send by the drone to S must forwarded to the users browser.
+The stream is to be displayed in a Flash application.
+A Flash application is capable of reading and displaying a video streams send via Real Time Messaging Protocol\textit{(RTMP)}\fxfatal{source}.
+Each S must therefore contain functionality capable of reading the drones stream and forward it via RTMP to the Flash application running in the users browser.
+
+As mentioned in Section~\ref{sec:design_slave} developing a streaming solution from scratch is outside the scope of the project.
+The streaming is therefore as a result to be handled using tools.
+The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
+
+There are two approaches to handling this.
+One is using a tool capable of reading the drones video feed and broadcast a RTMP feed.
+The other is one using two tools.
+A tool which reads the drones feeds and forwards it to a rtmp server.
+
+
 
 
 
