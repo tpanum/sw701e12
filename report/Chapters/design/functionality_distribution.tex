@@ -1,14 +1,34 @@
 \section{Functionality distribution}\label{sec:functionality_distrubution}
+% Hvilke funktionaliteter skal dækkes?
+% Hvilke instancer dækker hvad?
+% Hvorfor gør de det?
 
-While Section~\ref{sec:application_structure} covered the overall structure of this application, this section will cover how the functionality is divided between the Master and the Slaves in the system. \\
+The functionality of the system can be derived from the acceptance tests.
+This section will cover what instances are responsible for each functionality.
 
-The Master is the users only way into the system. 
-This access will always be via the users local web browser, where he sees the web system for \projectname{}.
-This web system and the database containing all informations about the system, drones, users etc. will be located on the Master. 
-The Master is responsible for providing these services and coordinating the communication between the users and drones via the Slaves. \\
+The need for storing data is derived from \at{1}, as previously described this is handled by the database \deno{DB}, which is a part of \deno{M}.
+\at{2} sets the need for a dynamic response to \deno{B}, which requires processing of the stored data.
+This processing is handled by \deno{W} as the structure contains a singleton server solution.
 
-A Slave is needed for every drone in the field, as the drones are not capable of long-distance communication. 
-Therefore, in order to communicate with any drone, the communication must be channeled through its assigned Slave. 
-This Slave is responsible for keeping contact with the drone and communicate directly with it via its API's. 
+Knowing that \deno{S} have a dynamic location relative to \deno{M}, this requires \deno{S} to send a signal to \{D} in order for \{M} to get the location of \{S} on the network.
+\deno{D} is then responsible for being able to receiving incoming signals from \deno{S}.
+
+Displaying video is required of \deno{B} by \at{3}.
+The video displayed by \{B} is a stream, this requires that \deno{S} sends out a video stream.
+In order to control a drone, commands have to be provided to the drone, as required by \at{3}.
+\deno{S} is responsible for being able to receive commands and make the drone execute the given command.
+\at{29} enforces security of the command handler.
+\deno{S} is the only instance with a direct link to the drone, this makes \{S} responsible for the command handler’s security.
+
+% While Section~\ref{sec:application_structure} covered the overall structure of this application, this section will cover how the functionality is divided between the Master and the Slaves in the system. \\
+
+% The Master is the users only way into the system.
+% This access will always be via the users local web browser, where he sees the web system for \projectname{}.
+% This web system and the database containing all informations about the system, drones, users etc. will be located on the Master.
+% The Master is responsible for providing these services and coordinating the communication between the users and drones via the Slaves. \\
+
+% A Slave is needed for every drone in the field, as the drones are not capable of long-distance communication.
+% Therefore, in order to communicate with any drone, the communication must be channeled through its assigned Slave.
+% This Slave is responsible for keeping contact with the drone and communicate directly with it via its API's.
 
 
