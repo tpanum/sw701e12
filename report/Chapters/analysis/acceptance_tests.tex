@@ -3,7 +3,11 @@
 %Hvordan er de linket til Use cases
 %Link til design
 The development method used in this project makes use of acceptance tests, see Section~\ref{sec:developmet_method}.
-An acceptance test is one which must be passed in order for a use case to have been implemented.
+Acceptance tests are associated with use cases, and must be passed in order for a use case to have been implemented.
+The acceptance tests are written based on the use cases and can be seen in Figure~\ref{tab:acceptance_tests1} and Figure~\ref{tab:acceptance_tests2}.
+A use case may have several acceptance test associated with it.
+In Figure~\ref{tab:acceptance_tests1} and Figure~\ref{tab:acceptance_tests2} the column \textbf{Use Case ID} refers to the use case the acceptance is associated with.
+The use case IDs can be seen in Figure~\ref{tab:use_cases}.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -30,7 +34,23 @@ An acceptance test is one which must be passed in order for a use case to have b
 	14 & 10 & The user with rights is able to deactivate an existing user via an interface.  \\ \hline
 	15 & 10 & The user with rights is able to activate an existing user via an interface.  \\ \hline
 	16 & 11 & The user is able to create a company via an interface.  \\ \hline
-	17 & 11 & The user with rights is able to remove a company.  \\ \hline
+	17 & 11 & The user with rights is able to remove a company.  \\
+  \hline  
+\end{tabular}
+\caption{Acceptance Tests 1}
+\label{tab:acceptance_tests1}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\begin{tabular}{ | l | l | p{8cm} | }
+  \hline              
+	\textbf{ID} & \textbf{Use Case ID} & \textbf{Acceptance test} \\ \hline
+	%%%%%%%%%%%      %%%%%%%%%%%S
+	%%%%%%%%%%% OBS! %%%%%%%%%%%
+	%%%%%%%%%%%      %%%%%%%%%%%
+	% Inden tallene �ndres, skal der lige gøres opmærksom på det, da de bruges andre steder.
 	18 & 12 & The user is able to add users to the company.   \\ \hline
 	19 & 12 & The user is able to remove users from the company.  \\ \hline
 	20 & 12 & The user is able to add new roles to the company.  \\ \hline
@@ -43,7 +63,8 @@ An acceptance test is one which must be passed in order for a use case to have b
 	27 & 15 & The user with rights can remove users from roles.  \\ 
   \hline  
 \end{tabular}
-\caption{Acceptance Tests}
-\label{tab:acceptance_tests}
+\caption{Acceptance tests 2}
+\label{tab:acceptance_tests2}
 \end{center}
 \end{figure}
+
