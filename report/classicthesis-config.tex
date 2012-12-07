@@ -107,9 +107,23 @@
                                                             % compile time
 
 %Bjarke HS stuff
+\usepackage{ifthen}
+\usepackage{xifthen}
 \newcommand{\todo}[1]{\fxnote{#1}}
 \newcommand{\todoi}[1]{\fxfatal{#1}}
 \newcommand{\todoI}[1]{\todoi{#1}}
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+\newcommand{\myQuoteA}[2]{
+\begin{changemargin}{.7in}{.7in}
+\textbf{``}
+\textit{#1}
+\textbf{''}
+\ifthenelse{\isempty{#2}}%  If there is nothing stated here just print the shit.
+{}% if #1 true
+{\vspace{-.5mm}\begin{changemargin}{.7in}{0in}\raggedleft{{\footnotesize--- #2}}\end{changemargin}}% if #1 false
+\end{changemargin}
+}
 
 %Rasmus stuff
 \newcommand{\figref}[1]{\figurename~\ref{#1}}
