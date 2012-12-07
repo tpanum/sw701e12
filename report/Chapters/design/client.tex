@@ -1,5 +1,5 @@
 
-\section{Client}
+\section{Client}\label{sec:design_client}
 Any client accesses the system via his Internet-browser, which is the only way into the system for the clients. 
 The reason why we have chosen that the users interaction with the system is via his Internet-browser instead of a client application is the following:
 
@@ -28,7 +28,7 @@ This approach has several advantages:
 These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users. \\
 
 The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements. 
-This is not natively supported by an Internet-browser, so Flash will be used for this purpose. 
-Flash is also platform-independent and will be run as a plugin in the clients Internet-browser.
-The flash-application, which is run through the clients Internet-browser, will be able to connect directly to the slave for the drone in question, making it possible to view the video feed and send actions directly.
+This is not natively supported in Internet-browsers, so a Flash application will be used for this purpose. 
+Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
+The flash-application will be able to connect the user directly to the slave associated with a specific drone in, making it possible to view its video feed and control it.
 

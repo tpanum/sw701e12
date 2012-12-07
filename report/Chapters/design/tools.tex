@@ -44,7 +44,7 @@ The operating system chosen for the server-side applications in \projectname{} i
 
 \subsection{Programming language}
 Our choice to use Linux Debian as operating system on the servers limits the possible choices for programming languages.
-Programming languages such as .NET that are not natively written to work on other platforms than Windows Server are discarded as we do not consider emulating tools such as Wine a reliable solution. \\
+Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
 We have some requirements to the programming language that we want to use.
 These are:
@@ -108,38 +108,48 @@ Both aspects also work very well with Ruby and Rails.
 %Hvilke løsningsmuligheder findes i den valgte tilgang
 %Hvilke tools er valgt og hvorfor
 %Hvordan er toolsne kombineret
-The video feed send by the drone to \deno{S} is to be forwarded to the users browser.
-The stream is to be displayed in a Flash application.
-A Flash application is capable of reading and displaying video streams send via Real Time Messaging Protocol\textit{(RTMP)}\fxfatal{source}.
-Each S must therefore contain functionality capable of reading the drones stream and forward it via RTMP to the Flash application running in the users browser.
+
+%Reviewer det selv inden andre skal se på det, for havde ikke meget fokus da jeg skrev det
+The video feed send by the drone to \deno{S} is forwarded to the users browser as seen in Figure~\ref{fig:sequence_diagram}.
+As described in Section~\ref{sec:design_client} the stream will be displayed in a Flash application.
+Flash only natively supports video streams send via Real Time Messaging Protocol\textit{(RTMP)}\citep{rtmp_spec}.
+The video stream send by the drone is send by TCP and it is H.264 encoded as described in Appendix~\ref{app:ar_drone_specification}.
+Flash is compatible with H.264 encoded video\citep{netstream_spec}.
+The drones video feed is however encoded with the unique PaVE headers, see Appendix~\ref{app:ar_drone_specification}, and must therefore be reencoded in order for the flash application to be able to read the stream.
+Each \deno{S} must therefore contain functionality capable of reading and reencode the drones stream and forward it via RTMP to the Flash application running in the users browser.
 
 As mentioned in Section~\ref{sec:design_slave} developing a streaming solution from scratch is outside the scope of the project.
-The streaming is therefore as a result to be handled using tools.
+The streaming is therefore to be handled using tools.
 The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
 \\
 
-There are two approaches to handling this.
+There are two streaming solution using tools.
 One is using a tool capable of reading the drones video feed and broadcast a RTMP feed.
 The other is one using two tools.
 A tool which reads the drones feeds and forwards it to a rtmp server.
-Both solution depends on a tool capable of decoding the PaVE headers the drones video feed is encoded with, see Appendi~\ref{app:ar_drone_specification}.
+Both solution depends on a tool capable of decoding the PaVE headers.
+The tools considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server.
 
-FFmpegg is a multimedia framework capable of recording, and converting audio and video.
-FFmpeg contain a multimedia streaming server called FFserver.
-FFserver is made for live broadcasts and is capable of decoding and enconding a large set of video formats.
+FFmpeg is a multimedia framework capable of recording and converting audio and video.
+It contains a multimedia streaming server called FFserver.
+FFserver is used for live broadcasts and is capable of decoding and enconding a large set of video formats.
 It is however incapable of decoding the unique PaVE headers the drones video feed is encoded with.
-Therefore FFmpeg cannot be used for reading the drones video feed, as it is unable to decode the drones video feed.
+It however capable of outputting a RTMP feed.
+Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input.
 
-Gstreamer is multimedia framework built arround pipelines.
-A pipeline in this context is a set plugin the video feed is send through and processed by.
-Gstreamer is not capable of outputting a readable RTMP stream.
-It is however capable of sending a rtmp feed to a RTMP server.
+Gstreamer is multimedia framework that uses a pipeline architecture to process video and audio feeds.
+A pipeline in this context is a set plugins the video feed is send through and processed by.
+As an example a video feed might be deencoded and then reencoded in a new format.
+Gstreamer is not capable of outputting a readable RTMP stream, as it contains no server functionality.
+It is however capable of sending a video feed to a RTMP server.
 Gstreamer is not natively capable of decoding PaVE header.
 There does however exist a plugin for gstreamer developed by the AR Drone community which enables to properly parse the PaVE headers.
-The plugin is named paveparse.
+The plugin is named paveparse\citep{paveparse}.
 
-As FFmpeg is not capable of reading drones' video feed Gstreamer will be used to read and restream the drones video feed.
+C++ RTMP Server\textit{(CRTMP)} is a streaming server capable of streaming to and from a flash application.
+It can receive a local stream send via e.g RTP and broadcast it globally as RTMP, RTMPE, RTMPS, RTMPT, and RTMPTE.
 
+The chosen solution is to use gstreamer to read and rebroadcast the drones video feed via CRTMP.
 
 
 
