@@ -21,14 +21,15 @@ As this is a system where it is important that the integrity is high, evidence i
 \end{figure}
 
 This lead to a solution where sessions is designed to keep the integrity and secure evidence as seen in figure~\ref{fig:sequence_diagram}. 
-As seen in the figure there is designed a level of security because of the sessions. It is not possible for a B to interact with a drone without having a session with a drones S.
+As seen in the figure there is designed a level of security because of the sessions. It is not possible for a \deno{B} to interact with a drone without having a session with a drones \deno{S}.
 
 When a drone is purchased a \deno{S} is setup at the location where the drone is going to operate.
-The Slave sends an initializing message to Master, informing Master that a new drone has entered the system.
-Master adds the drone with the IP and location of the Slave, along with the drone's unique identifier.
-If Master receives an initializing message from a Slave with a drone identifier that is already in the system, it will destroy any session that correlates with that drone. The sessions is destroyed because if one or more sessions are granted and S sends its initializing message it is safe to assume that S either disconnected or crashed and all sessions keys are invalid.
-Furthermore if the IP of Slave differs from that of the drone it will be updated.
-If a user tries to interact with a drone the system behaves differently. A session key will be made on a \deno{S}, this key will be send to \deno{M} and giving to \deno{B}. With this session key it is possible for the user to communicate directly with \deno{S} without \deno{M}.
+The \deno{S} sends an initializing message to \deno{M}, informing \deno{M} that a new drone has entered the system.
+\deno{M} adds the drone with the IP and location of the \deno{S}, along with the drone's unique identifier.
+If \deno{M} receives an initializing message from a \deno{S} with a drone identifier that is already in the system, it will destroy any session that correlates with that drone. The sessions is destroyed because if one or more sessions are granted and \deno{S} sends its initializing message it is safe to assume that \deno{S} either disconnected or crashed and all sessions keys are invalid.
+Furthermore if the IP of \deno{S} differs from the IP \deno{M} holds in its database it will be updated.
+
+If a user tries to interact with a drone the system behaves differently. A session key will be made on a \deno{S}, this key will be send to \deno{M} and giving to \deno{B}. If this session key is valid it is possible for the user to communicate directly with \deno{S} without \deno{M}.
 
 \begin{figure}[!h]
     \centering 
@@ -58,8 +59,8 @@ Secondly it ensured that unauthorized users do not have the possibility of contr
 Communication between the servers in the system are crucial. 
 Therefore it was important to make a method or methods for communicating between them. 
 One method could be to make a service which handles all these requests on each server. 
-The problem however is that with only one service they are a possibility for introduction a bottleneck to the system.
-Another solution is to make a service for each communication level. One service that handles sessions, a service that handles control commands, and a service that handles initial messages from Slaves see section~\ref{sec:application_structure}.
+The problem however is that with only one service there are a possibility for introduction a bottleneck to the system.
+Another solution is to make a service for each communication level. One service that handles sessions, a service that handles control commands, and a service that handles initial messages from \deno{S} see section~\ref{sec:application_structure}.
 
 This lead to a solution where the different actors in the system delivered and / or depended on services.
 
