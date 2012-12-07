@@ -43,7 +43,7 @@ The operating system chosen for the server-side applications in \projectname{} i
 
 \subsection{Programming language}
 Our choice to use Linux Debian as operating system on the servers limits the possible choices for programming languages.
-Programming languages such as .NET that are not natively written to work on other platforms than Windows Server are discarded as we do not consider emulating tools such as Wine a reliable solution. \\
+Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
 We have some requirements to the programming language that we want to use.
 These are:
@@ -140,13 +140,13 @@ Gstreamer is multimedia framework that uses a pipeline architecture to process v
 A pipeline in this context is a set plugins the video feed is send through and processed by.
 As an example a video feed might be deencoded and then reencoded in a new format.
 Gstreamer is not capable of outputting a readable RTMP stream, as it contains no server functionality.
-It is however capable of sending a rtmp feed to a RTMP server.
+It is however capable of sending a video feed to a RTMP server.
 Gstreamer is not natively capable of decoding PaVE header.
 There does however exist a plugin for gstreamer developed by the AR Drone community which enables to properly parse the PaVE headers.
 The plugin is named paveparse\citep{paveparse}.
 
 C++ RTMP Server\textit{(CRTMP)} is a streaming server capable of streaming to and from a flash application.
-It can receive a local RTMP stream and broadcast it globally.
+It can receive a local stream send via e.g RTP and broadcast it globally as RTMP, RTMPE, RTMPS, RTMPT, and RTMPTE.
 
 The chosen solution is to use gstreamer to read and rebroadcast the drones video feed via CRTMP.
 
