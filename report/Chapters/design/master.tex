@@ -1,5 +1,13 @@
 \section{Master}
-The functionality of Master stated in Section~\ref{sec:functionality_distrubution}, leads.
+% What responsibilities does M have?
+% How is M structured?
+% What models does M contain?
+% What controllers should M contain, and what should be in these controllers?
+% What views does M need?
+% How should the web application of M look?
+
+The functionality of Master described in Section~\ref{sec:functionality_distrubution} dictates the structure of \deno{M} to be as shown in Figure~\ref{fig:int_struct_m}. This figure shows three processes; Web, Database, and Daemon. The Database process can be any database engine that can handle transactions, therefore this will not be elaborated further. The Web and Daemon processes will need further explanation, however. \\
+
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{gfx/master_internal_structure.pdf}
@@ -7,6 +15,7 @@ The functionality of Master stated in Section~\ref{sec:functionality_distrubutio
     \label{fig:int_struct_m}
 \end{figure}
 
+The web process will be a web server running on an MVC architecture. There are several frameworks in different languages that can used for this, which will be considered in Section~\ref{sec:tools}.
 
 \subsection{Design language}
 \fxfatal{Bjarke og Thomas tag stilling}
