@@ -1,11 +1,11 @@
 \section{Tools}
 \label{sec:tools}
-The problem domain dictates that the proposed solution will consist of web development and server-side scripting.
-The development platform will therefore consist of two parts.
-Firstly the setup including the operating system of the server must be decided, and secondly the programming language for the application must be decided.
+The application structure described in Section~\ref{sec:application_structure} specifies the solution will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{S}'s.
+There are two choices to make regarding the development platform.
+Firstly the setup including the operating system on \deno{M} and \deno{S} must be decided, and secondly the programming language for the application must be decided.
 
-\subsection{Server operating system}
-There are two major operating system families to choose from, which each has some potential operating systems beneath them:
+\subsection{Server Operating System}
+There are two major operating system families to choose from, each of which contains a set of operating systems:
 
 \begin{itemize}
     \item Windows Server family
@@ -21,7 +21,7 @@ There are two major operating system families to choose from, which each has som
                     \item Debian/Ubuntu
                     \item Fedora
                     \item CentOS/RedHat
-                    \item Various other distributions of Linux
+                    \item Various other distributions of Linux\fxfatal{Er det nødvendigt at nævne dette?}
                 \end{itemize}
             \item BSD
             \item Mac OSX Server
@@ -32,31 +32,31 @@ We have chosen to use Linux Debian due to the following reasons:
 
 \begin{itemize}
     \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
-    \item It is easy to get started on the project, as installation of the programs needed is simple.
-    \item Linux Debian is open-source and does not require a license to install or use.
-    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. Linux Debian has a huge community that continuously updates and maintains it.
+    \item Installation of new programs is simple.
+    \item Linux Debian is open-source.
+    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. 
+    \item Linux Debian has a huge community that continuously updates and maintains it.
 \end{itemize}
 
-It is important to underline that any of the listed operating systems are fully capable of handling any task needed in this project.
-Operating systems are often chosen based on personal preferences or experience with a given operating system.
+It is important to underline that all considered operating systems contain the functionality needed in this project.
+%Operating systems are often chosen based on personal preferences or experience with a given operating system.
 %Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
 The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
 
 \subsection{Programming language}
-Our choice to use Linux Debian as operating system on the servers limits the possible choices for programming languages.
+Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages.
 Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
-We have some requirements to the programming language that we want to use.
-These are:
+The programming language must have the following:\fxfatal{Hvorfor? Skal linkes til tidligere sektioner}:
 
 \begin{itemize}
-    \item It must support object oriented programming
-    \item It must have native MySQL libraries
+    \item Support of object oriented programming
+    \item Native MySQL libraries
     \item It must be open-source and have an active community to ensure continuous bug-fixing etc. or be a corporate language that is professionally maintained.
 \end{itemize}
 
-This leaves us with a number of options that we have narrowed down to the ones we already have little to some knowledge about or experience with.
-These are:
+The programming languages that have this and whice where considered are:
+
 \begin{itemize}
     \item Java
     \item Python
@@ -65,10 +65,9 @@ These are:
     \item PHP
 \end{itemize}
 
-Just as when you are choosing which operating system to use, choosing which programming language to use can be considered a bit ``religious''.
-All of the above are able to output a program with similar functionality that runs on a Linux Debian server.\\
-
-The language we have chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
+All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
+%Check point
+The language chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
 The reasons why we have chosen Ruby and Ruby on rails follows.
 First are some of the advantages by using Ruby and Ruby on Rails:
 
@@ -128,14 +127,16 @@ One is using a tool capable of reading the drones video feed and broadcast a RTM
 The other is one using two tools.
 A tool which reads the drones feeds and forwards it to a rtmp server.
 Both solution depends on a tool capable of decoding the PaVE headers.
-The tools considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server.
+The tools considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server. 
+\\
 
 FFmpeg is a multimedia framework capable of recording and converting audio and video.
 It contains a multimedia streaming server called FFserver.
 FFserver is used for live broadcasts and is capable of decoding and enconding a large set of video formats.
 It is however incapable of decoding the unique PaVE headers the drones video feed is encoded with.
 It however capable of outputting a RTMP feed.
-Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input.
+Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input. 
+\\
 
 Gstreamer is multimedia framework that uses a pipeline architecture to process video and audio feeds.
 A pipeline in this context is a set plugins the video feed is send through and processed by.
@@ -144,7 +145,8 @@ Gstreamer is not capable of outputting a readable RTMP stream, as it contains no
 It is however capable of sending a video feed to a RTMP server.
 Gstreamer is not natively capable of decoding PaVE header.
 There does however exist a plugin for gstreamer developed by the AR Drone community which enables to properly parse the PaVE headers.
-The plugin is named paveparse\citep{paveparse}.
+The plugin is named paveparse\citep{paveparse}. 
+\\
 
 C++ RTMP Server\textit{(CRTMP)} is a streaming server capable of streaming to and from a flash application.
 It can receive a local stream send via e.g RTP and broadcast it globally as RTMP, RTMPE, RTMPS, RTMPT, and RTMPTE.
