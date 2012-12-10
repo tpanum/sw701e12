@@ -1,10 +1,14 @@
 \section{Report - First test run}
 \label{sec:testing_report}
 
+The acceptance tests will be run over two turns. 
+The first run is to determine the current state of the system and see if everything works as it is suppose too.
+If not, it will be fixed and tested again in the second acceptance test run. \\
+
 All of the acceptance tests were run.
 The tests that were successful and accepted can be seen in the appendix along with the other tests.
 One can expect that those tests that were accepted are fully implemented in \projectname{}, are functional and ready to use. 
-Those test that failed will be covered in this section. 
+Those test that failed will be covered in this section. \\
 
 
 \begin{figure}[htb]
@@ -16,14 +20,14 @@ Those test that failed will be covered in this section.
 	%%%%%%%%%%% OBS! %%%%%%%%%%%
 	%%%%%%%%%%%      %%%%%%%%%%%
 	% Inden tallene ændres, skal der lige gÃ¸res opmÃ¦rksom pÃ¥ det, da de bruges andre steder.
-	2 & 2 & Not implemented yet & ? \\ \hline
-	5 & 5 & Not implemented yet & ? \\ \hline
-	6 & 6 & ? & ? \\ \hline
-	13 & 10 & Not implemented yet & ? \\ \hline
-	14 & 10 & Not implemented yet & ? \\ \hline
-	22 & 13 & Not implemented yet & ? \\ \hline
-	23 & 13 & Not implemented yet & ? \\ \hline
-	28 & 17 & Not implemented yet & ? \\ \hline
+	2 & 2 & Failed. & Not implemented yet. \\ \hline
+	5 & 5 & Failed. & Not implemented yet. \\ \hline
+	6 & 6 & Failed. & The user is not capable of changing the name of a drone, as there is no name-field. The only identification is a hard-coded serial number. \\ \hline
+	13 & 10 & Failed. & Not implemented yet. \\ \hline
+	14 & 10 & Failed. & Not implemented yet. \\ \hline
+	22 & 13 & Failed. & Not implemented yet. \\ \hline
+	23 & 13 & Failed. & Not implemented yet. \\ \hline
+	28 & 17 & Failed. & Not implemented yet. \\ \hline
   \hline
 \end{tabular}
 \caption{Acceptance tests results from first test-run}
@@ -31,7 +35,28 @@ Those test that failed will be covered in this section.
 \end{center}
 \end{figure}
 
+The first acceptance tests results leads to three conclusions:
+
+\begin{itemize}
+	\item The primary functions of \projectname{} are implemented and working. 
+	\item However, some of the functionality can be improved and made more user-friendly. 
+	\item The failed acceptance tests listed in Table~\ref{tab:acceptance_tests_results_first_run} are not needed for a proof-of-concept solution, but they are needed before \projectname{} can be seen as ready-to-market.
+\end{itemize}
 
 
 \section{Report - Second test run}
-asfasdf
+The second acceptance test run was run after the failed tests in Table~\ref{tab:acceptance_tests_results_first_run} were fixed. 
+The result of the second acceptance test run can be seen in Table~\ref{tab:acceptance_tests_results_second_run}. \\
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | l | l | p{8cm} | }
+  \hline
+	\textbf{ID} & \textbf{Use Case ID} & \textbf{Status} & \textbf{Description} \\ \hline
+	? & ? & ? & ? \\ \hline
+  \hline
+\end{tabular}
+\caption{Acceptance tests results from first test-run}
+\label{tab:acceptance_tests_results_second_run}
+\end{center}
+\end{figure}
