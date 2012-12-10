@@ -1,31 +1,35 @@
 
 \section{Client}\label{sec:design_client}
-Any client accesses the system via his Internet-browser, which is the only way into the system for the clients. 
-The reason why we have chosen that the users interaction with the system is via his Internet-browser instead of a client application is the following:
+The clients interaction with the system is initiated by connecting to \deno{M}.
+This connection can be made using either an Internet browser or a client-side application.
+For \projectname{} this connection will be handled with the browser.
+This choice was made for the following reasons:
 
 \begin{itemize}
-	\item The client-side must be platform independent
-	\item The client-side must be able to run on virtually any hardware, so no resource-intensive operations can run on the client PC
+	\item The client-side must be platform independent.
+	\item The client-side must be hardware independant, meaning no resource-intensive operations can run on the client PC.
+	\item Browser increase the accessibility of \projectname{}
 \end{itemize}
 
-A Java program is also platform independent and can be made to not require many resources to run. 
-However, as we want \projectname{} to run as seamlessly as possible on as many different platforms as possible, we do not want to force the user to install i.e. Java in order to get started.
+A Java program is also platform independent and can be programmed to be light weight as possible. 
+However, in order for \projectname{} to run as seamlessly as possible on as many different platforms as possible, forcing the user to install i.e. Java in order to get started is not an ideal solution.
 Therefore the client-side of \projectname{} will be accessible via an Internet-browser. \\
 
-When using an Internet-browser, all functionality e.g. is usually processed server-side, meaning that the browser simply displays a result that was computed remotely. 
-However, there are some possibilities for processing some of the user-experience client-side in an Internet-browser. 
-This is usually done via Javascript, which we will take advantage of in \projectname{}. \\
+When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely. 
+However, some of the processing can be moved to the client-side to ease load on \deno{M}. 
+This can be achieved using Javascript, which will be used in \projectname{}. \\
 
-One of the tools that helps making the web interface more user-friendly and resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}. 
+Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}. 
 AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way. 
 This approach has several advantages:
 
 \begin{itemize}
 	\item Content on the interface can be updated without page-reload. This is normally not possible with web-development, as the web is stateless.
-	\item It saves resources server-side, as only the specific parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated
+	\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
+	\item Using AJAX can improve usability of a web application.
 \end{itemize}
 
-These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users. \\
+These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users, and making the system as accesible as possible. \\
 
 The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements. 
 This is not natively supported in Internet-browsers, so a Flash application will be used for this purpose. 
