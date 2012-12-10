@@ -4,7 +4,7 @@
 
 The UML diagrams in this report will be guided by the UML standard guide written in cooperation by several different software companies \citep{UML_notation}.
 Because this project uses Active Records (as a consequence of our choice to use Rails) it is possible to model the database as a class diagram \citep{active_records}.
-In other words the classes in the system will represent the database attributes with their own attributes. \\
+In other words the classes in the system will represent the database attributes with their own attributes.\\
 
 The UML notation in this report:
 \begin{itemize}
@@ -13,12 +13,12 @@ The UML notation in this report:
     \item attribute : type - all attributes will have a type e.g. \verb+id : int+.
 \end{itemize}
 
-For an example see Figure~\ref{fig:UML_class_diagram}
+For an example see Figure~\ref{fig:UML_class_diagram}.
 
-The tables (and hence classes) have all been named according to the naming conventions in Rails \citep{ror_naming_convention}.
+The tables (and hence classes) have all been named according to the naming conventions in Rails \citep{ror_naming_convention}. \fxfatal{Men hvorfor?}
 
 The primary purpose of \projectname{} is to connect users and drones to allow the user to interact with a drone by watching its video feed, controlling its movements or both.
-Therefore the users and drones are the primary objects that must be represented in \projectname{}. \\
+Therefore the users and drones are the primary objects that must be represented in \projectname{}.\\
 
 The system will contain the following objects and relationships:
 
@@ -29,11 +29,11 @@ Objects:
     \item Role
     \item Privilege
     \item Drone
-    \item Flightplan
+    \item Flight Plan
 \end{itemize}
 
 The relationship between the objects can be seen in Figure~\ref{fig:UML_class_diagram}.
-This figure also serves as the model for the whole system. \\
+This figure also serves as the model for the whole system.\\
 
 \begin{figure}[htb]
     \centering
@@ -84,8 +84,8 @@ The relationship between a User and a Drone is controlled by Privileges and Dron
 The logging of when a drone takes of and lands is represented by the Flightplans table.
 
 
-\subsection{Flightplan}
-Flightplans are used to log whenever a drone takes of and lands and which user is issuing the commands.
+\subsection{Flight Plan}
+Flight plans are used to log whenever a drone takes of and lands and which user is issuing the commands.
 One drone can have many flight plans.
 One flight plan can have one drone.
 Therefore this is a one-to-many relationship.

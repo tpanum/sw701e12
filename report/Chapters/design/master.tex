@@ -24,9 +24,23 @@ There are several frameworks in different languages that can used for this, whic
 
 \fxfatal{Insert reasoning behind having MVC}
 
+In Section~\ref{subsec:objects} the object model is described.
+The models of \deno{W}'s MVC are derived from this object model.
+Each model will have a direct mapping to a table in the database, and communication with the table in the database has to go through the model.
+
+Models that require views or certain model specific actions, e.g. creating an instance of the model, will have a controller implemented.
+This includes models such as User, Drone, and Company.
+There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle logging in.
+Each implemented controller with a corresponding model will implement Create, Read, Update, and Delete (CRUD).
+\fxfatal{Beskriv controllers med specielle actions}
+
+In the application there will be two ways of returning the information from a controller, either HTML or JSON.
+The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
+The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \fxfatal{Bør Object Model snakke om Affiliate Privilege og Session?}
+
 %%%%% DEAMON %%%%%
 The daemon process, \deno{D}, will be a process running in the background of \deno{M}, its main purpose is as outlined in previous sections to handle session communication with \deno{S}.
-\deno{D} will be written in the same language as \deno{W} to limit the amount of languages used.
+\deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
 
 %%%%% DESIGN %%%%%
 \subsection{Design language}
