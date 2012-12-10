@@ -6,7 +6,10 @@
 % What views does M need?
 % How should the web application of M look?
 
-The functionality of Master described in Section~\ref{sec:functionality_distrubution} dictates the structure of \deno{M} to be as shown in Figure~\ref{fig:int_struct_m}. This figure shows three processes; Web, Database, and Daemon. The Database process can be any database engine that can handle transactions, therefore this will not be elaborated further. The Web and Daemon processes will need further explanation, however. \\
+The functionality of Master described in Section~\ref{sec:functionality_distribution} dictates the structure of \deno{M} to be as shown in Figure~\ref{fig:int_struct_m}.
+This figure shows three processes; Web, Database, and Daemon.
+The Database process can be any database engine capable of handling transactions, therefore this will not be elaborated further.
+The Web and Daemon processes will need further explanation, however. \\
 
 \begin{figure}[htb]
     \centering
@@ -15,18 +18,27 @@ The functionality of Master described in Section~\ref{sec:functionality_distrubu
     \label{fig:int_struct_m}
 \end{figure}
 
-The web process will be a web server running on an MVC architecture. There are several frameworks in different languages that can used for this, which will be considered in Section~\ref{sec:tools}.
+%%%%%  WEB   %%%%%
+The web process, \deno{W} will be a web server running on a Model-View-Controller (MVC) architecture.
+There are several frameworks in different languages that can used for this, which will be considered in Section~\ref{sec:tools}.
 
+\fxfatal{Insert reasoning behind having MVC}
+
+%%%%% DEAMON %%%%%
+The daemon process, \deno{D}, will be a process running in the background of \deno{M}, its main purpose is as outlined in previous sections to handle session communication with \deno{S}.
+\deno{D} will be written in the same language as \deno{W} to limit the amount of languages used.
+
+%%%%% DESIGN %%%%%
 \subsection{Design language}
 \fxfatal{Bjarke og Thomas tag stilling}
 The design language, which is also known as design vocabulary, is the design guidelines for \projectname{}.
 The objects here will have an important role in the systems user interface, and their design language is therefore described here.
 
-\subsubsection{Color scheme}
+\subsubsection{Color schema}
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{gfx/color_schema.pdf}
-    \caption{color schema of \projectname{}.}
+    \caption{Color schema of \projectname{}.}
     \label{fig:color_schema}
 \end{figure}
 
