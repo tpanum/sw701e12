@@ -32,4 +32,16 @@ Use this command to compile paveparse:  gcc -fPIC -shared -o libgstpave.so -I. `
 
 Get paveparse from here: https://projects.ardrone.org/attachments/450/paveparse.zip
 
-Use this command to view video-feed: cd gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink --gst-plugin-path=.
+Use this command to view video-feed: gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! autovideosink --gst-plugin-path=.
+
+gst-launch tcpclientsrc host=192.168.1.1 port=5555 ! ffdec_h264 ! autovideosink --gst-plugin-path=.
+
+gst-launch udpsrc uri=udp://127.0.0.1:5123 caps="video/x-h264, width=(int)640, height=(int)360, framerate=(fraction)25/1" ! ffdec_h264 ! autovideosink --gst-plugin-path=.
+
+gst-launch udpsrc uri=rtp://172.25.26.10 port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
+
+gst-launch -v udpsrc multicast-group=224.1.1.1 auto-multicast=true port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z0KAHotoCgL3lQA\\=\\,aM4BqHcgAA\\=\\=\", payload=(int)96, ssrc=(uint)3018008085, clock-base=(uint)949802934, seqnum-base=(uint)11840" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
+
+gst-launch-0.10 tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! ffdec_h264 ! x264enc ! rtph264pay ! udpsink host=224.1.1.1 port=5123 auto-multicast=true --gst-plugin-path=.
+
+USE THIS COMMAND TO STREAM=gst-launch-0.10 -v tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! rtph264pay ! udpsink host=224.1.1.1 port=5123 auto-multicast=true --gst-plugin-path=.
