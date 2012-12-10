@@ -200,7 +200,7 @@ class CompaniesController < ApplicationController
       end
     elsif params[:perform].eql?("delete")
       respond_to do |format|
-        if @company.roles.delete(@role)
+        if @company.roles.destroy(@role)
           format.html { redirect_to @company, notice: 'Role was successfully deleted' }
           format.json { head :no_content }
         else

@@ -12,38 +12,38 @@ A slave is responsible for:
 	\item Receiving video feed from the drone and send it to the client
 \end{itemize}
 
-The slave must connect to both the drones network and to the Internet. 
-Therefore two network interfaces are required, out of which a minimum of one has to be a wireless network interface (WIFI-interface). 
+The slave is connected to both the drones network and the Internet.
+Therefore two network interfaces are required, one of which must be a wireless network interface (WIFI-interface).
 When the slave is connected, it will search the available wireless networks for the drone and connect to it if possible to establish the required connection.
-After that it will connect to \deno{M}. 
-If it is the first time the slave connects to \deno{M}, a new entry in \deno{M} should be created for this particular slave and its drone. 
+After that it will connect to \deno{M}.
+If it is the first time the slave connects to \deno{M}, a new entry in \deno{M} should be created for this particular slave and its drone.
 When that is done, or if this is not the first time it connects, it is ready to be used by the client. \\
 
 The need for session keys were described in Section~\ref{qwe123}.
-When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys. 
-So the slave has to make these and synchronize with \deno{M}. 
+When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys.
+So the slave has to make these and synchronize with \deno{M}.
 
 Finally, when \deno{S} is loaded, it must connect to the drone via its WIFI to ensure the connection is ready. \\
 
 \subsection{Designing applications for the different requirements}
-As soon as \deno{S} boots, it should connect to the WIFI broadcast by \deno{D}. 
-\deno{S} will come with some pre-installed software on deployment. 
+As soon as \deno{S} boots, it should connect to the WIFI broadcast by \deno{D}.
+\deno{S} will come with some pre-installed software on deployment.
 A part of this will be instructing the operating system, that when it is booted and the drivers for the wireless network interface are loaded, it must connect to a defined network.
 This network will be defined to be the one broadcast by the drone that \deno{S} is parred with. \\
 
 The four remaining areas of responsibility for \deno{S} requires some custom program to be executed.
-Connecting to \deno{M} when connected and creating and sending session keys are designed as individual scripts that are executed on boot and on request. 
+Connecting to \deno{M} when connected and creating and sending session keys are designed as individual scripts that are executed on boot and on request.
 The dissemination of flight commands to the drone and steaming of its video feed is more interesting, however. \\
 
-We know that operations must be sent to \deno{D} as UDP packages, and that \deno{S} must send as many as 30 packages per second. 
-We also know, that if empty packages are sent, \deno{D} will return to its default hovering position. 
-To send this many packages will require a state-full connection, as it takes too long time with a state-less connection to connect, send package and disconnect for every package sent. 
+As described in Appendix~\ref{app:ar_drone_specification} commands are send to \deno{D} as UDP packages, and that \deno{S} must send as many as 30 packages per second.
+Furthermore \deno{D} will return to its default hovering position, if it does not receive any packages.
+To send a sufficient ammount of packages requires a state-full connection, as the delay with a state-less connection is to large to properly control the drone\fxfatal{statement: soirve}.
 Therefore we have to create a daemon running on \deno{S} which accepts packages, formats them to the correct format and sends them on to \deno{D}.  \\
 
-The video feed from \deno{D} that the client must be able to see communicates the other way. 
-It is recorded by \deno{D}, sent to \deno{S} and from there it must be sent to the client. 
-It is out of the scope of this project that we design an implement our own streaming protocol. 
-Therefore an existing streaming protocol will be used to stream the video feed from \deno{D} to the client. 
+The video feed from \deno{D} that the client must be able to see communicates the other way.
+It is recorded by \deno{D}, sent to \deno{S} and from there it must be sent to the client.
+It is out of the scope of this project that we design an implement our own streaming protocol.
+Therefore an existing streaming protocol will be used to stream the video feed from \deno{D} to the client.
 This is described in further details in Section~\ref{sec:tools_streaming}.
 
 

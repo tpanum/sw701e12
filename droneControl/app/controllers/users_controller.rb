@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   	if @user.save
   	  flash[:notice] = "User created."
-  	  redirect_to(:action => 'list')
+  	  redirect_to(:action => 'index')
   	else
   	  render('new')
   	end
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   	User.find(params[:id]).destroy
 
   	flash[:notice] = "The user has been destroyed"
-  	redirect_to(:action => 'list')
+  	redirect_to(:action => 'index')
   end
 
   def search
