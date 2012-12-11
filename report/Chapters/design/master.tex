@@ -44,9 +44,8 @@ Each model will have a direct mapping to a table in \deno{DB}, and communication
 
 Models that require views or certain model specific actions, e.g. creating an instance of the model, will have a controller implemented.
 This includes models such as User, Drone, and Company.
-There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle logging in.
-Each implemented controller with a corresponding model will implement Create, Read, Update, and Delete (CRUD). \\
-\fxfatal{Beskriv controllers med specielle actions}
+There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle login and logout.
+Each implemented controller with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will implement Create, Read, Update, and Delete (CRUD) as default actions. \\
 
 In the application there will be two ways of returning the information from a controller, either HTML or JSON.
 The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
