@@ -44,6 +44,16 @@ The connection \deno{c} covers the requesting of a session key by \deno{M}.
 As \deno{M} has a static location, \deno{S} is able to verify the identity of \deno{M} based on its location.
 Connection \deno{d} covers the response of the request received in \deno{c}, and \deno{M} is able to verify the identity of \deno{S} based on its location. \\
 
+\begin{figure}[!h]
+    \centering 
+    \includegraphics[width=\textwidth]{gfx/sequence_diagram.pdf}
+    \caption{Sequence diagram of the communication network between \deno{B}, \deno{M}, and \deno{S}}
+    \label{fig:sequence_diagram}
+\end{figure}
+
+The functionalities of the described connections, can only happen in a sequence as illustrated in Figure~\ref{fig:sequence_diagram}.
+Each message in the sequence diagram can be done multiple times, however above messages are enforced to be performed atleast once in order for the given message to be performed. \\
+
 % The communication network is crucial for \projectname{} to work.
 % When designing a scalable communication network it is important to choose the right structure.
 % There are different ways when designing such a network but identical for them all is that they need to support the structure of \deno{M}, \deno{S} and \deno{B} described in section~\ref{sec:application_structure}.
@@ -57,12 +67,7 @@ Connection \deno{d} covers the response of the request received in \deno{c}, and
 % On the down side the system could be considered not safe because it would be possible to tamper with the drones.
 % As this is a system where it is important that the integrity is high, evidence is not tampered with, and where the outcome of an unauthorized user controller a drone could be devastating, it is important to deliver some form of security.
 
-% \begin{figure}[!h]
-%     \centering 
-%     \includegraphics[width=\textwidth]{gfx/sequence_diagram.pdf}
-%     \caption{Sequence diagram of the communication network between \deno{B}, \deno{M}, and \deno{S}}
-%     \label{fig:sequence_diagram}
-% \end{figure}
+
 
 % This lead to a solution where sessions is designed to keep the integrity and secure evidence as seen in figure~\ref{fig:sequence_diagram}. 
 % As seen in the figure there is designed a level of security because of the sessions.
