@@ -8,7 +8,7 @@
 
 The functionality of Master described in Section~\ref{sec:functionality_distribution} dictates the structure of \deno{M} to be as shown in Figure~\ref{fig:int_struct_m}.
 This figure shows three processes; Web, Database, and Daemon.
-The Database process can be any database engine capable of handling transactions, therefore this will not be elaborated further.
+The Database process, \deno{DB} can be any database engine capable of handling transactions, therefore this will not be elaborated further.
 The Web and Daemon processes will need further explanation, however. \\
 
 \begin{figure}[htb]
@@ -19,35 +19,44 @@ The Web and Daemon processes will need further explanation, however. \\
 \end{figure}
 
 %%%%%  WEB   %%%%%
-The web process, \deno{W} will be a web server running on a Model-View-Controller (MVC) architecture.
-There are several frameworks in different languages that can used for this, which will be considered in Section~\ref{sec:tools}.
+The web process, \deno{W} will be a web server using the Model-View-Controller (MVC) design pattern.
+There are several frameworks in different languages that support MVC, which will be considered in Section~\ref{sec:tools}. \\
 
+The nature of MVC is decoupling the different layers allowing the developers to focus on one layer at a time.
+This means that the model can be changed to fetch data differently without impacting the view. %as long as the view is provided with data in the same format as before.
+Furthermore can the developers create several views for the same model.
+It also provides developers the opportunity to change how user input is handled in the controller without modifying the associated view.
+Decoupling the layers forces the developer to keep the code separated, keeping code meant for the controller out of the view.
+%This separation, and in turn making debugging easier,
+% Kodeopsplitning -> readability / debugging
+% Analyse/Design -> Object Model gør at vi kan gøre alle vores tabeller til modeller
+% Videreudvikling
 \fxfatal{Insert reasoning behind having MVC}
 
 In Section~\ref{subsec:objects} the object model is described.
 The models of \deno{W}'s MVC are derived from this object model.
-Each model will have a direct mapping to a table in the database, and communication with the table in the database has to go through the model.
+Each model will have a direct mapping to a table in \deno{DB}, and communication with the table in \deno{DB} has to go through the model. \\
 
 Models that require views or certain model specific actions, e.g. creating an instance of the model, will have a controller implemented.
 This includes models such as User, Drone, and Company.
 There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle logging in.
-Each implemented controller with a corresponding model will implement Create, Read, Update, and Delete (CRUD).
+Each implemented controller with a corresponding model will implement Create, Read, Update, and Delete (CRUD). \\
 \fxfatal{Beskriv controllers med specielle actions}
-\fxfatal{Bør Object Model snakke om Affiliate Privilege og Session?}
 
 In the application there will be two ways of returning the information from a controller, either HTML or JSON.
 The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
-The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input.
+The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \\
 
 %%%%% DEAMON %%%%%
 The daemon process, \deno{D}, will be a process running in the background of \deno{M}, its main purpose is as outlined in previous sections to handle session communication with \deno{S}.
 \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
-\deno{D} will handle session communication with \deno{S} by continuously checking the Database for new session requests.
-If a session request is present in the Database \deno{D} will request a session from the appropriate \deno{S}.
-In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key that is 40 characters long, it saves this in the database for \deno{W} to send it to the user.
-\deno{D} should handle session requests periodically, thus if several requests are present in the Database then \deno{D} will not perform all requests at the same time.
-It will handle the session requests as a First In, First Out (FIFO) queue.
-However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in the Database.
+\deno{D} will handle session communication with \deno{S} by continuously checking \deno{DB} for new session requests.
+If a session request is present in \deno{DB} then \deno{D} will request a session from the appropriate \deno{S}.
+In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key that is 40 characters long, it saves this in \deno{DB} for \deno{W} to send it to the user.
+\deno{D} should handle session requests periodically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests at the same time. \\
+
+\deno{D} will handle the session requests as a First In, First Out (FIFO) queue.
+However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
 It is, however, certain that \deno{S} will only return a valid session key if there are currently no session keys on \deno{S}.
 Therefore only one person will have a valid session key for communicating with \deno{S}.
 
