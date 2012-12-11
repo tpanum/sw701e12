@@ -20,9 +20,14 @@ There are a number of ways that \projectname{} can be tested:
 Inspection and review of the specifications and code inspection and review was done in every iteration, ensuring that \projectname{} was heading in the right directly accordingly to the requirements. 
 This has been a process during the development, and the final results are what is presented in the design and implementation of \projectname{}.
 Actual testing of \projectname{} has been limited to dynamic black-box testing.
-We have chosen to only use dynamic black-box testing, since it is closely related to our previous approach using use cases and defining acceptance tests.
+We have chosen to only use dynamic black-box testing, since it is closely related to our previous approach using use cases and defining acceptance tests seen in Section~\ref{sec:acceptance_tests}.\\
+
 If the system were to go straight from development to production, however, unit-testing should be applied.
-However, unit-testing has been neglected in this context. \\
+Unit-testing provides automated tests that is often used to check whether or not the software being tested takes the correct input and gives the correct output. 
+This is to some degree also tested with acceptance tests, as different input is tested up against the system. 
+But with acceptance tests, this is made manually. 
+Unit tests are automatic and more complete than the acceptance tests as many different generated test inputs and outputs are tested. 
+The two reasons we have chosen not to use unit-tests but reside to acceptance tests are that: 1) Setting up and executing unit tests is very time consuming and 2) \projectname{} is a proof-of-concept so we believe that acceptance-tests should be sufficient.\\
 
 A number of use-cases formed the basis of the design and implementation of \projectname{}.
 These use-cases also formed the basis of the acceptance-tests that defines what we expect the software to do and how it should behave. \\
