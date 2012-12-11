@@ -27,11 +27,16 @@ This means that the model can be changed to fetch data differently without impac
 Furthermore can the developers create several views for the same model.
 It also provides developers the opportunity to change how user input is handled in the controller without modifying the associated view.
 Decoupling the layers forces the developer to keep the code separated, keeping code meant for the controller out of the view.
-%This separation, and in turn making debugging easier,
+This separation means that the developer can isolate bugs to a specific layer, and in turn makes debugging easier.
+
+% The analysis of the problem domain provided the object model as described in Section~\ref{subsec:objects}.
+% This model provides several models that are suitable for the MVC structure.
+
+MVC allows extending the functionality of each layer without touching the other layers and breaking working code.
+This does not mean that the developer can completely rewrite a layer without experiencing issues, but adding to a layer should leave the old code in a working state.
 % Kodeopsplitning -> readability / debugging
 % Analyse/Design -> Object Model gør at vi kan gøre alle vores tabeller til modeller
 % Videreudvikling
-\fxfatal{Insert reasoning behind having MVC}
 
 In Section~\ref{subsec:objects} the object model is described.
 The models of \deno{W}'s MVC are derived from this object model.
@@ -59,6 +64,14 @@ In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key t
 However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
 It is, however, certain that \deno{S} will only return a valid session key if there are currently no session keys on \deno{S}.
 Therefore only one person will have a valid session key for communicating with \deno{S}.
+How this session key communication is handled can be seen in Figure~\ref{fig:sessionkey_communication}.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{gfx/sessionkey_communication_b.pdf}
+    \caption{Session key communication.}
+    \label{fig:sessionkey_communication}
+\end{figure}
 
 %%%%% DESIGN %%%%%
 \subsection{Design language}
