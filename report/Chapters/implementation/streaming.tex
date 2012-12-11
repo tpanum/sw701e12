@@ -1,1 +1,123 @@
 \section{Streaming}
+\subsection{Gstreamer}
+\label{sec:gstreamer}
+As described in Section~\ref{sec:tools_streaming} the tool Gstreamer is used for reading the drones’ video feed and forwarding it to CRTMP.
+It is a pipeline based tool, and can be run through the command line using the \verb+gst-launch-0.10+ command.
+A pipeline in gstreamer is a set of plugins the video feed is processed by seperated by a \verb+|+.
+The first plugin in the pipeline is called a source element, and the final element is a sink.
+The plugins between the source and sink element consist of a set of video and audio processing plugins, such as decoders and encoders.
+
+>>FIGURE af pipeline princippet<<
+
+The source element is capable of receiving a video feed via a specific protocol from a defined destination.
+As described in Appendix~\ref{app:ar_drone_specification} the drone outputs its video feed using TCP on port 5555, and its IP on its network .
+To read the stream the Gstreamer plugin \verb+tcpclientsrc+ is used.
+It has a \verb+host+ and a \verb+port+ as parameters and the first part of the pipeline is: \verb+gst-launch-0.10 tcpclientsrc host=192.168.1.1 port=5555+.\\
+
+The data available for the next plugin is a H.264 encoded video frame with PaVE headers.
+The PaVE headers cannot be interpreted by Flash, and are therefore parsed by gstreamer using the \textit{paveparse} plugin\citep{paveparse}.
+Paveparse removes the PaVE headers and send the remaining H.264 data down the pipeline.
+Furthermore it handles the delay that comes from the drone using TCP to stream its video feed, by ignoring lost frames, and always displaying the newest received frames.\fxfatal{weak sætning}.
+
+As specified in Section\fxfatal{skriv det og ref til section tools} the video output of gstreamer should be in FLV.
+Two pipelines can be made capable of this..
+One is using a H.264 decoder to create raw video data, and then encode it as FLV.
+The other is using a FLVmuxer which uses a workaround to convert the H.264 video data to FLV.
+The best option is to use the H.264 decoder, however, as the H.264 data has no headers, due to \textit{paveparse}, the FLV encoder cannot properly encode the video data after it has been decoded.
+Therefore an FLVmuxer is used to create FLV output.
+
+With a FLV the sink element can be added to the pipeline.
+As the video feed is forwarded the RTMP server CRTMP, the sink element is \verb+rtmpsink+.
+It has one parameter called \verb+location+, which is the url of the RTMP server with an extension specifying the url of the stream on the RTMP server\fxfatal{Dårlig sætning}.
+As CRTMP runs on the same physical machine as Gstreamer the rtmpsink looks as follows:
+\verb+rtmpsink location='rtmp://0.0.0.0/live/myStream'+.
+
+The pipeline to forwarrd the drones’ video feed is therefore: \verb+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux name=mux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'+.
+
+There is however the chance some plugins process data faster than others, causing data to pile up at certain plugins if it is send through unrestricted.
+This can be solved using the plugin \verb+queue+.
+\verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size.
+The queue element is added between each plugin except \verb+tcpclientsrc+ and \verb+paveparse+, as there is no need to queue between the entry point and the first plugin.
+The resulting pipeline is therefore: \verb+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux name=mux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream' --gst-plugin-path=.+.
+
+gst-launch-0.10 -v -m testvideosrc ! queue ! x264enc pass=pass1 threads=0 bitrate=1536 tune=zerolatency ! queue ! flvmux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
+
+
+sudo gst-launch-0.10 -v -m tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux name=mux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream' --gst-plugin-path=.
+
+\subsection{C++ RTMP Server}
+\label{sec:CRTMP}
+As described in \ref{sec:tools_streaming} C++ RTMP Server is used as the server tool between Gstreamer and the flash application.
+
+CRTMP is found at http://www.rtmpd.com and comes in a source package ready to run.
+It can be runned with the linux command \verb+sh+, which is the bourne-shell or a compatible shell.
+
+There are four possibilities:
+
+\begin{itemize}
+   \item run_all.sh
+   \item run_all_deamon.sh
+   \item run_flvplayback.sh
+   \item run_flvplayback_deamon.sh
+\end{itemize}
+
+If the command \verb+sh run_all.sh+ CRTMP will use the config file \verb+all.lua+ and run with this configuration.
+
+The flvplayback was used, because this is the flash streamer application, and the configuration file \verb+flvplayback.lua+ was configured like seen in listing~\ref{lst:flvplayback}.
+
+\begin{lstlisting}[style=sourceCode, language=C, caption=flvplayback.lua configuration, label=lst:flvplayback]
+acceptors =
+                       {
+                               {
+                                       ip="0.0.0.0",
+                                       port=1935,
+                                       protocol="inboundRtmp"
+                               }
+                       },
+                       externalStreams =
+                       {
+                               {
+                                       uri="rtmp://flash.oit.duke.edu/vod/MP4:test/brunswick.m4v",
+                                       localStreamName="test",
+                                       forceTcp=true
+                               }
+                       },
+\end{lstlisting}
+
+
+It is important to understand that \verb+acceptors+ is inbound and \verb+externalStreams+ is outbound.
+Inbound is which ports CRTMP will let users connect to and \verb+externalStreams+ is where the stream is coming from.
+As seen in listing~\ref{listing:flvplayback} there is setup a test source which is a VoD, Video on Demand.
+This test source was used to test if CRTMP was running correctly.
+To logon to the stream Video Lan Client, VLC, was used because it have the same capabilities as flash when it comes to streaming RTMP.
+
+A connection is established with an URL of the format \verb +rtmp://[server address]/[application]/[streamName]+, where the \verb+server address+ is the address of the CRTMP server, the \verb+application+ is the application where CRTMP lookup e.g. live or media, and the \verb+streamName+ is the name of the stream.
+
+When a user connects to CRTMP and the \verb+application+ is live CRTMP will try to find a live stream that correspond to the link name.
+If no such live streams is found CRTMP will look in the media folder and try to find file streams.
+If no file stream is found CRTMP are going to wait for the live stream \verb+streamName+.
+
+C++ RTMP Server also uses RSA keys.
+It is possible to make users and add these users to realms. This can be used as an extra layer of security but is not used in \projectname{}.
+
+\section{Output stream}
+Following the setup of Gstreamer and CRTMP the next step is reading the output stream and displaying it in a Flash application.
+Due to the PaVE headers this is however not possible.
+
+\subsection{Issues with PaVE Headers}
+The documentation for the PaVE headers can be found at \citep[page. 59-60]{ardrone_developer_guide}.
+As described in section~\ref{sec:gstreamer} Flash applications are unable to interpret the PaVE headers, and as a result unable to display a video stream encoded with them.
+Therefore they must be removed or replaced with another header for the stream to be readable.
+The implemented solution removes them with the \verb+paveparse+ plugin, described in section~\ref{sec:gstreamer}.
+Removing the header leaves raw video data, with no information about how to interpret it.
+As a result the Flash application, VLC, and other video players are unable to interpret the video data.
+
+The PaVE headers result in a situation that makes displaying the video stream in Flash impossible, as the video feed cannot be interpreted by a Flash application both with and without them.
+
+\subsection{Test input}
+
+In Gstreamer there is a test source which is called \verb+videotestsrc+. This creates a test video stream as seen in figure~\ref{fig:videotestsrc}.
+
+If this source is used instead of the one from the drone it is possible to show that this solution will work.
+
+This solution can be seen in figure~\ref{fig:working_solution}
