@@ -266,9 +266,13 @@ class SlaveServer
       if is_json?(data)
         obj = JSON.parse(data)
         session = obj['session']
-        unless session.nil?
+        unless session.nil? && $key.nil?
           $key = rand(36**40).to_s(36)
           @respond = "{\"sessionkey\":\"#{$key}\"}"
+          $timer = Timers.new
+          $timer.after(60) {
+            $masterSender.sendSessionTerminate
+          }
         else
           @respond = "{\"sessionkey\":\"invalid\"}"
         end

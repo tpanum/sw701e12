@@ -33,14 +33,23 @@ This includes models such as User, Drone, and Company.
 There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle logging in.
 Each implemented controller with a corresponding model will implement Create, Read, Update, and Delete (CRUD).
 \fxfatal{Beskriv controllers med specielle actions}
+\fxfatal{Bør Object Model snakke om Affiliate Privilege og Session?}
 
 In the application there will be two ways of returning the information from a controller, either HTML or JSON.
 The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
-The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \fxfatal{Bør Object Model snakke om Affiliate Privilege og Session?}
+The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input.
 
 %%%%% DEAMON %%%%%
 The daemon process, \deno{D}, will be a process running in the background of \deno{M}, its main purpose is as outlined in previous sections to handle session communication with \deno{S}.
 \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
+\deno{D} will handle session communication with \deno{S} by continuously checking the Database for new session requests.
+If a session request is present in the Database \deno{D} will request a session from the appropriate \deno{S}.
+In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key that is 40 characters long, it saves this in the database for \deno{W} to send it to the user.
+\deno{D} should handle session requests periodically, thus if several requests are present in the Database then \deno{D} will not perform all requests at the same time.
+It will handle the session requests as a First In, First Out (FIFO) queue.
+However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in the Database.
+It is, however, certain that \deno{S} will only return a valid session key if there are currently no session keys on \deno{S}.
+Therefore only one person will have a valid session key for communicating with \deno{S}.
 
 %%%%% DESIGN %%%%%
 \subsection{Design language}
