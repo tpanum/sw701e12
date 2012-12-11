@@ -4,7 +4,7 @@
 As described in Section~\ref{sec:tools_streaming} the tool Gstreamer is used for reading the drones' video feed and forwarding it to CRTMP.
 It is a pipeline based tool, and can be run through the command line using the \verb+gst-launch-0.10+ command.
 A pipeline in gstreamer is a set of plugins the video feed is processed by seperated by a \verb+!+.
-The first plugin in the pipeline is called a source element, and the final element is a sink.
+The first plugin in the pipeline is called a source element, and the final element a sink.
 The plugins between the source and sink element consist of a set of video and audio processing plugins, such as decoders and encoders.
 
 \begin{figure}[htb]
