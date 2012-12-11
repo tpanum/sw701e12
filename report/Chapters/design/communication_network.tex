@@ -6,7 +6,7 @@ Based on Figure~\ref{fig:slave_structure}, which displays the dependency between
 
 \begin{figure}[!h]
     \centering 
-    \includegraphics[width=\textwidth]{gfx/dataflow_diagram.pdf}
+    \includegraphics[width=0.5\textwidth]{gfx/dataflow_diagram.pdf}
     \caption{Dataflow diagram of \projectname{}}
     \label{fig:dataflow_diagrem}
 \end{figure}
@@ -29,7 +29,7 @@ This allows \deno{M} to determine the identity of each incoming signal. When \de
 Knowing that requests from \deno{B} can happen asynchronously and from dynamic locations, this creates a problem in not knowing the identity of the connections made to \deno{S} through \deno{f}.
 \at{28} sets the requirement of differentiate between incoming connections to \deno{S}.
 If the communication described in connection \deno{e} and connection \deno{f} were running through \deno{M}, this would be no problem as security would be handled by the already existing sessions on \deno{M}.
-Connections \deno{e} and \deno{f} is required to flow an intense amount of data.
+The connections \deno{e} and \deno{f} is required to flow an intense amount of data.
 This data covers a video feed of the drone's video camera and commands for the drone.
 This would increase the load on \deno{M}, which is not desired as \deno{M} is assumed to have a high load already.
 However, since connection \deno{e} and connection \deno{f} are not running through \deno{M}, this leaves the problem of which \deno{B}, \deno{S} should listen to. \\
