@@ -1,7 +1,7 @@
 \section{Streaming}
 \subsection{Gstreamer}
 \label{sec:gstreamer}
-As described in Section~\ref{sec:tools_streaming} the tool Gstreamer is used for reading the drones’ video feed and forwarding it to CRTMP.
+As described in Section~\ref{sec:tools_streaming} the tool Gstreamer is used for reading the drones' video feed and forwarding it to CRTMP.
 It is a pipeline based tool, and can be run through the command line using the \verb+gst-launch-0.10+ command.
 A pipeline in gstreamer is a set of plugins the video feed is processed by seperated by a \verb+|+.
 The first plugin in the pipeline is called a source element, and the final element is a sink.
@@ -32,7 +32,7 @@ It has one parameter called \verb+location+, which is the url of the RTMP server
 As CRTMP runs on the same physical machine as Gstreamer the rtmpsink looks as follows:
 \verb+rtmpsink location='rtmp://0.0.0.0/live/myStream'+.
 
-The pipeline to forwarrd the drones’ video feed is therefore: \verb+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux name=mux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'+.
+The pipeline to forwarrd the drones' video feed is therefore: \verb+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux name=mux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'+.
 
 There is however the chance some plugins process data faster than others, causing data to pile up at certain plugins if it is send through unrestricted.
 This can be solved using the plugin \verb+queue+.
@@ -55,10 +55,10 @@ It can be runned with the linux command \verb+sh+, which is the bourne-shell or 
 There are four possibilities:
 
 \begin{itemize}
-   \item run_all.sh
-   \item run_all_deamon.sh
-   \item run_flvplayback.sh
-   \item run_flvplayback_deamon.sh
+   \item run\_all.sh
+   \item run\_all\_deamon.sh
+   \item run\_flvplayback.sh
+   \item run\_flvplayback\_deamon.sh
 \end{itemize}
 
 If the command \verb+sh run_all.sh+ CRTMP will use the config file \verb+all.lua+ and run with this configuration.
@@ -124,12 +124,12 @@ This solution can be seen in figure~\ref{fig:working_solution}
 
 \subsection{Implemented solution}
 The streaming setup used in \projectname{} uses only Gstreamer.
-One pipeline which reads the drones’ video feed and serves as a server, and a client pipeline \deno{CP} for displaying the video feed.
+One pipeline which reads the drones' video feed and serves as a server, and a client pipeline \deno{CP} for displaying the video feed.
 The setup can be seen in Figure\fxfatal{lav figur}
 
 FIGUR af Gstreamer setup med protokoller osv.
 
-The server pipeline \deno{SP} reads the drones’ video feed and multicast it via Real-time Transport Protocol(RTP).
+The server pipeline \deno{SP} reads the drones' video feed and multicast it via Real-time Transport Protocol(RTP).
 RTP is standardized protocol for sending audio and video packages over IP networks.
 RTMP is not used, as it is a protocol made specifically for Flash, and for a Gstreamer only solution RTP is better choice\fxfatal{Hvorfor?}.
 RTP packages are sent via UDP.

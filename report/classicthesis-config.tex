@@ -166,6 +166,64 @@
     belowcaptionskip=.75\baselineskip
     %frame=L
 }
+
+%----------------------------------------------------------------------------------------
+%	CODE LISTINGS SETUP
+%----------------------------------------------------------------------------------------
+
+\usepackage{listings} 
+\usepackage{color} %For sourceCode listnings
+
+%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+\lstset{language=[LaTeX]Tex, % Specify the language for listings here
+keywordstyle=\color{RoyalBlue}, % Add \bfseries for bold
+basicstyle=\small\ttfamily, % Makes listings a smaller font size and a different font
+%identifierstyle=\color{NavyBlue}, % Color of text inside brackets
+commentstyle=\color{Green}\ttfamily, % Color of comments
+stringstyle=\rmfamily, % Font type to use for strings
+numbers=left, % Change left to none to remove line numbers
+numberstyle=\scriptsize, % Font size of the line numbers
+stepnumber=5, % Increment of line numbers
+numbersep=8pt, % Distance of line numbers from code listing
+showstringspaces=false, % Sets whether spaces in strings should appear underlined
+breaklines=true, % Force the code to stay in the confines of the listing box
+%frameround=ftff, % Uncomment for rounded frame
+frame=single, % Frame border - none/leftline/topline/bottomline/lines/single/shadowbox/L
+belowcaptionskip=.75\baselineskip % Space after the "Listing #: Desciption" text and the listing box
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Steiniche was here %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gray95}{gray}{.95}
+\lstdefinestyle{sourceCode}
+{ 
+ numbers=left,
+ numbersep=5pt, 
+ stepnumber=1,
+ captionpos=b,  %bottom
+ keywordstyle=\color{purple},
+ commentstyle=\color[rgb]{0.133,0.545,0.133},
+ stringstyle=\color[rgb]{0.627,0.126,0.941},
+ backgroundcolor=\color{gray95},
+ frame=lrtb,
+ framerule=0.5pt,
+ linewidth=\textwidth,
+ tabsize=4,
+ numberbychapter=true,
+ basicstyle=\ttfamily\footnotesize,
+ language=[Sharp]C,
+ breaklines=true,
+ showstringspaces=false,
+ emph=[2]{Tag,Problem,Person,List,NotSupportedException,TestMethod,ProblemSearch,Assert,
+ EntityCollection,Department,IEnumerable,TimeSpan,DateTime},%%Classes
+ emphstyle=[2]{\color[rgb]{0.1,0.5,0.5}},
+ float=htb,
+ breakindent=20pt
+}
+
+
 % ****************************************************************************************************
 
 
