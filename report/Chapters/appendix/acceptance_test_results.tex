@@ -1,4 +1,130 @@
 \chapter{Acceptance Test Results}
 \label{appendix:acceptance_test_results}
 
-...
+\section{Acceptance test run}
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | l | l | p{8cm} | }
+  \hline
+	\textbf{ID} & \textbf{Use Case ID} & \textbf{Status} & \textbf{Description} \\ \hline
+	%%%%%%%%%%%      %%%%%%%%%%%S
+	%%%%%%%%%%% OBS! %%%%%%%%%%%
+	%%%%%%%%%%%      %%%%%%%%%%%
+	% Inden tallene ændres, skal der lige gÃ¸res opmÃ¦rksom pÃ¥ det, da de bruges andre steder.
+	1 & 1 & Accepted. & The user is provided with a username and password form, that gives visual feedback based on the users action (logging in, failed attempt).\\ \hline
+	2 & 2 & Failed. & The user, after performing a valid login, is only shown content according to his privileges. \\ \hline
+	3 & 3 & Accepted. & The user with rights is shown a page with an interface that allows him to pilot a specific drone.\\ \hline
+	4 & 4 & Accepted. & The user with rights is shown a page with a window that enables him to see the video feed of a specific drone. \\ \hline
+	5 & 5 & Failed. & The user can successfully grant or revoke a privilege to another user. \\ \hline
+	6 & 6 & Failed. & The user is able to change the name of the drone. \\ \hline
+	7 & 7 & Accepted. & The user is able to link a drone to a company.\\ \hline
+	8 & 7 & Accepted. & The user is able to unlink a drone from a company.  \\ \hline
+	9 & 8 & Accepted. & The user is presented with a concise list of available drones.  \\ \hline
+	10 & 9 & Accepted. & The user is able to press a link to logout of the system.  \\ \hline
+	11 & 10 & Accepted. & The user with rights is able to create a new user via an interface.  \\ \hline
+	12 & 10 & Accepted. & The user with rights is able to edit an existing user via an interface.  \\ \hline
+	13 & 10 & Failed. & The user with rights is able to deactivate an existing user via an interface.  \\
+	
+  \hline
+\end{tabular}
+\caption{Acceptance Tests 1}
+\label{tab:acceptance_tests1}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | l | l | p{8cm} | }
+  \hline
+	\textbf{ID} & \textbf{Use Case ID} & \textbf{Status} & \textbf{Description} \\ \hline
+	%%%%%%%%%%%      %%%%%%%%%%%S
+	%%%%%%%%%%% OBS! %%%%%%%%%%%
+	%%%%%%%%%%%      %%%%%%%%%%%
+	% Inden tallene ændres, skal der lige gÃ¸res opmÃ¦rksom pÃ¥ det, da de bruges andre steder.
+	14 & 10 & Failed. & The user with rights is able to activate an existing user via an interface.  \\ \hline
+	15 & 11 & Accepted. & The user is able to create a company via an interface.  \\ \hline
+	16 & 11 & Accepted. & The user with rights is able to remove a company. \\ \hline
+	17 & 12 & Accepted. & The user is able to add users to the company.   \\ \hline
+	18 & 12 & Accepted. & The user is able to remove users from the company.  \\ \hline
+	19 & 12 & Accepted. & The user is able to add new roles to the company.  \\ \hline
+	20 & 12 & Accepted. & The user is able to edit existing roles in the company.  \\ \hline
+	21 & 12 & Accepted. & The user is able to remove existing roles from a company.  \\ \hline
+	22 & 13 & Failed. & The user with rights is able to grant his own privileges to another user within the same company.  \\ \hline
+	23 & 13 & Failed. & The user with rights is able to remove privileges from other users within the same company that he is able to grant them.  \\ \hline
+	24 & 15 & Accepted. & The user with rights can add privileges to the role.  \\ \hline
+	25 & 15 & Accepted. & The user with rights can remove privileges from the role.  \\ \hline
+	26 & 16 & Accepted. & The user with rights can add users to roles.  \\ \hline
+	27 & 16 & Accepted. & The user with rights can remove users from roles.  \\ \hline
+	28 & 17 & Failed. & The user is not able to pilot a drone that is already being piloted. \\
+  \hline
+\end{tabular}
+\caption{Acceptance tests 2}
+\label{tab:acceptance_tests2}
+\end{center}
+\end{figure}
+
+
+%\cleardoublepage
+%
+%\section{Second acceptance test run}
+%
+%\begin{figure}[htb]
+%\begin{center}
+%\begin{tabular}{ | l | l | l | p{8cm} | }
+%  \hline
+%	\textbf{ID} & \textbf{Use Case ID} & \textbf{Status} & \textbf{Description} \\ \hline
+%	%%%%%%%%%%%      %%%%%%%%%%%S
+%	%%%%%%%%%%% OBS! %%%%%%%%%%%
+%	%%%%%%%%%%%      %%%%%%%%%%%
+%	% Inden tallene ændres, skal der lige gÃ¸res opmÃ¦rksom pÃ¥ det, da de bruges andre steder.
+%	1 & 1 & Accepted. & The user is provided with a username and password form, that gives visual feedback based on the users action (logging %in, failed attempt).\\ \hline
+%	2 & 2 & Failed. & The user, after performing a valid login, is only shown content according to his privileges. \\ \hline
+%	3 & 3 & Accepted. & The user with rights is shown a page with an interface that allows him to pilot a specific drone.\\ \hline
+%	4 & 4 & Accepted. & The user with rights is shown a page with a window that enables him to see the video feed of a specific drone. \\ \%hline
+%	5 & 5 & Failed. & The user can successfully grant or revoke a privilege to another user. \\ \hline
+%	6 & 6 & Failed. & The user is able to change the name of the drone. \\ \hline
+%	7 & 7 & Accepted. & The user is able to link a drone to a company.\\ \hline
+%	8 & 7 & Accepted. & The user is able to unlink a drone from a company.  \\ \hline
+%	9 & 8 & Accepted. & The user is presented with a concise list of available drones.  \\ \hline
+%	10 & 9 & Accepted. & The user is able to press a link to logout of the system.  \\ \hline
+%	11 & 10 & Accepted. & The user with rights is able to create a new user via an interface.  \\ \hline
+%	12 & 10 & Accepted. & The user with rights is able to edit an existing user via an interface.  \\ \hline
+%	13 & 10 & Failed. & The user with rights is able to deactivate an existing user via an interface.  \\
+%	
+%  \hline
+%\end{tabular}
+%\caption{Acceptance Tests 1}
+%\label{tab:acceptance_tests1}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htb]
+%\begin{center}
+%\begin{tabular}{ | l | l | l | p{8cm} | }
+%  \hline
+%	\textbf{ID} & \textbf{Use Case ID} & \textbf{Status} & \textbf{Description} \\ \hline
+%	%%%%%%%%%%%      %%%%%%%%%%%S
+%	%%%%%%%%%%% OBS! %%%%%%%%%%%
+%	%%%%%%%%%%%      %%%%%%%%%%%
+%	% Inden tallene ændres, skal der lige gÃ¸res opmÃ¦rksom pÃ¥ det, da de bruges andre steder.
+%	14 & 10 & Failed. & The user with rights is able to activate an existing user via an interface.  \\ \hline
+%	15 & 11 & Accepted. & The user is able to create a company via an interface.  \\ \hline
+%	16 & 11 & Accepted. & The user with rights is able to remove a company. \\ \hline
+%	17 & 12 & Accepted. & The user is able to add users to the company.   \\ \hline
+%	18 & 12 & Accepted. & The user is able to remove users from the company.  \\ \hline
+%	19 & 12 & Accepted. & The user is able to add new roles to the company.  \\ \hline
+%	20 & 12 & Accepted. & The user is able to edit existing roles in the company.  \\ \hline
+%	21 & 12 & Accepted. & The user is able to remove existing roles from a company.  \\ \hline
+%	22 & 13 & Failed. & The user with rights is able to grant his own privileges to another user within the same company.  \\ \hline
+%	23 & 13 & Failed. & The user with rights is able to remove privileges from other users within the same company that he is able to grant %them.  \\ \hline
+%	24 & 15 & Accepted. & The user with rights can add privileges to the role.  \\ \hline
+%	25 & 15 & Accepted. & The user with rights can remove privileges from the role.  \\ \hline
+%	26 & 16 & Accepted. & The user with rights can add users to roles.  \\ \hline
+%	27 & 16 & Accepted. & The user with rights can remove users from roles.  \\ \hline
+%	28 & 17 & Failed. & The user is not able to pilot a drone that is already being piloted. \\
+%  \hline
+%\end{tabular}
+%\caption{Acceptance tests 2}
+%\label{tab:acceptance_tests2}
+%\end{center}
+%\end{figure}%
