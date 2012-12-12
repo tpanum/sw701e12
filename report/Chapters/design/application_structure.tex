@@ -4,7 +4,7 @@
 Web applications have a single point of entry, a hostname, that is translated into an IP address.
 The IP address points to a server, which then handles HTTP requests (requests) from users, these users will be denoted as Browser or \deno{B}.
 This means that a server solution is needed.
-Server solutions can either be a singleton or a distributed with multiple servers.
+Server solutions can either be singleton or distributed with multiple servers.
 Singleton server solutions are based on having one server that handles all incoming requests.
 This means that singleton server solutions are vulnerable to DoS, through HTTP requests, but provides consistency.
 
@@ -17,13 +17,13 @@ This means that singleton server solutions are vulnerable to DoS, through HTTP r
 
 Distributed server solutions contain several servers possibly on several locations, meaning that DoS will be harder to perform, since there is no single point of failure.
 However, this solution cannot ensure consistency and adds complexity.
-The two solutions are graphically displayed in Figure~\ref{fig:server_solutions}.
+The two solutions are displayed in Figure~\ref{fig:server_solutions}.
 A singleton solution has been chosen due to; consistency and simplicity.
 This singleton solution will be denoted as Master or \deno{M}.
 
 The application is required to handle communication with drones, as defined by \at{1}.
 In case of the communication being disabled, this might end up with a drone crash.
-The technical limitations of antennas for digital wireless communication, sets a constraint for the availability of drones.
+The technical limitations of antennas for digital wireless communication, set a constraint for the availability of drones.
 Assuming there exists no antenna to cover the physical area of our problem domain, it is necessary to have a distributed antenna setup in order to cover the whole physical area of the problem domain.
 This leads to the structure shown in Figure~\ref{fig:antenna_structure}.
 
@@ -51,14 +51,14 @@ As \deno{S} has a dynamic network position relative to \deno{M}, this enforces t
 \end{figure}
 
 The acceptance tests, e.g. \at{17}, \at{24}, and \at{25} enforce a constraint that requires \deno{M} to be able to store data based of the interaction of the user.
-As requests can happen asynchronously, this makes it ideal to use a database denoted \deno{DB}, due to its transaction system in order to ensure no data loss.
+As requests can happen asynchronously, a relational database denoted \deno{DB} is an obvious choice to store this data, as it is able to receive data at any time and let other processes handle it later, hence helping to minimize potential data loss.
 
 The response output of \deno{M} needs to be dynamic based on the user, e.g. \at{2}, which requires \deno{M} to be capable of processing data and store it in the database.
 The processing unit that creates the dynamic response will be denoted \deno{W}.
-The communication with the drones are handled by another processing unit, denoted \deno{D}.
+The communication with the drones is handled by another processing unit, denoted \deno{D}.
 If \deno{W} were to handle requests from \deno{S} and \deno{B}, this would increase the load on \deno{W}.
 By creating multiple request handlers, it is possible to have a process for each. \deno{W}, \deno{DB}, and \deno{S} are processes, seen in Figure~\ref{fig:daemon_structure}, which improves resource management.
-The resource management could be to constrain processing power for each process, or distribute the processes on individual machines.
+The resource management could be to constrain processing power for each process, or to distribute the processes on individual machines.
 
 \begin{figure}[htb]
     \centering
