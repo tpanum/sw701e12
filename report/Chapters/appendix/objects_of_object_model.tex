@@ -1,7 +1,8 @@
-\chapter{Objects}
+\chapter{Objects \& Rich Relationships}
 
 Each attribute named \verb+id+ is a unique integer relative to the object.
 
+\section{Objects}
 \begin{figure}[htb]
 \begin{center}
 \begin{tabular}{ | l | p{8cm} | }
@@ -122,16 +123,19 @@ Each attribute named \verb+id+ is a unique integer relative to the object.
 \end{center}
 \end{figure}
 
-% \begin{figure}[htb]
-% \begin{center}
-% \begin{tabular}{ | l | p{8cm} | }
-%   \hline
-%     \textbf{Attribute} & \textbf{Description} \\ \hline
-%     \verb+id+ & \\ \hline
-%     \verb+username+ & \\ \hline
-%     \verb+attempt_login+ & \\ \hline
-% \end{tabular}
-% \caption{User Object}
-% \label{tab:user_object}
-% \end{center}
-% \end{figure}
+\section{Rich Relationships}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+user_id+ & A reference to the user.\\ \hline
+    \verb+affiliate_privilege_id+ & A reference to the affiliate privilege.\\ \hline
+    \verb+flag+ & A flag that indicates if the privilege should be granted or revoked.\\ \hline
+\end{tabular}
+\caption{User Privileges Relationships}
+\label{tab:user_privileges_relationships}
+\end{center}
+\end{figure}
