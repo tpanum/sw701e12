@@ -14,9 +14,10 @@ The UML attribute notation in this report is:
 
 The system will contain the following objects: \deno{Affiliate Privilege}, \deno{Company}, \deno{Drone}, \deno{Privilege}, \deno{Role}, \deno{Session}, and \deno{User}.
 The model of the objects and their relationships can be seen in Figure~\ref{fig:UML_class_diagram}.
+Each object covered is represented in the object model diagram with its name in lowercase and pluralized, e.g. \deno{User} object $\rightarrow$ \deno{users}.
 The relationships between objects can either be implicit with a line directly from one object to another, or explicit with a simple or rich relationship model between the two objects.
-Simple relationship models are models without a PK, e.g. roles\_users.
-Rich relationship models have a PK, e.g. company\_roles.\\
+Simple relationship models are models without a PK. They are represented in the model diagram with both objects in lowercase and pluralized, e.g. roles\_users.
+Rich relationship models have a PK. These are represented by having both objects in lowercase but only the last object is pluralized, e.g. company\_roles.\\
 
 \begin{figure}[htb]
     \centering

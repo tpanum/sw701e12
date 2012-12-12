@@ -1,0 +1,137 @@
+\chapter{Objects}
+
+Each attribute named \verb+id+ is a unique integer relative to the object.
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+first_name+ & The user's first name.\\ \hline
+    \verb+last_name+ & The user's last name.\\ \hline
+    \verb+email+ & The email of the user. Must be unique.\\ \hline
+    \verb+salt+ & A hashed string based on email and time.\\ \hline
+    \verb+hashed_password+ & A hashed password based on the salt and an inputted string.\\ \hline
+    \verb+password+ & The password in clear text. Only temporary, thus not stored in the database.\\ \hline
+\end{tabular}
+\caption{User Object}
+\label{tab:user_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+ip+ & The IPv4 of the drone's slave.\\ \hline
+    \verb+location+ & The location of the drone's slave.\\ \hline
+    \verb+name+ & A unique string that represents the drone, which is predefined on the drone's slave.\\ \hline
+    \verb+description+ & Optional string to describe the drone.\\ \hline
+    \verb+company_id+ & A reference to the company object.\\ \hline
+\end{tabular}
+\caption{Drone Object}
+\label{tab:drone_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition. \\ \hline
+    \verb+name+ & The title of the company.\\ \hline
+    \verb+owner+ & The \verb+id+ of the user owning the company.\\ \hline
+\end{tabular}
+\caption{Company Object}
+\label{tab:company_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+title+ & The name of the role.\\ \hline
+    \verb+level_type+ & An integer representing a non-hierarchy level of roles.\\ \hline
+\end{tabular}
+\caption{Role Object}
+\label{tab:role_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+identifier+ & A string that combined with \verb+instance_type+ is unique.\\ \hline
+    \verb+description+ & A description of the privilege.\\ \hline
+    \verb+instance_type+ & An integer representing the type of privilege, such as global, company, and drone.\\ \hline
+\end{tabular}
+\caption{Privilege Object}
+\label{tab:privilege_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+privilege_id+ & A reference to the privilege id.\\ \hline
+    \verb+affiliate+ & The id of the instance type specified by the privilege.\\ \hline
+\end{tabular}
+\caption{Affiliate Privilege Object}
+\label{tab:affiliate_privilege_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+drone_id+ & A reference to the drone.\\ \hline
+    \verb+user_id+ & A reference to the user.\\ \hline
+    \verb+session_key+ & The session key for the user and drone combination.\\ \hline
+\end{tabular}
+\caption{Session Object}
+\label{tab:session_object}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Attribute} & \textbf{Description} \\ \hline
+    \verb+id+ & See definition.\\ \hline
+    \verb+drone_id+ & A reference to the drone of which to get session for.\\ \hline
+\end{tabular}
+\caption{Session Key Task Object}
+\label{tab:session_key_task_object}
+\end{center}
+\end{figure}
+
+% \begin{figure}[htb]
+% \begin{center}
+% \begin{tabular}{ | l | p{8cm} | }
+%   \hline
+%     \textbf{Attribute} & \textbf{Description} \\ \hline
+%     \verb+id+ & \\ \hline
+%     \verb+username+ & \\ \hline
+%     \verb+attempt_login+ & \\ \hline
+% \end{tabular}
+% \caption{User Object}
+% \label{tab:user_object}
+% \end{center}
+% \end{figure}
