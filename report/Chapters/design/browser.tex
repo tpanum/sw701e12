@@ -1,5 +1,5 @@
 
-\section{Client}\label{sec:design_client}
+\section{Browser}\label{sec:design_client}
 The clients interaction with the system is initiated by connecting to \deno{M}.
 This connection can be made using either an Internet browser or a client-side application.
 For \projectname{} this connection will be handled with the browser.
@@ -11,16 +11,16 @@ This choice was made for the following reasons:
 	\item Browser increase the accessibility of \projectname{}
 \end{itemize}
 
-A Java program is also platform independent and can be programmed to be light weight. 
+A Java program is also platform independent and can be programmed to be light weight.
 However, in order for \projectname{} to run as seamlessly as possible on as many different platforms as possible, forcing the user to install i.e. Java in order to get started is not an ideal solution.
 Therefore the client-side of \projectname{} will be accessible via an Internet-browser. \\
 
-When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely. 
-However, some of the processing can be moved to the client-side to ease load on \deno{M}. 
+When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely.
+However, some of the processing can be moved to the client-side to ease load on \deno{M}.
 This can be achieved using Javascript, which will be used in \projectname{}. \\
 
-Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}. 
-AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way. 
+Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}.
+AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way.
 This approach has several advantages:
 
 \begin{itemize}
@@ -31,8 +31,8 @@ This approach has several advantages:
 
 These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users, and making the system as accesible as possible. \\
 
-The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements. 
-This is not natively supported in Internet-browsers, so a Flash application will be used for this purpose. 
+The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements.
+This is not natively supported in Internet-browsers, so a Flash application will be used for this purpose.
 Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
 The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
 

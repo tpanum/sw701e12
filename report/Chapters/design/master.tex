@@ -45,16 +45,18 @@ Each model will have a direct mapping to a table in \deno{DB}, and communication
 Models that require views or certain model specific actions, e.g. creating an instance of the model, will have a controller implemented.
 This includes models such as User, Drone, and Company.
 There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle login and logout.
-Each implemented controller with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will implement Create, Read, Update, and Delete (CRUD) as default actions. \\
+Each implemented controller with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will implement Create, Read, Update, and Delete (CRUD) as default actions. All the controllers' actions are listed in Appendix~\ref{app:controller_actions} \\
 
 In the application there will be two ways of returning the information from a controller, either HTML or JSON.
 The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
 The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \\
 
-%%%%% DEAMON %%%%%
+%%%%% DAEMON %%%%%
 The daemon process, \deno{D}, will be a process running in the background of \deno{M}, its main purpose is as outlined in previous sections to handle session communication with \deno{S}.
 \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
 \deno{D} will handle session communication with \deno{S} by continuously checking \deno{DB} for new session requests.
+The reason for communicating through \deno{DB}, is to adapt to the asynchronous behaviour of the web.
+This also allows for running multiple instances of \deno{D}, as they can use a shared quene represented in \deno{DB}.
 If a session request is present in \deno{DB} then \deno{D} will request a session from the appropriate \deno{S}.
 In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key that is 40 characters long, it saves this in \deno{DB} for \deno{W} to send it to the user.
 \deno{D} should handle session requests periodically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests at the same time. \\
@@ -63,13 +65,13 @@ In case \deno{D} receives a valid session id from \deno{S}, i.e. a session key t
 However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
 It is, however, certain that \deno{S} will only return a valid session key if there are currently no session keys on \deno{S}.
 Therefore only one person will have a valid session key for communicating with \deno{S}.
-How this session key communication is handled can be seen in Figure~\ref{fig:sessionkey_communication}.
+How this session key communication is handled can be seen in Figure~\ref{fig:sessionkey_communication_b}.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.85\textwidth]{gfx/sessionkey_communication_b.pdf}
     \caption{Session key communication.}
-    \label{fig:sessionkey_communication}
+    \label{fig:sessionkey_communication_b}
 \end{figure}
 
 %%%%% DESIGN %%%%%
