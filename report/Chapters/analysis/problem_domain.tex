@@ -8,32 +8,32 @@
 %Hvilke krav stiller de til løsningen
 The problem domain for the application is video surveillance of large outdoor areas.
 The solution investigated in this report is to use a drone with a camera instead of stationary cameras to handle this.
-The solution will be used commercially by different businesses that may each have several different areas or locations that needs to be survelied.\\
+The solution is intended to be used commercially by different businesses that may each have several different areas or locations that needs to be survelied.\\
 
 Video surveillance using drones has a set of challenges which must be considered.
 The connection to the drone must be stable at all times to make it controlable.
-If the connection to the drone is lost it might crash, which must be avoided.
-The large outdoor areas makes it a requirement the connection is stable at long range.
-Additionally the connection must be compatible with a web interface.\fxfatal{Dårlig sætning, men vigtigt den type connection vi bruger er kompatibel med en webløsning enten direkte eller ved brug at et API eller SDK}.\\
-Furthermore the system must be scalable to include several locations, meaning several drones, and users simultaneously.
+If the connection to the drone is lost the drone might crash, which must be avoided.
+The large outdoor areas makes it a requirement that the connection is stable at long range.
+Additionally the connection must support interaction with other services, making it possible to remotely control the drone.
+Furthermore the system must be scalable to include several locations, meaning several drones, and users simultaneously. \\
 
-For video surveillance to be usefull the video must be stored.
+For video surveillance to be useful the video must be stored.
 It can be stored directly on the drone, or it can be stored externally.
 Storing it on the drone increases the hardware requirements for the drone, as it must be ensured the data is not lost should the drone crash.
 The alternative is to stream the video feed via the connection to the drone and store it externally.
 This reduces the requirements to the drone, but increases the requirements to the connection as the video feed must be usable.\\
 
 There are two legal aspects to consider with regards to video surveillance.
-Firstly there are laws which limits the areas on which it is allowed to video surveil\fxfatal{source:https://www.retsinformation.dk/Forms/r0710.aspx?id=105112}.
-This is not an issue for video surveillance with stationary cameras, as they are simply placed in location that ensure they do not violate these laws.
+Firstly there are laws that limit the areas on which it is allowed to video surveil \citep{lov_om_tv_overvaagning} in Denmark, where this project is developed.
+This is not an issue for video surveillance with stationary cameras, as they are simply placed in locations that ensure they do not violate these laws.
 With movable cameras it is not trivial to ensure the video surveillance is done within the given laws. 
 Furthermore the system must be secure.
-In this context secure means that access to the sensitive information restricted, both internally and externally\\
+In this context secure means that access to the sensitive information is restricted, both internally and externally\\
 
  
 The main problems present in the problem domain are therefore as follows:\\
 \begin{itemize}
-	\item Wireless short-distance and wired long-distance communication with a drone. This includes controlling the drone.
+	\item Wireless short-distance (with the drone, see Appendix~\ref{app:ar_drone_specification}) and wired long-distance communication (back to the user) with a drone. This includes controlling the drone.
 	%We know that a drone will be near an area that it shall survival, and that the operator might be located far away. Therefore it is necessary that the system can communicate over long distances. 
 	\item Wireless short-distance and wired long-distance video streaming. The drone must be able to send back the video feed from its cameras. Therefore the system must also be able to transmit a video feed in real-time over long distances.
 	%\item Interaction with the drone will be handled through a web application. It is already decided that the user must be able to control the drone via a web application. Therefore we need to look into how one can do this, knowing that the web is a state-less environment. 
