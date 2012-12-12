@@ -2,13 +2,15 @@
 \label{sec:design_slave}
 The functionality of Slave is as follows, derived from Section~\ref{sec:communication_network} and Section~\ref{sec:functionality_distribution}.
 
-\begin{enumarate}
+
+
+\begin{enumerate}
 	\item Establish and maintain a wireless connection to the drone.
 	\item Send initialization message to M when powered on, as seen in Figure~\ref{fig:sequence_diagram}.
 	\item Create and send session keys upon request.
 	\item Receiving flight-operations from the client and send them to the drone.
 	\item Read video feed from the drone and forward it to \deno{B}.
-\end{enumarate}
+\end{enumerate}
 
 The slave is connected to the drone and the Internet\fxfatal{Hvilket ord skal bruges her?}.
 Therefore two network interfaces are required, one of which must be a wireless network interface (WIFI-interface), as all the communication with the drone is wireless as described in Appendix~\ref{app:ar_drone_specification}.
