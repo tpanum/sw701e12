@@ -78,7 +78,7 @@ Ruby was chosen for the following reasons:
 Ruby is a object oriented scripting language.
 Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
 
-Ruby on Rails \emph{[Rails]} is a open-source web framework for Ruby.
+Ruby on Rails \emph{[Rails]} is an open-source web framework for Ruby.
 Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
 Rails also contains features, which makes it easier to conduct products with distributed development.
 An example is ``Migrations'', which is Rails' method for handling setup of databases.
@@ -114,13 +114,13 @@ The drones video feed is however encoded with the unique PaVE headers, see Appen
 Each \deno{S} must therefore contain functionality capable of reading and reencoding the drones stream and forward it via RTMP to the Flash application running in the users browser.
 
 As mentioned in Section~\ref{sec:design_slave} developing a streaming solution from scratch is outside the scope of the project.
-The streaming is therefore to be handled using tools.
-The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
+The streaming is therefore to be handled using existing tools.
+%The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
 \\
 
-There are two streaming solution using tools.
+There are two streaming solutions using tools.
 One is using a tool capable of reading the drones video feed and broadcast a RTMP feed.
-The other is one using two tools.
+The other is using two tools.
 A tool which reads the drones feeds and forwards it to a rtmp server.
 Both solution depends on a tool capable of decoding the PaVE headers.
 The tools considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server. 
@@ -130,18 +130,18 @@ FFmpeg is a multimedia framework capable of recording and converting audio and v
 It contains a multimedia streaming server called FFserver.
 FFserver is used for live broadcasts and is capable of decoding and enconding a large set of video formats.
 It is however incapable of decoding the unique PaVE headers the drones video feed is encoded with.
-It however capable of outputting a RTMP feed.
+It is, however, capable of outputting a RTMP feed.
 Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input. 
 \\
 
-Gstreamer is multimedia framework that uses a pipeline architecture to process video and audio feeds.
+Gstreamer is a multimedia framework that uses a pipeline architecture to process video and audio feeds.
 A pipeline in this context is a set plugins the video feed is send through and processed by.
 As an example a video feed might be deencoded and then reencoded in a new format.
 Gstreamer is not capable of outputting a readable RTMP stream, as it contains no server functionality.
 It is however capable of sending a video feed to a RTMP server.
 Gstreamer is not natively capable of decoding PaVE header.
-There does however exist a plugin for gstreamer developed by the AR Drone community which enables to properly parse the PaVE headers.
-The plugin is named paveparse\citep{paveparse}. 
+There does however exist a plugin for Gstreamer developed by the AR Drone community \citep{paveparse} which enables to properly parse the PaVE headers.
+The plugin is named paveparse. 
 \\
 
 C++ RTMP Server\textit{(CRTMP)} is a streaming server capable of streaming to and from a flash application.
