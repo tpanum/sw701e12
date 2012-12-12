@@ -15,15 +15,15 @@ The plugins between the source and sink element consist of a set of video and au
 \end{figure}
 
 The source element is capable of receiving a video feed via a specific protocol from a defined destination.
-As described in Appendix~\ref{app:ar_drone_specification} the drone outputs its video feed using TCP on port 5555, and its IP on its network .
+As described in Appendix~\ref{app:ar_drone_specification} the drone outputs its video feed using TCP on port 5555, and its IP on its network is 192.168.1.1.
 To read the stream the Gstreamer plugin \verb+tcpclientsrc+ is used.
-It has a \verb+host+ and a \verb+port+ as parameters and the first part of the pipeline can be seen in Listing~\ref{lst:tcpclientsrc}.
+The parameters \verb+host+ and \verb+port+ can be set for \verb+tcpclientsrc+ and the first part of the pipeline can be seen in Listing~\ref{lst:tcpclientsrc}.
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=tcpclientsrc setup, label=lst:tcpclientsrc]
 gst-launch-0.10 tcpclientsrc host=192.168.1.1 port=5555
 \end{lstlisting}
 
-The data available for the next plugin is a H.264 encoded video frame with PaVE headers.
+The data available for the next plugin is H.264 encoded video frames with PaVE headers.
 The PaVE headers cannot be interpreted by Flash, and are therefore parsed by gstreamer using the \textit{paveparse} plugin\citep{paveparse}.
 Paveparse removes the PaVE headers and send the remaining H.264 data down the pipeline.
 Furthermore it handles the delay that comes from the drone using TCP to stream its video feed, by ignoring lost frames, and always displaying the newest received frames.\fxfatal{weak sætning}.
@@ -31,12 +31,12 @@ Furthermore it handles the delay that comes from the drone using TCP to stream i
 As specified in Section\fxfatal{skriv det og ref til section tools} the video output of gstreamer should be in FLV.
 Two pipelines containing this functionality can be made.
 One is using a H.264 decoder to create raw video data, and then encode it as FLV.
-The other is using a FLVmuxer which uses a workaround to convert the H.264 video data to FLV.
+The other is using a FLVmux which uses a workaround to convert the H.264 video data to FLV.\fxfatal{Dårlig og ikke helt korrekt sætning}
 The best option is to use the H.264 decoder, however, as the H.264 data has no headers, due to \textit{paveparse}, the FLV encoder cannot properly encode the video data after it has been decoded.
 Therefore an FLVmuxer is used to create FLV output.
 
-With a FLV the sink element can be added to the pipeline.
-As the video feed is forwarded the RTMP server CRTMP, the sink element is \verb+rtmpsink+.
+With FLV encoded video the sink element can be added to the pipeline.
+As the video feed is forwarded to CRTMP, the sink element is \verb+rtmpsink+.
 It has one parameter called \verb+location+, which is the url of the RTMP server with an extension specifying the url of the stream on the RTMP server\fxfatal{Dårlig sætning}.
 The \verb+rtmpsink+ can be seen in Listing~\ref{lst:rtmpsink}:
 
@@ -52,8 +52,8 @@ tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux name=mux ! rtmpsink
 
 There is however the chance some plugins process data faster than others, causing data to pile up at certain plugins if it is send through unrestricted.
 This can be solved using the plugin \verb+queue+.
-\verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size.
-The queue element is added between each plugin except \verb+tcpclientsrc+ and \verb+paveparse+, as there is no need to queue between the entry point and the first plugin.
+\verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size.\fxfatal{source: http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gstreamer-plugins/html/gstreamer-plugins-queue.html}
+The queue element is added between every plugin except \verb+tcpclientsrc+ and \verb+paveparse+, as there is no need to queue between the entry point and the first plugin.
 The complete pipeline can be seen in Listing~\ref{lst:pipeline2}: 
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=Complete Pipeline, label=lst:pipeline2]
@@ -76,35 +76,35 @@ There are four possibilities:
    \item run\_flvplayback\_deamon.sh
 \end{itemize}
 
-If the command \verb+sh run_all.sh+ CRTMP will use the config file \verb+all.lua+ and run with this configuration.
+If the command \verb+sh run_all.sh+ is run, CRTMP will startup using the config file \verb+all.lua+.
 
 The flvplayback was used, because this is the flash streamer application, and the configuration file \verb+flvplayback.lua+ was configured like seen in listing~\ref{lst:flvplayback}.
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=flvplayback.lua configuration, label=lst:flvplayback]
 acceptors =
-                       {
-                               {
-                                       ip="0.0.0.0",
-                                       port=1935,
-                                       protocol="inboundRtmp"
-                               }
-                       },
-                       externalStreams =
-                       {
-                               {
-                                       uri="rtmp://flash.oit.duke.edu/vod/MP4:test/brunswick.m4v",
-                                       localStreamName="test",
-                                       forceTcp=true
-                               }
-                       },
+           {
+                   {
+                           ip="0.0.0.0",
+                           port=1935,
+                           protocol="inboundRtmp"
+                   }
+           },
+externalStreams =
+            {
+                   {
+                           uri="rtmp://flash.oit.duke.edu/vod/MP4:test/brunswick.m4v",
+                           localStreamName="test",
+                           forceTcp=true
+                   }
+            },
 \end{lstlisting}
 
 
-It is important to understand that \verb+acceptors+ is inbound and \verb+externalStreams+ is outbound.
-Inbound is which ports CRTMP will let users connect to and \verb+externalStreams+ is where the stream is coming from.
-As seen in listing~\ref{listing:flvplayback} there is setup a test source which is a VoD, Video on Demand.
+\verb+Acceptors+ define inbound- and \verb+externalStreams+ outbound connections.
+Inbound defines which ports CRTMP will let users connect to and \verb+externalStreams+ is the source of the stream.
+The sample \verb+externalSteam+ seen in listing~\ref{listing:flvplayback} has a video file on an external server as input, and gives the outbound stream the name \verb+test+.
 This test source was used to test if CRTMP was running correctly.
-To logon to the stream Video Lan Client, VLC, was used because it have the same capabilities as flash when it comes to streaming RTMP.
+To view the stream Video Lan Client, VLC, was used as it has the same capabilities as flash when it comes to streaming RTMP.
 
 A connection is established with an URL of the format seen in Listing~\ref{lst:server_address}, where the \verb+server address+ is the address of the CRTMP server, the \verb+application+ is the application where CRTMP lookup e.g. live or media, and the \verb+streamName+ is the name of the stream.
 
@@ -142,12 +142,14 @@ An illustration of the PaVE header problem can be seen in Figure~\ref{fig:videof
 The PaVE headers result in a situation that makes displaying the video stream in Flash impossible, as the video feed cannot be interpreted by a Flash application both with and without them.
 
 \subsection{Test input}
+That the designed solution would work if the drones' video feed used a standard header can be documented by using a different video source.
+For this purpose the Gstreamer plugin \verb+videotestsrc+ is used.
+It creates a test video stream as seen in figure~\ref{fig:videotestsrc}, consisting of raw video data.
 
-In Gstreamer there is a test source which is called \verb+videotestsrc+. This creates a test video stream as seen in figure~\ref{fig:videotestsrc}.
 
 If this source is used instead of the one from the drone it is possible to show that this solution will work.
 
-This solution can be seen in figure~\ref{fig:working_solution}
+This solution can be seen in figure~\ref{fig:working_solution}.
 
 \begin{figure}[htb]
     \centering
@@ -182,7 +184,7 @@ RTP packages are sent via UDP.
 \deno{SP} uses the \verb+tcpclientsrc+ and \verb+paveparse+ plugins used described in Section~\ref{sec:gstreamer}.
 
 Video data send via RTP must be payloaded, as a video frame is larger than the maximum size allowed size of a UDP packet.
-Payloading adds the RTP header to the data packages, which encapsulates the payloaded data.
+Payloading adds the RTP header to the data packages, which encapsulates the payloaded data.\fxfatal{uspecifikt}
 Gstreamer has a set of rtp pay- and depayloaders for each video format it supports.
 The plugin used in this pipeline is \verb+rtph264pay+.
 
@@ -207,7 +209,7 @@ The caps are generated by \deno{SP}.
 The \verb+udpsrc+ element of \deno{CP} can be seen in Listing~\ref{lst:udpsrc}.
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=udpsrc Setup, label=lst:udpsrc]
-udpsrc uri=rtp://172.25.26.10 port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233"
+udpsrc uri=rtp://XXX.XXX.XXX.XXX port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233"
 \end{lstlisting}
 \fxfatal{Highlighting er mærkelig i streaming listings}.
 
@@ -219,7 +221,7 @@ The last plugin used is \verb+xvimagesink+ which displays the video stream to th
 The complete \deno{CP} can be seen in Listing~\ref{lst:CP}.
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=Client Pipeline, label=lst:CP]
-udpsrc uri=rtp://172.25.26.10 port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
+udpsrc uri=rtp://XXX.XXX.XXX.XXX port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
 \end{lstlisting}
 
 
