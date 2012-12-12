@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204131539) do
+ActiveRecord::Schema.define(:version => 20121212135403) do
 
   create_table "affiliate_privileges", :force => true do |t|
     t.integer  "privilege_id"
@@ -60,15 +60,6 @@ ActiveRecord::Schema.define(:version => 20121204131539) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
-
-  create_table "flight_plans", :force => true do |t|
-    t.string   "name"
-    t.integer  "drone_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "flight_plans", ["drone_id"], :name => "index_flight_plans_on_drone_id"
 
   create_table "privileges", :force => true do |t|
     t.string   "identifier"
