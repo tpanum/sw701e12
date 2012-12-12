@@ -1,0 +1,104 @@
+\chapter{Controller Actions}
+\label{app:controller_actions}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    \verb+login+ & Checks if user is logged in or redirects user to login page. \\ \hline
+    \verb+attempt_login+ & Attempts to log in the user, if it fails shows the login page again along with an error. If the user is logged in the user is redirect to the application and is shown a message saying the login was successful. \\ \hline
+    logout & Performs a logout for the user, and redirects him to the login page. \\ \hline
+\end{tabular}
+\caption{Access Controller}
+\label{tab:access_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+\end{tabular}
+\caption{Affiliate Privilege Controller}
+\label{tab:affpriv_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+    \verb+users+ & Returns two arrays: all users within the company and all users not in the company.\\ \hline
+    \verb+companies_users+ & Adds/removes a user to/from a company depending on the action.\\ \hline
+    \verb+privileges+ & Returns two arrays: all users within the company and all users not in the company's primary role.\\ \hline
+    \verb+companies_privileges+ & Adds/removes a privilege to/from a company's primary role depending on the action.\\ \hline
+    \verb+drones+ & Returns the company.\\ \hline
+    \verb+companies_drones+ & Adds a drone to a company.\\ \hline
+    \verb+roles+ & Returns the company.\\ \hline
+    \verb+companies_roles+ & Creates and adds or deletes and removes a role to/from a company.\\ \hline
+\end{tabular}
+\caption{Company Controller}
+\label{tab:company_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+    \verb+get_information+ & Gets information of a drone given a name of the drone, also returns the companies of the current user.\\ \hline
+    \verb+link_drone_to_company+ & Links a drone to a company.\\ \hline
+\end{tabular}
+\caption{Drone Controller}
+\label{tab:drone_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+    \verb+search+ & Searches for privileges within the companies of a role or user.\\ \hline
+\end{tabular}
+\caption{Privilege Controller}
+\label{tab:privilege_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+    \verb+add_privileges+ & Adds affiliate privileges to a role.\\ \hline
+    \verb+remove_privileges+ & Removes affiliate privileges from a role.\\ \hline
+    \verb+add_users+ & Adds users to a role.\\ \hline
+    \verb+remove_users+ & Removes users from a role.\\ \hline
+\end{tabular}
+\caption{Role Controller}
+\label{tab:role_controller_actions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Action} & \textbf{Description} \\ \hline
+    CRUD & Create, Read, Update, Delete the Model \\ \hline
+    \verb+search+ & Searches by full name for a user within the companies of a role.\\ \hline
+\end{tabular}
+\caption{User Controller}
+\label{tab:user_controller_actions}
+\end{center}
+\end{figure}

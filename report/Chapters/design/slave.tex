@@ -1,7 +1,7 @@
 \section{Slave}
 \label{sec:design_slave}
 
-A slave sits between a drone and anyone that tries to communicate with that drone. 
+A slave sits between a drone and anyone that tries to communicate with that drone.
 A slave is responsible for:
 
 \begin{itemize}
@@ -19,7 +19,7 @@ After that it will connect to \deno{M}.
 If it is the first time the slave connects to \deno{M}, a new entry in \deno{M} should be created for this particular slave and its drone.
 When that is done, or if this is not the first time it connects, it is ready to be used by the client. \\
 
-The need for session keys were described in Section~\ref{qwe123}.
+The need for session keys was described in Section~\ref{qwe123}. \fxfatal{Insert correct ref}
 When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys.
 So the slave has to make these and synchronize with \deno{M}.
 
