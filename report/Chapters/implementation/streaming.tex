@@ -165,7 +165,7 @@ This solution can be seen in figure~\ref{fig:working_solution}
 
 \subsection{Implemented solution}
 The streaming setup used in \projectname{} uses only Gstreamer.
-One pipeline which reads the drones' video feed and serves as a server, and a client pipeline \deno{CP} for displaying the video feed.
+One pipeline which reads the drones' video feed and serves as a server, denoted \deno{SP}, and a client pipeline ,denoted \deno{CP}, for displaying the video feed on the client side.
 The setup can be seen in Figure~\ref{fig:current_solution}.
 
 \begin{figure}[htb]
@@ -175,7 +175,7 @@ The setup can be seen in Figure~\ref{fig:current_solution}.
     \label{fig:current_solution}
 \end{figure}
 
-The server pipeline \deno{SP} reads the drones' video feed and multicast it via Real-time Transport Protocol(RTP).
+\deno{SP} reads the drones' video feed and multicast it using the Real-time Transport Protocol(RTP).
 RTP is standardized protocol for sending audio and video packages over IP networks.
 RTMP is not used, as it is a protocol made specifically for Flash, and for a Gstreamer only solution RTP is better choice\fxfatal{Hvorfor?}.
 RTP packages are sent via UDP.
@@ -210,6 +210,17 @@ The \verb+udpsrc+ element of \deno{CP} can be seen in Listing~\ref{lst:udpsrc}.
 udpsrc uri=rtp://172.25.26.10 port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233"
 \end{lstlisting}
 \fxfatal{Highlighting er mærkelig i streaming listings}.
+
+The next two steps of the pipeline depayload the received data and decode it to raw video data.
+The depayloading is done with the \verb+rtph264depay+ plugin and the decoding with the \verb+ffdec_h264+ plugin.
+Following these two steps the video data has reassembled after the transfer and been decoded.
+The last plugin used is \verb+xvimagesink+ which displays the video stream to the user.
+\verb+xvimagesink+ has two flags used to remove delay on the stream named \verb+sync+ and \verb+async+ which are both set to true.
+The complete \deno{CP} can be seen in Listing~\ref{lst:CP}.
+
+\begin{lstlisting}[style=sourceCode, language=C, caption=Client Pipeline, label=lst:CP]
+udpsrc uri=rtp://172.25.26.10 port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
+\end{lstlisting}
 
 
 
