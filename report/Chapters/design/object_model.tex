@@ -12,8 +12,11 @@ The UML attribute notation in this report is:
     \item attribute : type - all attributes will have a type e.g. \verb+id : int+.
 \end{itemize}
 
-The system will contain the following objects: \deno{Affiliate Privilege}, \deno{Company}, \deno{Drone}, \deno{Privilege}, \deno{Role}, \deno{Session}, \deno{User}. The relationship between the objects can be seen in Figure~\ref{fig:UML_class_diagram}.
-This figure also serves as the model for the whole system.\\
+The system will contain the following objects: \deno{Affiliate Privilege}, \deno{Company}, \deno{Drone}, \deno{Privilege}, \deno{Role}, \deno{Session}, and \deno{User}.
+The model of the objects and their relationships can be seen in Figure~\ref{fig:UML_class_diagram}.
+The relationships between objects can either be implicit with a line directly from one object to another, or explicit with a simple or rich relationship model between the two objects.
+Simple relationship models are models without a PK, e.g. roles\_users.
+Rich relationship models have a PK, e.g. company\_roles.\\
 
 \begin{figure}[htb]
     \centering
@@ -22,26 +25,24 @@ This figure also serves as the model for the whole system.\\
     \label{fig:UML_class_diagram}
 \end{figure}
 
-The following section will analyze all the object types in the system, their relationships and why they are built as they are.
-The upper part of Figure~\ref{fig:UML_class_diagram} shows the relationship between users, companies and roles/privileges while the lower part of the figure shows the relationship between drones, roles/privileges and flight plans.
 
-
-\subsection{User}
+\subsection{Objects}
+% USER %
 Only users that are logged in with a valid username and password can interact with the system.
 If you are visiting the system as a guest and hence not logged in, only a login-page will be displayed.
-The system is designed so that every individual has their own unique user, allowing the system to show user-specific objects and allow user-specific access to different parts of the system. \\
+The system is designed so that every individual has their own unique user, allowing the system to show user-specific objects and allow user-specific access to different parts of the system.\\
 
 A users access to the system will need to be restricted to make sure that any user only accesses what he is permitted too.
 This restriction is controlled by roles and privileges.
-The handling of roles and privileges will be done by the role-model. \\
+The handling of roles and privileges will be done by the role-model.\\
 
 A user will be identified by his e-mail address which will work as the username and therefore be unique.
-Each user will also have a password, that is both salted and hashed in the database, using the SHA-1 hashing algorithm. SHA-1 has been chosen as this is considered a strong hashing algorithm that has no current or known collisions. By using a salt, the password is secured against rainbow-tables.  \\
+Each user will also have a password, that is both salted and hashed in the database, using the SHA-1 hashing algorithm. SHA-1 has been chosen as this is considered a strong hashing algorithm that has no current or known collisions. By using a salt, the password is secured against rainbow-tables.\\
 
 The user-object serves as the point of entrance for anyone who wishes to use the system, and combined with companies, roles and privileges dictate its options.
 
 
-\subsection{Company}
+% COMPANY %
 \projectname{} is designed with the intent that multiple different clients can use the system.
 These clients could be different companies that in some way wishes one or more drones to surveil their premises.
 One company may have several employees that they wish to provide with access to the system.
@@ -53,7 +54,7 @@ Roles and privileges can be assigned to a Company and inherited by its Users.
 This is described in further details in the following sections.
 
 
-\subsection{Drone}
+% DRONE %
 Along with Users, Drones are the most important object in \projectname{}.
 An instance of a Drone in the system represents a physical drone somewhere in the field.
 A Drone-object itself does not contain much data nor functionality.
@@ -63,15 +64,7 @@ The relationship between a User and a Drone is controlled by Privileges and Dron
 
 The logging of when a drone takes of and lands is represented by the Flightplans table.
 
-
-\subsection{Flight Plan}
-Flight plans are used to log whenever a drone takes of and lands and which user is issuing the commands.
-One drone can have many flight plans.
-One flight plan can have one drone.
-Therefore this is a one-to-many relationship.
-
-
-\subsection{Privilege}
+% PRIVILEGE %
 \label{sec:privileges}
 A Privilege-object represents a privilege that can be granted to another object in the system.
 Examples of privileges are:
@@ -97,7 +90,7 @@ Privileges can both be assigned directly to a user or assigned along with other 
 But the structure of the Privileges also allows for later expansion, providing the system with scalability as more Privileges can be added to the system later without changing any of the source code of the system.
 
 
-\subsection{Role}
+% ROLE %
 Roles are designed to bind multiple Privileges and Users using one component to save the administrators some work.
 Consider a role as a collection of Privileges that are assigned to an object in the system.
 Roles can be assigned to:
@@ -118,7 +111,7 @@ These are by 1) getting the Privilege granted directly via the \verb+User_Privil
 These will be explained in details in the following subsections.
 
 
-\subsubsection*{Users and Privileges}
+% Users and Privileges %
 \label{sec:users_and_privileges}
 \fxfatal{Kig på subsubsections}
 An administrator can grant a specific Privilege directly to a user via the \verb+User_Privileges+ table.
@@ -131,7 +124,7 @@ Then a User-specific Privilege is granted to U2 on P1, but with the ``exception'
 This is equal to blacklisting U2 from using Privilege P1, providing the system with a lot of flexibility, as even though a group of Users are granted a number of Privileges via a role, User-specific exceptions can be added to this setting. \\
 
 
-\subsubsection*{Roles and Privileges}
+% Roles and Privileges %
 As mentioned before -- the reason that Roles can be used to assign Privileges to a User, is to make both the administration and data structure of Users and Privileges as simple and efficient as possible.
 By allowing exceptions, full flexibility is still possible. \\
 
@@ -154,7 +147,7 @@ Say a user \verb+U1+ needs access to Drone \#4.
 User U1 then needs to either have the Privileges directly granted as described in Section~\ref{sec:users_and_privileges} or be a member of the role ``Control Drone \#4''.
 
 
-\subsubsection*{Privileges and granting of Privileges}
+% Privileges and granting of Privileges %
 Since it is possible to grant Privileges both directly to a User and via a Role, the same Privilege can be used in more than one context.
 Therefore the \verb+Affiliation_Privileges+ table exists.
 This table links the granting of a Privilege with the actual Privilege and defines on which Object the Privilege applies.
@@ -169,7 +162,7 @@ By marking this flag as ``true'', the User or Users that via a Role is granted t
 %Note: Alle brugere kan videregrante et privilege hvis de har tilladelse til det. Det er et flag som sætes i user_privileges og privileges_roles, som tillader alle der har dette privilegie til at videregrante det. Husk at beskrive hvordan et privilege og et affiliation privilege til sammen giver et grant-able privilegie
 
 
-\subsubsection*{Privileges and Drones}
+% Privileges and Drones %
 With \projectname{} in its current form, most Privileges that are granted will have an connected with a Drone.
 Privileges and its a affiliations are linked in the \verb+Affiliation_Privileges+ table.
 This is also where Drones are linked to any granted privilege. \\
@@ -184,15 +177,7 @@ Say P1 is the privilege for watching the video feed of a drone.
 Then the user U1 will have access to watch the video feed of Drone D1.
 
 
-\subsubsection*{Drones and Flight plans}
-Every time a Drone takes of or lands, it is logged to the database.
-This action is logged into the \verb+Flight_plans+ table.
-Each flight plan is unique and associated to only one Drone. \\
-
-The reason for keeping this log is to enable the users of the system to later analyze the action history of any given Drone.
-
-
-\subsubsection*{Drones and Companies}
+% Drones and Companies %
 The \verb+Company_drones+ table defines a relationship between a Drone and a Company.
 
 The administrator of each Company defines the Roles in that Company.
