@@ -1,7 +1,7 @@
 \section{Communication network}
 
 Having functionality distributed across several instances sets the need for communication between the instances.
-Based on Figure~\ref{fig:slave_structure}, which displays the dependency between \deno{B}, \deno{M}, and \deno{S} this leads to the following data flow diagram. \\
+Based on Figure~\ref{fig:slave_structure}, which displays the dependency between \deno{B}, \deno{M}, and \deno{S} this leads to the diagram shown in Figure~\ref{fig:dataflow_diagrem}. \\
 
 
 \begin{figure}[!h]
@@ -15,11 +15,11 @@ Based on Figure~\ref{fig:slave_structure}, which displays the dependency between
 The arrows represent a connection, each connection represent dataflow in the direction of the arrow.
 The type of data flowing in each connection and the reasons behind will be covered as each connection is discussed below. \\
 
-Connection \deno{a} covers requests made by \deno{B}, which covers HTTP requests, which is a constraint of web solutions.
-HTTP requests enables the user to view the web application through his browser, and to send information.
+Connection \deno{a} covers requests made by \deno{B}, which covers HTTP requests, which is a limit of web solutions that they must use the HTTP protocol.
+HTTP requests enable the user to view the web application through his browser, and to send information.
 In order to fulfill the request created by \deno{a}, a response is needed which the connection \deno{b} handles.
 This connection covers the flow of the dynamic content created by \deno{M}, and static content such as: images, stylesheets, and multimedia objects.
-Connection \deno{b} sends it back to \deno{B} to be displayed for the user. \\
+Connection \deno{b} sends both the static and dynamic content back to \deno{B} to be displayed for the user. \\
 
 The connection \deno{d} handles the signal described in Section~\ref{sec:functionality_distribution}.
 This signal covers the initial communication between \deno{S} and \deno{M}. \deno{M} verifies the identity of \deno{S} by \deno{S} sending its own unique identifier.
@@ -27,20 +27,20 @@ This unique identifier is a string, which consist of X characters \fixme{How man
 All unique identifiers of each \deno{S} is known to \deno{M}.
 This allows \deno{M} to determine the identity of each incoming signal. When \deno{M} receives a signal, and verify the identity of \deno{S}, the source location of the signal is stored in \deno{M} making \deno{M} able to know the location of \deno{S}. \\
 
-Knowing that requests from \deno{B} can happen asynchronously and from dynamic locations, this creates a problem in not knowing the identity of the connections made to \deno{S} through \deno{f}.
-\at{28} sets the requirement of differentiate between incoming connections to \deno{S}.
+Since requests from \deno{B} can happen asynchronously and from dynamic locations, it can create a problem that the identity of the connection made from \deno{S} to \deno{f} is not known. 
+\at{28} sets the requirement of differentiating between incoming connections to \deno{S}.
 If the communication described in connection \deno{e} and connection \deno{f} were running through \deno{M}, this would be no problem as security would be handled by the already existing sessions on \deno{M}.
-The connections \deno{e} and \deno{f} is required to flow an intense amount of data.
+The connections \deno{e} and \deno{f} are required to transport a large amount of data.
 This data covers a video feed of the drone's video camera and commands for the drone.
 This would increase the load on \deno{M}, which is not desired as \deno{M} is assumed to have a high load already.
 However, since connection \deno{e} and connection \deno{f} are not running through \deno{M}, this leaves the problem of which \deno{B}, \deno{S} should listen to. \\
 
 The solution chosen to solve this problem is to make \deno{S} create a randomly generated key (session key), that contains 40 characters and is unique relative to \deno{S} stored on \deno{S} itself.
-When \deno{S} receives incoming commands, then \deno{S} verifies whether or not the key received along with the command is equal to the one locally stored on \deno{S}.
-If this is the case, then \deno{S} classifies the received command is valid and performs the action.
+When \deno{S} receives incoming commands, \deno{S} verifies whether or not the key received along with the command is equal to the one locally stored on \deno{S}.
+If this is the case, \deno{S} classifies the received command as valid and performs the action.
 The session key is delivered to \deno{B} from \deno{M}, as \deno{M} is able to verify the identity of \deno{B} through the session. \\
 
-The connection \deno{c} covers the requesting of a session key by \deno{M}.
+The connection \deno{c} covers requesting a session key by \deno{M}.
 As \deno{M} has a static location, \deno{S} is able to verify the identity of \deno{M} based on its location.
 Connection \deno{d} covers the response of the request received in \deno{c}, and \deno{M} is able to verify the identity of \deno{S} based on its location. \\
 
