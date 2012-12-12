@@ -49,13 +49,13 @@ In \projectname{} this includes models such as User, Drone, and Company, describ
 There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle login and logout.
 Each controller in \projectname{} with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will have Create, Read, Update, and Delete (CRUD)\fxfatal{ref til CRUD} as default actions. All the controllers' actions are listed in Appendix~\ref{app:controller_actions} \\
 
-%In the application there will be two ways of returning the information from a controller, either HTML or JSON.
+%In the application there will be two ways of returning the information from a controller, either HTML \citep{what_is_html} or JSON \citep{what_is_json}.
 %The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
 %The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \\
 
 %%%%% DAEMON %%%%%
-The daemon process, \deno{D}, will be a process running in the background of \deno{M}.
-Its main purpose is to handle the session communication with \deno{S}.
+The daemon process, \deno{D}, has two tasks and will be a process running in the background of \deno{M}.
+One of the purpose is to handle the session communication with \deno{S}.
 Session communication refers to the session key required to communicate with a drone, as described in Section~\ref{sec:communication_network}.
 \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
 \deno{D} will handle session communication with \deno{S} by continuously checking \deno{DB} for new session requests.
@@ -63,7 +63,11 @@ The session communication is handled through the \deno{DB}, to account for the a
 This makes it possible to run multiple instances of \deno{D}, as they can use a shared queue in \deno{DB}.
 If a session request is present in \deno{DB}, then \deno{D} will request a session from the associated \deno{S}.
 If \deno{D} receives a valid session id from \deno{S}, it saves this in \deno{DB} and \deno{W} sends it to the user.
-\deno{D} should handle session requests chronologically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously. \\
+\deno{D} should handle session requests chronologically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously. 
+The second purpose of \deno{D}, is to handle initialization messages from \deno{S}. 
+\fxfatal{Rasmus was here. Skriv hvad initialization message er samt hvordan det mere teknisk fungere.}
+\\
+
 
 \deno{D} will handle the session requests as a First In, First Out (FIFO) queue.
 However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
