@@ -55,21 +55,32 @@ Each controller in \projectname{} with a corresponding model, i.e. Affiliate Pri
 
 %%%%% DAEMON %%%%%
 The daemon process, \deno{D}, has two tasks and will be a process running in the background of \deno{M}.
-One of the purpose is to handle the session communication with \deno{S}.
-Session communication refers to the session key required to communicate with a drone, as described in Section~\ref{sec:communication_network}.
+One will handle the session communication with \deno{S}, as described in Section~\ref{sec:communication_network}.
+The other handles receiving initialization messages from \deno{S}.
+This communications between \deno{M} and \deno{S} will be done using JSON (\textit{JavaScript Object Notation}).
+
+Session communication refers to the session key required to communicate with a drone.
 \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
 \deno{D} will handle session communication with \deno{S} by continuously checking \deno{DB} for new session requests.
+Session request are entered in a table in \deno{DB} by \deno{M} when a request for one is received from \deno{B}, as illustrated in Figure~\ref{fig:sessionkey_communication_b}.
 The session communication is handled through the \deno{DB}, to account for the asynchronous behaviour of the web\citep{stateless}.
-This makes it possible to run multiple instances of \deno{D}, as they can use a shared queue in \deno{DB}.
+This makes it possible to run multiple instances of \deno{D}, as they can all read the same table in \deno{DB}.
 If a session request is present in \deno{DB}, then \deno{D} will request a session from the associated \deno{S}.
-If \deno{D} receives a valid session id from \deno{S}, it saves this in \deno{DB} and \deno{W} sends it to the user.
-\deno{D} should handle session requests chronologically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously. 
-The second purpose of \deno{D}, is to handle initialization messages from \deno{S}. 
-\fxfatal{Rasmus was here. Skriv hvad initialization message er samt hvordan det mere teknisk fungere.}
+If \deno{D} receives a valid session key from \deno{S}, it saves this in \deno{DB} and \deno{W} sends it to the user.
+\deno{D} should handle session requests chronologically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously.
+The second purpose of \deno{D}, is to handle initialization messages from \deno{S}.
+Each \deno{S} is associated with a \deno{drone} in the object model described in section~\ref{section:uml_notation}.
+When \deno{D} receive an initialization message from \deno{S} it will create a \deno{drone} object and store it in the \deno{DB}.
+In the \deno{drone} object the \verb+ip+,\verb+location+, and \verb+name+ will be retrieved from the initialization message send from \deno{S}.
+The \verb+location+ is retrived from the IP and the \verb+name+ is the drones' serial code.
+If \deno{M} receives an initialization message from a \deno{S} with a changed IP, it will update the \verb+ip+ and \verb+location+ of the \deno{S} in \deno{DB}.
+The drones' serial code will be described in Section~\ref{sec:design_slave}.
 \\
 
+All communication between \deno{M} and \deno{S} is done using JavaScript Object Notation (\textit{JSON})\citep{JSON}.
+The choice of JSON is described in Secion~\ref{sec:tools}.
 
-\deno{D} will handle the session requests as a First In, First Out (FIFO) queue.
+\deno{D} will handle the session requests as a First In, First Out (FIFO) queue, to reduce the average time it takes to receive a session key after requestion one.
 However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
 \deno{S} will only return a valid session key, if it currently has no active sessions.
 Therefore at most one person will have a valid session key for communicating with \deno{S} at any given time.
