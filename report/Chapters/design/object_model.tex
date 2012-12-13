@@ -15,6 +15,7 @@ The UML attribute notation in this report is:
 The system will contain the following objects: \deno{Affiliate Privilege}, \deno{Company}, \deno{Drone}, \deno{Privilege}, \deno{Role}, \deno{Session}, and \deno{User}.
 The model of the objects and their relationships can be seen in Figure~\ref{fig:UML_class_diagram}.
 Each object covered is represented in the object model diagram with its name in lowercase and pluralized, e.g. \deno{User} object $\rightarrow$ \deno{users}.
+If an object's name consists of several words the spaces will be replaced by underscores, e.g. Session Key Task becomes session\_key\_tasks.
 The relationships between objects can either be implicit with a line directly from one object to another, or explicit with a simple or rich relationship model between the two objects.
 Simple relationship models are models without a PK. They are represented in the model diagram with both objects in lowercase and pluralized, e.g. roles\_users.
 Rich relationship models have a PK. This kind of relationship model does not have a predetermined naming convention, therefore it can be anything as long as it does not collide with the other model names, e.g. user\_privileges.\\
@@ -28,81 +29,35 @@ Rich relationship models have a PK. This kind of relationship model does not hav
 
 
 \subsection{Objects}
-% USER %
-Only users that are logged in with a valid username and password can interact with the system.
-If you are visiting the system as a guest and hence not logged in, only a login-page will be displayed.
-The system is designed so that every individual has their own unique user, allowing the system to show user-specific objects and allow user-specific access to different parts of the system.\\
+Access to and actions of the system is restricted.
+This restriction is based on the identity of user in the system.
+An instance of the \deno{User} object represents a user to the system.
+The \deno{User} object has the attributes \verb+email+ and \verb+password+, as seen in Figure~\ref{tab:user_object} in Appendix~\ref{app:objects}, these combined form the credentials needed for a user to authenticate his identity to the system. \\
 
-A users access to the system will need to be restricted to make sure that any user only accesses what he is permitted too.
-This restriction is controlled by roles and privileges.
-The handling of roles and privileges will be done by the role-model.\\
+The \verb+email+ is publicly available, which leaves the \verb+password+ to be protected in order for user to protect his identity in the system.
+The \verb+password+ entered by the user is concatenated with a \verb+salt+ and hashed through a SHA-1 hashing algorithm to be stored in \verb+hashed_password+.
+The hashing algorithm provides a way for storing the password without having its exact value, as this could leave to a security flaw.
+Having access to passwords of users directly, e.g. through a hacker attack, would allow the hacker to login into the users account, which is unintended for the system.
+When a salt is concatenated before hashing it makes it harder for the hacker to gain the original passwords, e.g. through a rainbow table~\cite{something}. \\
 
-A user will be identified by his e-mail address which will work as the username and therefore be unique.
-Each user will also have a password, that is both salted and hashed in the database, using the SHA-1 hashing algorithm. SHA-1 has been chosen as this is considered a strong hashing algorithm that has no current or known collisions. By using a salt, the password is secured against rainbow-tables.\\
+Having a distributed setup with multiple \deno{S}, each representing a \deno{Drone} object, means that the network locations of these need to be known in order to communicate.
+The network location is stored in the \verb+ip+ field of the \deno{Drone} object, as shown in Figure~\ref{tab:drone_object} of Appendix~\ref{app:objects}.
+The physical drone have a unique identifier known as \verb+name+, which makes the user able to identify a given drone. \\
 
-The user-object serves as the point of entrance for anyone who wishes to use the system, and combined with companies, roles and privileges dictate its options.
+The users of the system will be part of different companies, therefore there is a need for grouping users by a company.
+The \deno{Company} object have an \verb+owner+, which is a reference to a \deno{User} object.
+This is required for the system to know which user have access to all \deno{Affiliate Privilege} objects of the company. \\
 
+An \deno{Affiliate Privilege} object references a \deno{Privilege}, and only when combined they form a unique key.
+This key unlocks a certain functionality, meaning that if the user does not have a relation to the \deno{Affiliate Privilege} object, which represents the key, then the user is not able to unlock that functionality.
+\deno{Role} objects give the possibility of grouping \deno{Privilege} objects together.
+Each \deno{Company} have a related role which contains all privileges, of which the company have full control.
+Full control gives the right for passing on a privilege, or disabling if the privilege is already granted.
+\deno{Affiliate Privilege} objects have a field \verb+affiliate+ that links the privilege to an object of the type declared by the referenced \deno{Privilege} object's \verb+instance_type+ field. \\
 
-% COMPANY %
-\projectname{} is designed with the intent that multiple different clients can use the system.
-These clients could be different companies that in some way wishes one or more drones to surveil their premises.
-One company may have several employees that they wish to provide with access to the system.
-The Company-object handles this relationship, allowing multiple users to be grouped together in a company.
-One User can be a member of several Company, and one Company can have many Users in it.
-Therefore this is a many-to-many relationship, represented in the Companies\_users table. \\
-
-Roles and privileges can be assigned to a Company and inherited by its Users.
-This is described in further details in the following sections.
-
-
-% DRONE %
-Along with Users, Drones are the most important object in \projectname{}.
-An instance of a Drone in the system represents a physical drone somewhere in the field.
-A Drone-object itself does not contain much data nor functionality.
-It simply represents a drone and is a point of connection between Users and controlling the Drone itself. \\
-
-The relationship between a User and a Drone is controlled by Privileges and Drones through Companies in most cases. \\
-
-The logging of when a drone takes of and lands is represented by the Flightplans table.
-
-% PRIVILEGE %
-\label{sec:privileges}
-A Privilege-object represents a privilege that can be granted to another object in the system.
-Examples of privileges are:
-
-\begin{itemize}
-    \item Add a new user to the system
-    \item Edit the informations of a specific company
-    \item Watch the video feed from a specific drone
-    \item Control the movement of a specific drone
-\end{itemize}
-
-A privilege consists of three elements:
-
-\begin{itemize}
-    \item An action that it provides privilege to perform (such as any of the ones mentioned above)
-    \item An object that these can be applied on
-    \item An affiliation where the privilege is granted too.
-\end{itemize}
-
-Privileges can both be assigned directly to a user or assigned along with other privileges using a Role. \\
-
-\projectname{} comes with a number of predefined Privileges that can be granted across the system as the administrator wishes.
-But the structure of the Privileges also allows for later expansion, providing the system with scalability as more Privileges can be added to the system later without changing any of the source code of the system.
-
-
-% ROLE %
-Roles are designed to bind multiple Privileges and Users using one component to save the administrators some work.
-Consider a role as a collection of Privileges that are assigned to an object in the system.
-Roles can be assigned to:
-
-\begin{itemize}
-    \item Users -- in this case, it is the same as if the Privileges were granted directly to the User, only this way multiple Privileges can be assigned to a User at once.
-    \item Company -- in this case, the Company administrator can assign Users in the Company to any of the assigned Roles.
-\end{itemize}
-
-As mentioned above, Roles are not the only way that a user can get a privilege granted, however.
-Though a User can be granted all Privileges in a Role by getting assigned to it, a User is also able to be granted a Privilege directly via the \verb+User_Privileges+ table.
+The \deno{Session} object represents an active pilot connection between a user and a drone.
+The \verb+session_key+ field provides a key that needs to be sent along with the commands.
+The \deno{Session Key Task} object is an object used for \deno{D} and \deno{M} to communicate through \deno{DB}, as shown in Figure~\ref{fig:daemon_structure} in Section~\ref{sec:application_structure}.
 
 
 \subsection{Relationships}
