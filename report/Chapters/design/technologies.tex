@@ -1,0 +1,190 @@
+\section{Technologies}
+\label{sec:tools}
+\label{sec:technologies}
+The application structure described in Section~\ref{sec:application_structure} specifies the solution will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{S}'s.
+There are two choices to make regarding the development platform.
+Firstly the setup including the operating system on \deno{M} and \deno{S} must be decided, and secondly the programming language for the application must be decided.
+
+\subsection{Server Operating System}
+There are two major operating system families to choose from, each of which contains a set of operating systems:
+
+\begin{itemize}
+    \item Windows Server family
+        \begin{itemize}
+            \item Windows Server 2003
+            \item Windows Server 2008
+            \item Windows Server 2012
+        \end{itemize}
+    \item UNIX family
+        \begin{itemize}
+            \item Linux
+                \begin{itemize}
+                    \item Debian/Ubuntu
+                    \item Fedora
+                    \item CentOS/RedHat
+                    \item Various other distributions of Linux%\fxfatal{Er det nødvendigt at nævne dette? - ja /ace}
+                \end{itemize}
+            \item BSD
+            \item Mac OSX Server
+        \end{itemize}
+\end{itemize}
+
+We have chosen to use Linux Debian due to the following reasons:
+
+\begin{itemize}
+    \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
+    \item Installation of new programs is simple.
+    \item Linux Debian is open-source.
+    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. 
+    \item Linux Debian has a huge community that continuously updates and maintains it.
+\end{itemize}
+
+It is important to underline that all considered operating systems contain the functionality needed in this project.
+%Operating systems are often chosen based on personal preferences or experience with a given operating system.
+%Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
+The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
+
+\subsection{Programming language}
+Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages.
+Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
+
+The programming language must have the following:\fxfatal{Hvorfor? Skal linkes til tidligere sektioner}:
+
+\begin{itemize}
+    \item Support of object oriented programming
+    \item Native MySQL libraries
+    \item It must be open-source and have an active community to ensure continuous bug-fixing etc. or be a corporate language that is professionally maintained.
+\end{itemize}
+
+The programming languages that have this and whice where considered are:
+
+\begin{itemize}
+    \item Java
+    \item Python
+    \item Ruby
+    \item Perl
+    \item PHP
+\end{itemize}
+
+All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
+%Check point
+The language chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
+Ruby was chosen for the following reasons:
+\begin{itemize}
+    \item Ruby is easy to install server-side.
+    \item Ruby can be used as a server-side scripting language.
+    \item Rails provide a framework for web-development with Ruby.
+\end{itemize}
+
+Ruby is a object oriented scripting language.
+Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
+
+Ruby on Rails \emph{[Rails]} is an open-source web framework for Ruby.
+Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
+Rails also contains features, which makes it easier to conduct products with distributed development.
+An example is ``Migrations'', which is Rails' method for handling setup of databases.
+Instead of using a shared database that each developer connects to, to make sure that everybody is always working on an updated database, Rails uses migrations to save changes to the databases.
+When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
+This will initialize a part of Rails that updates the developers local database.
+If he makes some changes to the database, he makes a new migration document, pushes it to the repository and the rest of the team can get the updated version of the database by running the migration.\\
+
+%This is one of the features of Rails that helped us to make the decision to use it. \\
+
+Keeping in mind that this is a student project, Ruby is also a natural choice as we in the group have little to no knowledge of how Ruby works.
+This is a great opportunity for us to lean how to use another programming language. \\
+
+%An important part of the project is long distance communication with the drone.
+%``Long Distance'' in this context is communication between two computer devices that are not on the same LAN.
+%This will require a server or gateway between the web application and the drone.
+%We also already know that we have to build some web application and server side scripting which both requires some soft of hosting.
+%Both aspects also work very well with Ruby and Rails.
+
+\subsection{Streaming Tools}\label{sec:tools_streaming}
+%Hvad skal vi opnå med streaming
+%Hvilke tilgange kan der tages til at løse problemet
+%Hvilke løsningsmuligheder findes i den valgte tilgang
+%Hvilke tools er valgt og hvorfor
+%Hvordan er toolsne kombineret
+
+%Reviewer det selv inden andre skal se på det, for havde ikke meget fokus da jeg skrev det
+The video feed send by the drone to \deno{S} is forwarded to the users browser as seen in Figure~\ref{fig:sequence_diagram}.
+As described in Section~\ref{sec:design_client} the stream will be displayed in a Flash application.
+Flash only natively supports video streams send via Real Time Messaging Protocol\textit{(RTMP)}\citep{rtmp_spec}.
+The video stream send by the drone is send by TCP and it is H.264 encoded, which Flash is compatible with\citep{netstream_spec}, as described in Appendix~\ref{app:ar_drone_specification}.
+The drones video feed is however encoded with the unique PaVE headers, see Appendix~\ref{app:ar_drone_specification}, and must therefore be reencoded in order for the flash application to be able to read the stream.
+Each \deno{S} must therefore contain functionality capable of reading and reencoding the drones stream and forward it via RTMP to the Flash application running in the users browser.
+
+As mentioned in Section~\ref{sec:design_slave} developing a streaming solution from scratch is outside the scope of the project.
+The streaming is therefore to be handled using existing tools.
+%The tools must be open-source\fxfatal{Hvorfor? Noget med budget eller bare fordi vi har valgt det}.
+\\
+
+There are two streaming solutions using tools.
+One is using a tool capable of reading the drones video feed and broadcast a RTMP feed.
+The other is using two tools.
+A tool which reads the drones feeds and forwards it to a rtmp server.
+Both solution depends on a tool capable of decoding the PaVE headers.
+The tools considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server. 
+\\
+
+FFmpeg is a multimedia framework capable of recording and converting audio and video.
+It contains a multimedia streaming server called FFserver.
+FFserver is used for live broadcasts and is capable of decoding and enconding a large set of video formats.
+It is however incapable of decoding the unique PaVE headers the drones video feed is encoded with.
+It is, however, capable of outputting a RTMP feed.
+Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input. 
+\\
+
+Gstreamer is a multimedia framework that uses a pipeline architecture to process video and audio feeds.
+A pipeline in this context is a set plugins the video feed is send through and processed by.
+As an example a video feed might be deencoded and then reencoded in a new format.
+Gstreamer is not capable of outputting a readable RTMP stream, as it contains no server functionality.
+It is however capable of sending a video feed to a RTMP server.
+Gstreamer is not natively capable of decoding PaVE header.
+There does however exist a plugin for Gstreamer developed by the AR Drone community \citep{paveparse} which enables to properly parse the PaVE headers.
+The plugin is named paveparse. 
+\\
+
+C++ RTMP Server\textit{(CRTMP)} is a streaming server capable of streaming to and from a flash application.
+It can receive a local stream send via e.g RTP and broadcast it globally as RTMP, RTMPE, RTMPS, RTMPT, and RTMPTE.
+
+The chosen solution is to use gstreamer to read and rebroadcast the drones video feed via CRTMP.
+
+
+
+\subsection{Browser technologies}
+
+\fxfatal{Er flyttet ned for browser.}
+
+When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely.
+However, some of the processing can be moved to the client-side to ease load on \deno{M}.
+This can be achieved using Javascript \citep{what_is_javascript}, which will be used in \projectname{}. \\
+
+Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}.
+AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way.
+This approach has several advantages:
+
+\begin{itemize}
+	\item Content on the interface can be updated without page-reload. This is normally not possible with web-development, as the web is stateless.
+	\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
+	\item Using AJAX can improve usability of a web application.
+\end{itemize}
+
+These tools ensure that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}, and making the system as accessible as possible. \\
+
+The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements.
+This is not natively supported in Internet-browsers, but there are a number of tools that allows us to implement this into an Internet-browser:
+
+\begin{itemize}
+	\item Flash
+	\item Silverlight
+	\item HTML5
+\end{itemize}
+
+Out of the three, Flash was chosen.
+HTML5 was discarded is still a very new technology, and old Internet-browsers do not support this.
+\projectname{} needs to be platform independent and also support browsers that are not the newest. 
+Flash was chosen over Silverlight as we have previous experience with this and know how it works. \\
+
+Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
+The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
