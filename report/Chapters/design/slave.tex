@@ -3,30 +3,40 @@
 The functionality of Slave is as follows, derived from Section~\ref{sec:communication_network} and Section~\ref{sec:functionality_distribution}.
 
 \begin{enumerate}
-	\item Establish and maintain a wireless connection to the drone.
-	\item Send initialization message to M when powered on, as seen in Figure~\ref{fig:sequence_diagram}.
-	\item Create and send session keys upon request.
-	\item Receiving flight-operations from the client and send them to the drone.
-	\item Read video feed from the drone and forward it to \deno{B}.
+	\item Establish and maintain a wireless connection to the drone.\label{enum:wireless}
+	\item Send initialization message to M when powered on, as seen in Figure~\ref{fig:sequence_diagram}.\label{enum:initialization}
+	\item Create and send session keys upon request.\label{enum:session}
+	\item Receive flight-operations from \deno{B} and send them to the drone.\label{enum:actions}
+	\item Read video feed from the drone and forward it to \deno{B}.\label{enum:stream}
 \end{enumerate}
 
 The slave is connected to the drone and the Internet\fxfatal{Hvilket ord skal bruges her?}.
 Therefore two network interfaces are required, one of which must be a wireless network interface (WIFI-interface), as all the communication with the drone is wireless as described in Appendix~\ref{app:ar_drone_specification}.
 \deno{S} will automatically attempt to establish a connection to the drones wireless network when powered on.
 Following this the initialization message is send to \deno{M}.
-When the initialization is succesfully completed \deno{S} is ready to use.
+When the initialization is succesfully completed, \deno{S} is ready to use.
 Each \deno{S} will have a unique identifier called serial code. \\
 
 The initialization message is send from \deno{S} to \deno{M} as JSON, see Section~\ref{sec:tools}.
 It will contain \deno{S}' serial code.
 The initialization message is send to \deno{M} when \deno{S} is powered on.
 
-%Session keys, hvorfor på S
-%Generating session key, length etc.
-%The process of sending session keys.
-%Ref til sequence diagram
+A session key is generated on \deno{S} when a request is received, see item~\ref{enum:session}.
+It is not be possible to communicate with \deno{S} without a valid session key.
+The session key is generated on \deno{S} to ease the load on \deno{M}.
+As mentioned in Section~\ref{sec:communication_network} there can only be one active session key active on \deno{S}.
+A session key is a 40 character string consisting of letters and numbers.
+This was chosen based on \citep{password_length} which states that length is stronger than complexity when creating passwords.
+A session key of length 40 was deemed sufficient.
+Following the generation of a session key it is stored on \deno{S} and send to \deno{M}.
+While a session key is active on \deno{S} only messages containing it are forwarded to \deno{S}' associated drone.
+The session key is send to \deno{M} as JSON, see Section~\ref{sec:tools}.
+Session keys will be deleted from \deno{S} if the connection times out.
 
+\deno{S} receives flight-operations from \deno{B} which must be forwarded to the drone, see item~\ref{enum:actions}.
+The flight-operations must be read and converted to an \verb+AT command+ for it to be interpretable by the drone, see Appendix~\ref{app:ar_drone_specification}.
 
+Item~\ref{enum:stream} will be explained in Section~\ref{sec:tools}, as already existing technologies will be used.
 
 %The need for session keys was described in Section~\ref{sec:communication_network}.
 %When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys.
