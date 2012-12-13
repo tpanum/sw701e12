@@ -8,7 +8,7 @@ This choice was made for the following reasons:
 \begin{itemize}
 	\item The client-side must be platform independent.
 	\item The client-side must be hardware independant, meaning no resource-intensive operations can run on the client PC.
-	\item Browser increase the accessibility of \projectname{}
+	%\item Browser increase the accessibility of \projectname{}
 \end{itemize}
 
 A Java program is also platform independent and can be programmed to be light weight.
@@ -17,7 +17,7 @@ Therefore the client-side of \projectname{} will be accessible via an Internet-b
 
 When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely.
 However, some of the processing can be moved to the client-side to ease load on \deno{M}.
-This can be achieved using Javascript, which will be used in \projectname{}. \\
+This can be achieved using Javascript \citep{what_is_javascript}, which will be used in \projectname{}. \\
 
 Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}.
 AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way.
@@ -29,10 +29,22 @@ This approach has several advantages:
 	\item Using AJAX can improve usability of a web application.
 \end{itemize}
 
-These tools ensures that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users, and making the system as accesible as possible. \\
+These tools ensure that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}, and making the system as accessible as possible. \\
 
 The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements.
-This is not natively supported in Internet-browsers, so a Flash application will be used for this purpose.
+This is not natively supported in Internet-browsers, but there are a number of tools that allows us to implement this into an Internet-browser:
+
+\begin{itemize}
+	\item Flash
+	\item Silverlight
+	\item HTML5
+\end{itemize}
+
+Out of the three, Flash was chosen.
+HTML5 was discarded is still a very new technology, and old Internet-browsers do not support this.
+\projectname{} needs to be platform independent and also support browsers that are not the newest. 
+Flash was chosen over Silverlight as we have previous experience with this and know how it works. \\
+
 Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
 The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
 

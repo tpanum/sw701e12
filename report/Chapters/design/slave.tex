@@ -1,50 +1,50 @@
 \section{Slave}
 \label{sec:design_slave}
+The functionality of Slave is as follows, derived from Section~\ref{sec:communication_network} and Section~\ref{sec:functionality_distribution}.
 
-A slave sits between a drone and anyone that tries to communicate with that drone.
-A slave is responsible for:
 
-\begin{itemize}
-	\item Connect to the drone when connected
-	\item Connect to \deno{M} when connected, to ensure proper connections are in place
-	\item Create and send session keys upon request
-	\item Receiving flight-operations from the client and send them to the drone
-	\item Receiving video feed from the drone and send it to the client
-\end{itemize}
 
-The slave is connected to both the drones network and the Internet.
-Therefore two network interfaces are required, one of which must be a wireless network interface (WIFI-interface).
-When the slave is connected, it will search the available wireless networks for the drone and connect to it if possible to establish the required connection.
-After that it will connect to \deno{M}.
-If it is the first time the slave connects to \deno{M}, a new entry in \deno{M} should be created for this particular slave and its drone.
-When that is done, or if this is not the first time it connects, it is ready to be used by the client. \\
+\begin{enumerate}
+	\item Establish and maintain a wireless connection to the drone.
+	\item Send initialization message to M when powered on, as seen in Figure~\ref{fig:sequence_diagram}.
+	\item Create and send session keys upon request.
+	\item Receiving flight-operations from the client and send them to the drone.
+	\item Read video feed from the drone and forward it to \deno{B}.
+\end{enumerate}
 
-The need for session keys was described in Section~\ref{qwe123}. \fxfatal{Insert correct ref}
-When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys.
-So the slave has to make these and synchronize with \deno{M}.
+The slave is connected to the drone and the Internet\fxfatal{Hvilket ord skal bruges her?}.
+Therefore two network interfaces are required, one of which must be a wireless network interface (WIFI-interface), as all the communication with the drone is wireless as described in Appendix~\ref{app:ar_drone_specification}.
+\deno{S} will automatically attempt to establish a connection to the drones wireless network when powered on.
+Following this the initialization message is send to \deno{M}.
+When the initialization is succesfully completed \deno{S} is ready to use. \\
 
-Finally, when \deno{S} is loaded, it must connect to the drone via its WIFI to ensure the connection is ready. \\
+%The need for session keys was described in Section~\ref{sec:communication_network}.
+%When a client tries to access the drone attached to a give slave, the clients connection must be verified using these session keys.
+%So the slave has to make these and synchronize with \deno{M}.
 
-\subsection{Designing applications for the different requirements}
-As soon as \deno{S} boots, it should connect to the WIFI broadcast by \deno{D}.
-\deno{S} will come with some pre-installed software on deployment.
-A part of this will be instructing the operating system, that when it is booted and the drivers for the wireless network interface are loaded, it must connect to a defined network.
-This network will be defined to be the one broadcast by the drone that \deno{S} is parred with. \\
 
-The four remaining areas of responsibility for \deno{S} requires some custom program to be executed.
-Connecting to \deno{M} when connected and creating and sending session keys are designed as individual scripts that are executed on boot and on request.
-The dissemination of flight commands to the drone and steaming of its video feed is more interesting, however. \\
 
-As described in Appendix~\ref{app:ar_drone_specification} commands are send to \deno{D} as UDP packages, and that \deno{S} must send as many as 30 packages per second.
-Furthermore \deno{D} will return to its default hovering position, if it does not receive any packages.
-To send a sufficient ammount of packages requires a state-full connection, as the delay with a state-less connection is to large to properly control the drone\fxfatal{statement: soirve}.
-Therefore we have to create a daemon running on \deno{S} which accepts packages, formats them to the correct format and sends them on to \deno{D}.  \\
 
-The video feed from \deno{D} that the client must be able to see communicates the other way.
-It is recorded by \deno{D}, sent to \deno{S} and from there it must be sent to the client.
-It is out of the scope of this project that we design an implement our own streaming protocol.
-Therefore an existing streaming protocol will be used to stream the video feed from \deno{D} to the client.
-This is described in further details in Section~\ref{sec:tools_streaming}.
+
+%As soon as \deno{S} boots, it should connect to the WIFI broadcast by \deno{D}.
+%\deno{S} will come with some pre-installed software on deployment.
+%A part of this will be instructing the operating system, that when it is booted and the drivers for the wireless network interface are loaded, it must connect to a %defined network.
+%This network will be defined to be the one broadcast by the drone that \deno{S} is parred with. \\
+
+%The four remaining areas of responsibility for \deno{S} requires some custom program to be executed.
+%Connecting to \deno{M} when connected and creating and sending session keys are designed as individual scripts that are executed on boot and on request.
+%The dissemination of flight commands to the drone and steaming of its video feed is more interesting, however. \\
+
+%As described in Appendix~\ref{app:ar_drone_specification} commands are send to \deno{D} as UDP packages, and that \deno{S} must send as many as 30 packages per second.
+%Furthermore \deno{D} will return to its default hovering position, if it does not receive any packages.
+%To send a sufficient ammount of packages requires a state-full connection, as the delay with a state-less connection is to large to properly control the drone\fxfatal{statement: soirve}.
+%Therefore we have to create a daemon running on \deno{S} which accepts packages, formats them to the correct format and sends them on to \deno{D}.  \\
+
+%The video feed from \deno{D} that the client must be able to see communicates the other way.
+%It is recorded by \deno{D}, sent to \deno{S} and from there it must be sent to the client.
+%It is out of the scope of this project that we design an implement our own streaming protocol.
+%Therefore an existing streaming protocol will be used to stream the video feed from \deno{D} to the client.
+%This is described in further details in Section~\ref{sec:tools_streaming}.
 
 
 
