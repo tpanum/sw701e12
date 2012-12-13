@@ -95,11 +95,11 @@ How this session key communication is handled can be seen in Figure~\ref{fig:ses
 
 %%%%% DESIGN %%%%%
 \subsection{Design language}
-\fxfatal{Bjarke og Thomas tag stilling}
-The design language, which is also known as design vocabulary, is the design guidelines for \projectname{}.
-The objects here will have an important role in the systems user interface, and their design language is therefore described here.
+When a client is interacting with \projectname{}, this is done via some interface. 
+This section will cover the guidelines for the looks and feel of that interface, trying to make it as user-friendly for the clients as possible. 
+This guidance is called the design language.
 
-\subsubsection{Color schema}
+\emph{Color schema}
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{gfx/color_schema.pdf}
@@ -107,17 +107,22 @@ The objects here will have an important role in the systems user interface, and 
     \label{fig:color_schema}
 \end{figure}
 
-The color schema seen in \figref{fig:color_schema} shows the colors that are being used in the applications design. \fixme{hvorfor har vi valgt de farver fremfor orange og lyserød?}
+The color schema seen in \figref{fig:color_schema} shows the colors that are being used in the applications design \citep{how-to-get-a-professional-look-with-color}. 
+These colors has been chosen to give \projectname{} a professional and calm look. \\
 
-\subsubsection{Fonts}
+\emph{Fonts}
+
 The family of fonts will be: Arial, Helvetica.
-These fonts have been selected because they are common both in Windows and Mac and therefore they are browser safe \cite{common_fonts}, meaning that the system will look the same no matter what operating system the user is using.
+These fonts have been selected because they are common both in Windows and Mac and therefore they are browser safe \cite{common_fonts}, meaning that the system will look the same no matter what operating system the user is using. \\
 
-\subsubsection{Shapes}
+
+\emph{Shapes}
+
 All boxes that the user can interact with in the system, will be displayed with rounded corners.
-This was done to make the interaction with the boxes as simple and straight forward as possible for the user.
+This was decided to make the boxes that a user can interact with stand out from other boxes that the user cannot interact with. \\
 
-\subsubsection{Layouts}
+
+\emph{Layouts}
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth]{gfx/menu.pdf}
@@ -126,7 +131,7 @@ This was done to make the interaction with the boxes as simple and straight forw
 \end{figure}
 
 In \figref{fig:menu_design} the menu of the application is seen.
-In the figure, the bullet ``Control'' is active and therefore shown with a gray background color.
+In the figure, the bullet ``Control'' is active and therefore shown with a gray background color to make it distinct and show, that it is active.
 All other menus have a black background color and are separated with white spaces.
 
 \begin{figure}[htb]
@@ -137,7 +142,7 @@ All other menus have a black background color and are separated with white space
 \end{figure}
 
 In \figref{fig:search_bar_design} the search bar of the application is seen.
-The ``search'' text will disappear when the bare is clicked, and if the user types anything this will be shown in the search bar instead.
+The ``search'' text will disappear when the field is selected, and if the user types anything this will be shown in the search bar instead.
 
 \begin{figure}[htb]
     \centering
@@ -145,8 +150,9 @@ The ``search'' text will disappear when the bare is clicked, and if the user typ
     \caption{Table design for the application.}
     \label{fig:table_design}
 \end{figure}
+
 In \figref{fig:table_design} the general design for tables of the application is seen.
-Odd rows will be light blue and even rows will be blue.
+Odd rows will be light blue and even rows will be blue.\\
 
 \begin{figure}[htb]
     \centering
@@ -154,6 +160,7 @@ Odd rows will be light blue and even rows will be blue.
     \caption{List design for the application.}
     \label{fig:list_design}
 \end{figure}
+
 The list design shown in \figref{fig:list_design} is designed to show a tree-structured list.
 This example shows the relationship between drones, privileges and users, where it is possible to activate different privileges on a given drone for a given user.
 Each type of element (user, drone and privilege) as separate colors to make it easier to get an overview of the list. \\
@@ -168,7 +175,7 @@ Each privilege can have three different marks:
 
 If no privileges are marked, as seen with ``Drone 1337'', the user has no privileges to access this drone.
 If a box is dotted, as seen with ``Drone 42'', the user s some privileges for this drone.
-And finally, if a box is ticked, as seen with ``Drone 1'', the user has all privileges for this drone.
+And finally, if a box is ticked, as seen with ``Drone 1'', the user has all privileges for this drone. \\
 
 \begin{figure}[htb]
     \centering
@@ -177,8 +184,8 @@ And finally, if a box is ticked, as seen with ``Drone 1'', the user has all priv
     \label{fig:button_design}
 \end{figure}
 
-The buttons used in \projectname{} has also gotten their own design to match the rest of the view.
+The buttons seen in Figure~\ref{fig:button_design} used in \projectname{} has also gotten their own design to match the rest of the view.
 There are six buttons:
 Back, Forth, More, Less, Yes, \& No.
 These will be used in the user interface where appropriate.
-They do not carry any functionality, but are merely standard buttons with nicer looks.
+They do not carry any functionality, but are merely standard buttons with nicer looks that, along with the other design language decisions shown in this section, is intended to give the clients a better and more user-friendly experience with interacting with \projectname{}.
