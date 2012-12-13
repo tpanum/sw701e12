@@ -124,6 +124,7 @@ Following the setup of Gstreamer and CRTMP the next step is reading the output s
 Due to the PaVE headers this is however not possible.
 
 \subsection{Issues with PaVE Headers}
+\label{sec:issues_with_pave_headers}
 The documentation for the PaVE headers can be found at \citep[page. 59-60]{ardrone_developer_guide}.
 As described in section~\ref{sec:gstreamer} Flash applications are unable to interpret the PaVE headers, and as a result unable to display a video stream encoded with them.
 Therefore they must be removed or replaced with another header for the stream to be readable.
@@ -166,6 +167,7 @@ This solution can be seen in figure~\ref{fig:working_solution}.
 \end{figure}
 
 \subsection{Implemented solution}
+\label{sec:video_stream_implemented_solution}
 The streaming setup used in \projectname{} uses only Gstreamer.
 One pipeline which reads the drones' video feed and serves as a server, denoted \deno{SP}, and a client pipeline ,denoted \deno{CP}, for displaying the video feed on the client side.
 The setup can be seen in Figure~\ref{fig:current_solution}.
