@@ -2,7 +2,7 @@
 \label{sec:design_client}
 Users interact with the system by connecting to \deno{M} through \deno{B}.
 This connection is through an Internet browser as described in Section~\ref{sec:application_structure}.
-The user will interact with the system through a web interface, which is retrieved from \deno{W}.
+The user will interact with the system through a web interface, which is retrieved from \deno{M}.
 The functionality of \deno{B} is described in Section~\ref{sec:functionality_distribution}.
 If \deno{B} interacts with a drone, \deno{B} must be able to displays the drones video feed, and allow the user to send commands to the drone.
 The communication with the drone is through \deno{S}, therefore \deno{B} must be able to communicate directly with \deno{S}.
@@ -10,7 +10,7 @@ The communication with the drone is through \deno{S}, therefore \deno{B} must be
 For \deno{B} to interact with the system requires authentication to establish a connection with \deno{M}\fxfatal{Eller W}.
 The users' credentials is stored on \deno{B} and it is used to uphold the users' authentication.
 
-To ease the load on \deno{W}, some of the processing is moved from \deno{W} to \deno{B}.
+To ease the load on \deno{M}, some of the computation is moved from \deno{M} to \deno{B}.
 \deno{B} has two types of interaction with \deno{S} as described in Section~\ref{sec:communication_network}.
 To display the drones video feed, a video player must be present in \deno{B}.
 To control the drone \deno{B} must request a session key from \deno{M} as illustrated in Figure~\ref{fig:sequence_diagram}.
