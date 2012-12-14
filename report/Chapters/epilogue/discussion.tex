@@ -16,5 +16,77 @@
 % forhold os til de valg vi har truffet
 % vær kritisk overfor det vi har valgt her.
 
+
+% STRUKTUR
+% Done! Rails - god/dårlig beslutning? Hvad har det tilført projektet?
+% Done! security problem - det er ukrypteret trafik og man kan spoof nye slaver.
+% Done! streaming - hvorfor virker vores idé ikke? Hvad kunne man have gjort? Hvad har vi så gjort i stedet? Fordele/ulemper. 
+% Done! Arbejdsblade - tidsforbrug, godt/skidt? 
+
+% Reflektér over det endelige produkt
+
+
+
 \section{Discussion \& Reflection}
-...
+\label{sec:discussion}
+During the design and implementation of \projectname{} we have made a series of choices that has affected the outcome of the project.
+This section will elaborate on these choices and the impact they have had on the final product. \\
+
+One of the first decisions we made was that we will use the programming language Ruby and the development framework Ruby on Rails. 
+We knew that Rails came with a lot of functionality, such as using the MVC model and Active Relations and other features that helped us use out time as efficient as possible when we were developing. 
+On the other hand we had little to none previous experience with Ruby or Rails, so the time saved on the built-in feature of Rails was spent on learning the programming language instead.
+We believe this was a wise decision. 
+One of the preliminary boundaries of this project was, that it is a student project. 
+We therefore believe that it is a good thing, that we got to learn a new programming language. 
+We may have been able to implement this project faster if we were using a programming language that we were more familiar with, such as PHP, but we believe that the learning process is worth more than the time we might have saved. \\
+
+Looking at the final product, \projectname{}, we are satisfied with the results. 
+There are, however, elements in it that could be improved. 
+Some are important to look at while others are less important until the product should be made ready for market. \\
+
+Whenever a client (Browser \deno{B}) is trying to access a Drone \deno{D}, it must receive a session key from \deno{M} generated on \deno{S}.
+This key is transfered unencrypted via regular HTTP. 
+This means that the key can be caught by third party if he can sniff the network packages sent on the network of either \deno{S} or \deno{B}. 
+This has no impact on the functionality of the system, but it is a security concern that should be looked at before \projectname{} is ready to market.
+
+Another potential security issue is the registration of new Slaves \deno{S}.
+There is no authentication of new \deno{S} in the current implementation, meaning that any computer can connect to \deno{M}.
+If they provide a valid serial ID when they connect the first time, they will be saved in the system as an active and valid \deno{S}. 
+This can lead to different security issues, but as the previous security issue it has no significant impact no the functionality of \projectname{}.
+It must, however, be fixed before \projectname{} can be seen as ready to market. \\
+
+A lot of our time was spent on streaming the video feed from the drone to the clients browser. 
+Transporting the video feed from the drone to the slave \deno{S} was no problem, for this purpose Gstreamer was used and set up with appropriate options on \deno{S} to fetch the feed from the drone. 
+Displaying the video feed in the flash application in the clients browser did not work because of the lack of PaVE headers as described in Section~\ref{sec:issues_with_pave_headers}.
+A lot of time was spent on this, as displaying the video feed from the drone is one of the important features of \projectname{}. 
+Instead we ended up implementing the solution described in Section~\ref{sec:video_stream_implemented_solution}, which works (sort of) but in no way is an ideal implementation.
+It requires the client to run a separate application on his computer to view the video stream, and have his computer focused on the flash application in the browser at the same time to be able to send commands to the drone. 
+
+This is not a satisfying solution.
+However, it works as a proof of concept implementation. 
+It is possible to both view the video feed from the drone and send commands to it that it will react too. 
+If \projectname{} was suppose to be ready to market now, a solution where the video feed is presented in the browser, preferably in the same flash application that takes the flight commands, is a requirement. 
+
+A lot of time was spent trying to implement the first solution, as we are aware of the importance if this, given the case that \projectname{} should be ready to market. 
+However, when we came to the conclusion that we could not get it to work within the given time of this project, the secondary solution was implemented, which -- in our eyes -- is better than no video feed and still makes a proof of concept. 
+We do not consider the time wasted, as it still provided the project with a lot of valuable knowledge about streaming and how to implement such solutions. \\
+
+During the design and implementation of \projectname{} we have used work sheets to document our thoughts and work, to make it easier when we had to write this report. 
+This also took a lot of time, but is considered a good investment as it provided useful resources in writing this report. \\
+
+\projectname{} is not a perfect system, and it is not ready to market.
+However, there are elements in it that we are very proud of, and that we think is good work. 
+
+\begin{itemize}
+	\item The architecture that binds a drone and a user together, using a browser, slave and master-server. 
+	\item The object-model of the structure of the web application hosted on the master.
+	\item The communication with the drone that allows us to control its movements via a flash application in the clients browser.
+\end{itemize}
+
+These are the most basic elements in \projectname{}\'s foundation, that we are proud of and believe are well implemented.
+
+
+
+
+
+

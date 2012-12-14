@@ -1,50 +1,24 @@
+\section{Browser}
+\label{sec:design_client}
+Users interact with the system by connecting to \deno{M} through \deno{B}.
+This connection is through an Internet browser as described in Section~\ref{sec:application_structure}.
+The user will interact with the system through a web interface, which is retrieved from \deno{M}.
+The functionality of \deno{B} is described in Section~\ref{sec:functionality_distribution}.
+If \deno{B} interacts with a drone, \deno{B} must be able to displays the drones video feed, and allow the user to send commands to the drone.
+The communication with the drone is through \deno{S}, therefore \deno{B} must be able to communicate directly with \deno{S}.
 
-\section{Browser}\label{sec:design_client}
-The clients interaction with the system is initiated by connecting to \deno{M}.
-This connection can be made using either an Internet browser or a client-side application.
-For \projectname{} this connection will be handled with the browser.
-This choice was made for the following reasons:
+For \deno{B} to interact with the system requires authentication to establish a connection with \deno{M}\fxfatal{Eller W}.
+The users' credentials is stored on \deno{B} and it is used to uphold the users' authentication.
 
-\begin{itemize}
-	\item The client-side must be platform independent.
-	\item The client-side must be hardware independant, meaning no resource-intensive operations can run on the client PC.
-	%\item Browser increase the accessibility of \projectname{}
-\end{itemize}
+To ease the load on \deno{M}, some of the computation is moved from \deno{M} to \deno{B}.
+\deno{B} has two types of interaction with \deno{S} as described in Section~\ref{sec:communication_network}.
+To display the drones video feed, a video player must be present in \deno{B}.
+To control the drone \deno{B} must request a session key from \deno{M} as illustrated in Figure~\ref{fig:sequence_diagram}.
+When controlling the drone the video feed must be available in \deno{B}.
 
-A Java program is also platform independent and can be programmed to be light weight.
-However, in order for \projectname{} to run as seamlessly as possible on as many different platforms as possible, forcing the user to install i.e. Java in order to get started is not an ideal solution.
-Therefore the client-side of \projectname{} will be accessible via an Internet-browser. \\
 
-When using an Internet-browser, all data is usually processed server-side, meaning that the browser displays a result, which was computed remotely.
-However, some of the processing can be moved to the client-side to ease load on \deno{M}.
-This can be achieved using Javascript \citep{what_is_javascript}, which will be used in \projectname{}. \\
 
-Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}.
-AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed on the clients Internet-browser, handle the output from the server and attach the information to the view in an appropriate way.
-This approach has several advantages:
-
-\begin{itemize}
-	\item Content on the interface can be updated without page-reload. This is normally not possible with web-development, as the web is stateless.
-	\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
-	\item Using AJAX can improve usability of a web application.
-\end{itemize}
-
-These tools ensure that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}, and making the system as accessible as possible. \\
-
-The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements.
-This is not natively supported in Internet-browsers, but there are a number of tools that allows us to implement this into an Internet-browser:
-
-\begin{itemize}
-	\item Flash
-	\item Silverlight
-	\item HTML5
-\end{itemize}
-
-Out of the three, Flash was chosen.
-HTML5 was discarded is still a very new technology, and old Internet-browsers do not support this.
-\projectname{} needs to be platform independent and also support browsers that are not the newest. 
-Flash was chosen over Silverlight as we have previous experience with this and know how it works. \\
-
-Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
-The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
-
+%Funktions struktur
+%Web app
+%Interact with S
+%View video feed
