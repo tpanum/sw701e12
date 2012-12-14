@@ -1,12 +1,13 @@
 \section{Technologies}
 \label{sec:tools}
 \label{sec:technologies}
-The application structure described in Section~\ref{sec:application_structure} specifies the solution will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{S}'s.
-There are two choices to make regarding the development platform.
-Firstly the setup including the operating system on \deno{M} and \deno{S} must be decided, and secondly the programming language for the application must be decided.
+The application structure described in Section~\ref{sec:application_structure} specifies \projectname{} will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{Slaves}.
+In this section the development setup will be chosen, including both server operating systems and programming language.
+The design furthermore specifies some functionality which must be implemented using specific technologies.
 
 \subsection{Server Operating System}
-There are two major operating system families to choose from, each of which contains a set of operating systems:
+In this project two operating system families will be considered for use.
+Each family consist of a set of operating systems.
 
 \begin{itemize}
     \item Windows Server family
@@ -29,57 +30,57 @@ There are two major operating system families to choose from, each of which cont
         \end{itemize}
 \end{itemize}
 
-We have chosen to use Linux Debian due to the following reasons:
+\projectname{} will use Linux Debian as server operating system:
 
 \begin{itemize}
-    \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
-    \item Installation of new programs is simple.
-    \item Linux Debian is open-source.
+    %\item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
+    \item Installation of new programs is quick through the Debian package manager.
+    \item Linux Debian is open-source\citep{Debian}.
     \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. 
-    \item Linux Debian has a huge community that continuously updates and maintains it.
+    %\item Linux Debian has a huge community that continuously updates and maintains it.
 \end{itemize}
 
-It is important to underline that all considered operating systems contain the functionality needed in this project.
+%It is important to underline that all considered operating systems contain the functionality needed in this project.
 %Operating systems are often chosen based on personal preferences or experience with a given operating system.
 %Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
 The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
 
 \subsection{Programming language}
 Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages.
-Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
+%Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
-The programming language must have the following:\fxfatal{Hvorfor? Skal linkes til tidligere sektioner}:
+The programming language must have the following:
 
 \begin{itemize}
-    \item Support of object oriented programming
-    \item Native MySQL libraries
-    \item It must be open-source and have an active community to ensure continuous bug-fixing etc. or be a corporate language that is professionally maintained.
+	\item Support for network communication, see Section~\ref{sec:communication_network}.
+	\item Support for communicating with databases, see Section~\ref{sec:application_structure}.
+	\item Support for object oriented programming, see Section~\ref{subsec:objects}.
+	\item Must be maintained to ensure the language does not become discontinued.
 \end{itemize}
 
-The programming languages that have this and whice where considered are:
+The considered programming languages were:
 
 \begin{itemize}
-    \item Java
     \item Python
     \item Ruby
     \item Perl
     \item PHP
 \end{itemize}
 
-All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
+%All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
 %Check point
-The language chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
+The language chosen for \projectname{} is Ruby.
 Ruby was chosen for the following reasons:
 \begin{itemize}
-    \item Ruby is easy to install server-side.
-    \item Ruby can be used as a server-side scripting language.
-    \item Rails provide a framework for web-development with Ruby.
+    %\item Ruby is easy to install server-side.
+    \item Ruby can be used as a scripting language.
+    \item Ruby on Rails \emph{(Rails)} provide a framework for web-development with Ruby.
 \end{itemize}
 
 Ruby is a object oriented scripting language.
 Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
 
-Ruby on Rails \emph{[Rails]} is an open-source web framework for Ruby.
+Rails is an open-source web framework for Ruby\citep{rails}.
 Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
 Rails also contains features, which makes it easier to conduct products with distributed development.
 An example is ``Migrations'', which is Rails' method for handling setup of databases.
