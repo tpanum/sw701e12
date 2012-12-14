@@ -1,12 +1,13 @@
 \section{Technologies}
 \label{sec:tools}
 \label{sec:technologies}
-The application structure described in Section~\ref{sec:application_structure} specifies the solution will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{S}'s.
-There are two choices to make regarding the development platform.
-Firstly the setup including the operating system on \deno{M} and \deno{S} must be decided, and secondly the programming language for the application must be decided.
+The application structure described in Section~\ref{sec:application_structure} specifies \projectname{} will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{Slaves}.
+In this section the development setup will be chosen, including both server operating systems and programming language.
+The design furthermore specifies some functionality which must be implemented using specific technologies.
 
 \subsection{Server Operating System}
-There are two major operating system families to choose from, each of which contains a set of operating systems:
+In this project two operating system families will be considered for use.
+Each family consist of a set of operating systems.
 
 \begin{itemize}
     \item Windows Server family
@@ -29,69 +30,71 @@ There are two major operating system families to choose from, each of which cont
         \end{itemize}
 \end{itemize}
 
-We have chosen to use Linux Debian due to the following reasons:
+\projectname{} will use Linux Debian as server operating system:
 
 \begin{itemize}
-    \item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
-    \item Installation of new programs is simple.
-    \item Linux Debian is open-source.
+    %\item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
+    \item Installation of new programs is quick through the Debian package manager.
+    \item Linux Debian is open-source\citep{Debian}.
     \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. 
-    \item Linux Debian has a huge community that continuously updates and maintains it.
+    %\item Linux Debian has a huge community that continuously updates and maintains it.
 \end{itemize}
 
-It is important to underline that all considered operating systems contain the functionality needed in this project.
+%It is important to underline that all considered operating systems contain the functionality needed in this project.
 %Operating systems are often chosen based on personal preferences or experience with a given operating system.
 %Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
 The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
 
 \subsection{Programming language}
 Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages.
-Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
+%Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
-The programming language must have the following:\fxfatal{Hvorfor? Skal linkes til tidligere sektioner}:
+The programming language must have the following:
 
 \begin{itemize}
-    \item Support of object oriented programming
-    \item Native MySQL libraries
-    \item It must be open-source and have an active community to ensure continuous bug-fixing etc. or be a corporate language that is professionally maintained.
+	\item Support for network communication, see Section~\ref{sec:communication_network}.
+	\item Support for communicating with databases, see Section~\ref{sec:application_structure}.
+	\item Support for object oriented programming, see Section~\ref{subsec:objects}.
+	\item Must be maintained to ensure the language does not become discontinued.
 \end{itemize}
 
-The programming languages that have this and whice where considered are:
+The considered programming languages were:
 
 \begin{itemize}
-    \item Java
     \item Python
     \item Ruby
     \item Perl
     \item PHP
 \end{itemize}
 
-All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
+%All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
 %Check point
-The language chosen for \projectname{} is Ruby and the web development framework Ruby on Rails.
+The language chosen for \projectname{} is Ruby.
 Ruby was chosen for the following reasons:
 \begin{itemize}
-    \item Ruby is easy to install server-side.
-    \item Ruby can be used as a server-side scripting language.
-    \item Rails provide a framework for web-development with Ruby.
+    %\item Ruby is easy to install server-side.
+    \item Ruby can be used as a scripting language.
+    \item Ruby on Rails \emph{(Rails)} provide a framework for web-development with Ruby.
 \end{itemize}
 
-Ruby is a object oriented scripting language.
-Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
+Ruby is a object oriented scripting language. \\
+%Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
 
-Ruby on Rails \emph{[Rails]} is an open-source web framework for Ruby.
+Rails is an open-source web framework for Ruby\citep{rails}, the following paragraph uses it as source.
 Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
-Rails also contains features, which makes it easier to conduct products with distributed development.
-An example is ``Migrations'', which is Rails' method for handling setup of databases.
-Instead of using a shared database that each developer connects to, to make sure that everybody is always working on an updated database, Rails uses migrations to save changes to the databases.
-When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
-This will initialize a part of Rails that updates the developers local database.
-If he makes some changes to the database, he makes a new migration document, pushes it to the repository and the rest of the team can get the updated version of the database by running the migration.\\
+Rails also contains features, which simplifies distributed development.
+An example is Migrations. 
+Migrations are set of ruby classes designed to make it easy to setup and modify databases.
+With migrations each developer can use a local database for development, instead of a shared database.
+%When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
+%This will initialize a part of Rails that updates the developers local database.
+If a developer makes changes to the database, he makes a new migration, shares it with the other the developers, and by running the migrations their local database is updated to the latest version. 
+Additionally migrations makes deployment of systems easier, as the database is automatically setup by running all migrations.\\
 
 %This is one of the features of Rails that helped us to make the decision to use it. \\
 
-Keeping in mind that this is a student project, Ruby is also a natural choice as we in the group have little to no knowledge of how Ruby works.
-This is a great opportunity for us to lean how to use another programming language. \\
+%Keeping in mind that this is a student project, Ruby is also a natural choice as we in the group have little to no knowledge of how Ruby works.
+%This is a great opportunity for us to lean how to use another programming language. \\
 
 %An important part of the project is long distance communication with the drone.
 %``Long Distance'' in this context is communication between two computer devices that are not on the same LAN.
@@ -101,25 +104,24 @@ This is a great opportunity for us to lean how to use another programming langua
 
 \subsection{Browser technologies}
 \fxfatal{Er flyttet ned for browser.}
-As described in Section~\ref{sec:design_client} \deno{B} must be able to display a video feed and handle some of the processing to reduce the load on \deno{M}.
-
+As described in Section~\ref{sec:design_client}, \deno{B} must be able to display a video feed and handle some of the computation to reduce the load on \deno{M}.
 Reducing the load on \deno{M} can be achieved using Javascript, see \citep{what_is_javascript}.
 
-Another tool that helps make web interfaces more resource efficient on the server-side is Asynchronous Javascript and XML \emph{[AJAX]}.
-AJAX allow the client to query a specific server-side page asynchronously from the rest of the page, and via Javascript executed in \deno{B}, handle the output from the server and attach the information to the view in an appropriate way.
+Another tool that helps reduce computation on \deno{M} is: Asynchronous Javascript and XML \emph{(AJAX)}.
+AJAX allow \deno{B} to request a specific view asynchronously from the rest of the view, and using Javascript computed in \deno{B}, handle the output from \deno{M} and attach the information to the view.
 This also provides the asynchronous processing described in Section~\ref{sec:interaction}.
 This approach has several advantages:
 
 \begin{itemize}
-	\item Content on the interface can be updated without page-reload. This is normally not possible with web-development, as the web is stateless.
-	\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
-	\item Using AJAX can improve usability of a web application.
+	\item The content of a view can be updated without recomputing it. This is normally not possible with web-development, as the web is stateless\citep{stateless}.
+	%\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
+	\item Using AJAX can improve usability of a web application.\citep{why_ajax_makes_the_user_experience_better}
 \end{itemize}
 
-These tools ensure that the client-side of \projectname{} is designed to be platform independent and takes advantage of the available tools to be as resource-efficient as possible while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}, and making the system as accessible as possible. \\
+These tools ensure that \deno{B} of \projectname{} is be platform independent while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}.\\
 
-The client must also be able to view the video feed from a drone and to send actions to it in order to control its movements.
-This is not natively supported in Internet-browsers, but there are a number of tools that allows us to implement this into an Internet-browser:
+As described in Section~\ref{sec:design_client} a technology must be used in \deno{B} to display the drones video feed.
+The technologies considered for this are:
 
 \begin{itemize}
 	\item Flash
@@ -127,10 +129,9 @@ This is not natively supported in Internet-browsers, but there are a number of t
 	\item HTML5
 \end{itemize}
 
-Out of the three, Flash was chosen.
-HTML5 was discarded is still a very new technology, and old Internet-browsers do not support this.
-\projectname{} needs to be platform independent and also support browsers that are not the newest. 
-Flash was chosen over Silverlight as we have previous experience with this and know how it works. \\
+Flash was chosen.
+HTML5 was discarded as it is still a new technology, and therefore not fully supported by all browsers\citep{html5_video}.
+Silverlight uses .NET as backend, and as \projectname{} is developed for a Linux Debian server it was discarded.\fxfatal{source} \\
 
 Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
 The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
