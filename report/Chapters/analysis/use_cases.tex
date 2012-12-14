@@ -40,8 +40,10 @@ The use cases can be seen in Table~\ref{tab:use_cases}.\\
 The use cases define a set of objects which must be present in \projectname{} in order for the use cases to be implementable.
 The objects reflect elements in the problem domain which must be modelled in the system.
 The objects are \textit{users}, \textit{drones}, \textit{companies}, \textit{roles}, and \textit{privileges}.
-Everybody using \projectname{} are classified as \textit{users}, including customers, owners of companies, system admins etc.
-However as reflected in the use cases \textit{users} will not have unrestricted access to the system.
+This leads to the dependency diagram in Figure~\ref{fig:element_diagram}.
+All objects are dependent on privileges, since they either provide or need privileges in order to be used.
+Everybody using \projectname{} are classified as \textit{users}, including customers, owners of companies, system administrators etc.
+However as reflected in the use cases \textit{users} will not have unrestricted access to the system, as they depend on privileges.
 Access to the system will be restricted through \textit{privileges}.
 As defined in use case \#8 privileges grants access to functionality, meaning a \textit{user} will not have access to anything by default.
 A \textit{drone} refers to a physical drone.
@@ -49,7 +51,16 @@ A \textit{drone} refers to a physical drone.
 As an example a company might purchase a set of drones for surveilling their property.
 The company would need a set of users for its employees, and a set of privileges granting access to its drones.
 The \textit{company} object would handle this grouping.
-Use case \#15 defines a role as at set of privileges, that can be associated with a \textit{company} and granted to \textit{users}.\\
+Use case \#15 defines a role as at set of privileges, that can be associated with a \textit{company} and granted to \textit{users}.
+Roles make the process of granting frequently granted privileges easier.
+This becomes easier as only one link have to be made to each user, instead of multiple links to multiple users.\\
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.95\textwidth]{gfx/element_diagram.pdf}
+    \caption{Element Diagram}
+    \label{fig:element_diagram}
+\end{figure}
 
 As video surveillance is concerned with sensitive information, security in \projectname{} is important.
 This is reflected in use case \#1 and \#2.
