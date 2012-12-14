@@ -17,11 +17,29 @@ The users privileges are retrieved through the users model.
 For each drone in the system it is checked if the user has privileges that grants him access to the drone.
 From the drones list the user can edit a drone, or delete a drone.
 Drones are added automically to the system through the initialization messages send by the \deno{Slaves}.
-To make a drone usable in \projectname{}, it must be added to a company as reflected in the object model, see Section~\ref{subsec:objects}.
-Drones are edited through the edit view returned by the drones controller.
-This view is send to \deno{B} from \deno{M} when the user request to edit a drone.
+To make a drone usable in \projectname{}, it must be added to a company as reflected in the object model, see Section~\ref{subsec:objects}. \\
 
-\fxfatal{Section om drones list view ellet hvad det nu hedder, skal skrives efter privileges er skrevet}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{gfx/interaction_sequence_diagram.pdf}
+    \caption{Illustration interaction between \deno{B} and \deno{M}.}
+    \label{fig:interaction_sequence}
+\end{figure}
+
+The process of editing a drone is illustrated in Figure~\ref{fig:interaction_sequence}.
+\deno{B} request the list of drones from \deno{M}, and is returned a list of drones based on his privileges.
+\deno{B} then requests to edit a drone and \deno{M} ensures the user has needed privilege to edit the drone.
+If this is the case, \deno{B} receives a view from \deno{M} where the user can input data to update the drone with.
+The user can then choose save the entered data and \deno{B} then sends it to \deno{M} which saves them in the \deno{DB}.
+\deno{M} then returns \deno{B} an updated edit view the drone.
+
+As mentioned a user deletes a drone through the drones list send to \deno{B} by \deno{M}.
+When a delete request is send from \deno{B} to \deno{M} for a drone, \deno{M} deletes all links the drone has with other object in \deno{DB}.
+The drone is not deleted from the system, as described in Section~\ref{subsec:objects}\fxfatal{Dette skal skrives hvis det ikke kommer til at stå i object model}.
+
+Some of the views require asynchronous behaviour, that allows the views to be updated without recomputing it.
+As an example when editing the current view can be updated asynchronously insted of having \deno{M} recompute it.
+In this way some of the computation is moved from \deno{M} to \deno{B}, as described in Section~\ref{sec:design_client}.
 \fxfatal{User eller \deno{B} når vi snakker om brugeren}
 
 From the drones' list \deno{B} can request to pilot or view of the drones' listed.
