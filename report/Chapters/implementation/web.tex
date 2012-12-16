@@ -18,6 +18,8 @@ The web-interface is implemented using Rails as described in Section~\ref{sec:pr
 This framework enforces a number of standards that is followed in the implementation of the web-interface.
 The most significant is CRUD, mentioned in Section~\ref{sec:master}.
 The web-interface is implemented using the design mentioned in Section~\ref{sec:master} and Appendix~\ref{app:controller_actions}.
+
+%\subsection{Gems for Ruby on Rails}
 A number of Rails-specific tools, named \emph{Gems} \citep{Rails_Gems}, which are plugins for Rails written by the community, provides us with a number of tools that we can use and build our own application on. 
 Five different Gems are used in \projectname{}. 
 These are: \\
@@ -34,20 +36,19 @@ These are: \\
 Ruby and Rails is not able to connect with MySQL out of the box. 
 Therefore the \emph{mysql2} \citep{Rails_mysql2} gem is is used, which provides a simple interface for Ruby to connect with a MySQL database.
 
-The daemons-rails \citep{Rails_daemons_rails} is used for the daemon running in \deno{M}. 
+The \emph{daemons-rails} \citep{Rails_daemons_rails} is used for the daemon running in \deno{M}. 
 It accepts incoming requests from \deno{S}'s and uses the models in the web-application to interact with these.
-To make sure that the daemon can use these, the damons-rails gem is used.
+To make sure that the daemon can use these, the daemons-rails gem is used.
 
-The Eventmachine Gem \citep{Rails_eventmachine} is used to allow our web-application to easily interact with other programs using TCP/IP.
+The \emph{eventmachine} Gem \citep{Rails_eventmachine} is used to allow our web-application to easily interact with other programs using TCP/IP.
 The daemon running on \deno{M} also uses this to communicate with \deno{S}'s when exchanging informations regarding session keys. 
 Whenever a user requests access to a drone, the request of a session key is saved in the database. 
 The daemon running on \deno{M} takes this request and uses the eventmachine to connect to the \deno{S} associated with the drone that the user wishes to interact with, in order to sync session keys and verify that the connection between the user and drone is valid. 
 
-SHT\_Rails \emph{Shared Handlebars Template for Rails} \citep{Rails_sht_rails} is used in the view of the web-interface and enables the application to render a view both as html and json, making it easier to integrate AJAX functionalities.
+The \emph{SHT\_Rails} Gem \emph{Shared Handlebars Template for Rails} \citep{Rails_sht_rails} is used in the view of the web-interface and enables the application to render a view both as HTML and JSON, making it easier to integrate AJAX functionalities.
+This is used in the view, where AJAX is implemented as described in Section~\ref{sec:browser_technologies}
 
-The SWFObject Gem \citep{Rails_swfobject} allows us to easily display a swf flash object in the view of \projectname{}. \\
+The \emph{SWFObject} Gem \citep{Rails_swfobject} allows us to easily display a swf flash object in the view of \projectname{}, which is used when a user is interacting with a drone by either viewing its video feed or sending new commands to it. \\
 
-
-
-
+All of the listed Gems are plugins written by third party that provides some functionality that we need somewhere in \projectname{}.
 
