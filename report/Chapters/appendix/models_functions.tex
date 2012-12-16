@@ -1,0 +1,80 @@
+\chapter{Model funcitons}\label{app:model_functions}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+privileges+ & returns all privileges associated with a company \\ \hline
+\end{tabular}
+\caption{Company Model}
+\label{tab:company_model_functions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+type+ & returns the type of the privilege \\ \hline
+    \verb+type=+ & Assings a type to the privilege, raises an exception if the assigned type does not exist \\ \hline
+\end{tabular}
+\caption{Privilege Model}
+\label{tab:privilege_model_functions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+unlink+ & unlinks the drone from its associated company \\ \hline
+    \verb+privileges+ & returns the privileges associated witht the drone \\ \hline
+\end{tabular}
+\caption{Drone Model}
+\label{tab:drone_model_functions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{4cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+check_no_other_sessions_for_drone_exists+ & Checks if a session exists for a drone and raises an exception if this is the case \\ \hline
+\end{tabular}
+\caption{Session Model}
+\label{tab:session_model_functions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+privileges+ & Returns the privileges of the role \\ \hline
+\end{tabular}
+\caption{Role Model}
+\label{tab:role_model_functions}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tabular}{ | l | p{8cm} | }
+  \hline
+    \textbf{Function} & \textbf{Description} \\ \hline
+    \verb+authenticate+ & Have an e-mail and a password as parameters. Returns the user object if it is a valid user, or false if it is not. \\ \hline
+    \verb+make_salt+ & Accepts a parameter to be used in generation of a salt and returns it \\ \hline
+    \verb+hash_with_salt+ & Have a password and a salt as parameters. Returns the password hashed with salt.  \\ \hline
+    \verb+password_match?+ & Has a password as a parameter. Returns true if the password with the user objects salt matched the stored. \\ \hline
+    \verb+has_privilege?+ & Has a privilege as a parameter and returns true or false based on whether or not the user has the privilege \\ \hline
+    \verb+privileges+ & Returns the privileges of the role \\ \hline
+\end{tabular}
+\caption{Role Model}
+\label{tab:role_model_functions}
+\end{center}
+\end{figure}
