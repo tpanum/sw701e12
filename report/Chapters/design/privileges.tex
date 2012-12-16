@@ -1,0 +1,67 @@
+\section{Privileges}
+The need for restricting functionality is fulfilled by the privilege concept described in Section~\ref{sec:use_cases}. This section will examine this functionality from an interaction perspective. Assuming there is a set of users $U$, and a set of privileges $P$ to be assigned to each user in $U$. This leads to the following formula, where is $I$ is the amount of interactions required by the user. The amount of interactions should be low therefore the lower the better.
+
+\begin{align}
+I_1 = |U|*|P|
+\end{align}
+
+Assuming $|P| > 1$, $|U| > 1$, and both $|P|$ and $|U|$ will increase, then $I_1$ has a quadratic growth. However, there is another solution, where the privileges are grouped in a role, and the users are assigned to the role. This means that each privilege in $P$, have to be assigned to the role $r$ and then $r$ can be assigned to each user in $U$. The amount of interactions needed in order to create a role with the privileges $P$, is equal to $I_1$ where $|U| = 1$, this leads to:
+
+\begin{align}
+I_r = |P|
+\end{align}
+
+Assuming that assigning a role $r$ to a user requires $1$ interaction. This leads to the following formula for calculating the amount of interactions using the role solution.
+
+\begin{align}
+I_2 = |U|+I_r
+I_2 = |U|+|P|
+\end{align}
+
+It is apparent that $I_1$ grows at a higher rate than $I_2$. \\
+
+Based on the use cases, the assumption of roles in the problem domain having the exact same privileges for every user cannot be made. An example: The users A, B, C, and D share the same role as system administrator, but the users A, C, and D may view the log while user B may not. However, all users are categorized as the same, as their common role's privileges may change. \\
+
+These exceptions must be handled by the system. A solution could be to put all users in a system administrator role, with all privileges that a system administrator should have, and then define that user B should not have the privilege to view the log, i.e. create an exception for user B. Another solution would be to exclude B from the system administrator role, and grant him every privilege that he needs through user specific privileges. The issue with this approach is if the privileges for the system administrators change then these changes must be done for both B and the system administrator role. A third solution would be to have the system administrator role act as a lowest common denominator, and then add extra privileges separately, e.g. add the privilege to view the log to A, C, and D separately. \\
+
+The system should be capable of handling all solutions, so the users can use the solution that fits their specific scenario.
+
+In order to calculate the amount of interactions used for each solution a few functions will need to be introduced.
+
+It is assumed there exists a $p(u)$, which returns the set of privileges that should be granted to a user $u$.
+
+\begin{align}
+p(u) \subseteq P
+\end{align}
+
+It is also assumed there exists a $p_{m}(u)$ that returns the set of privileges a user $u$ should not be granted from $P$.
+
+\begin{align}
+p_{m}(u)=P\textbackslash p(u)
+\end{align}
+
+Furthermore the users that do not have all privileges within $P$ will be denoted by $u_{m}$ and users that have all privileges within $P$ will be denoted by $u_{a}$. \\
+
+Given the solution, where users are granted all privileges in a role and then revoked privileges through exceptions, the amount of interactions can be calculated with the following equation:
+
+\begin{align}
+I_{e} = |U| + |P| + \sum_{i \in u_{m}} |p_{m}(i)|
+\end{align}
+
+The amount of interactions for the solution, where users that should not have all privileges of a role are not added to the role and instead given every privilege separately, can be calculated with the following:
+
+\begin{align}
+I_{rm} = |U| - |u_{m}| + |P| + \sum_{i \in u_{m}} |P|-|p_{m}(i)|
+\end{align}
+
+Before describing the equation for the third solution it is necessary to introduce another function, $p_{lcd}(U)$ that returns the set of privileges that corresponds to the lowest common denominator within a set of users.
+
+\begin{align}
+p_{lcd}(U) = p(u_1) \cap p(u_2) \cap \dots p(u_n)
+\end{align}
+
+With $p_{lcd}(U)$ defined it is possible to find the amount of interactions for the lowest common denominator solution. For this solution a role is created, which contains all common privileges, and the variable privileges are granted individually. It can be calculated as follows:
+
+\begin{align}
+I_{lcd} = \left|p_{lcd}\left(U\right)\right| + \left|U\right| + \sum_{i \in U} \left|p\left(i\right)\right|\textbackslash\left|p_{lcd}\left(U\right)\right|
+\end{align}
