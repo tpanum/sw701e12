@@ -43,8 +43,10 @@ This separation means that the developer can isolate bugs to a specific layer, a
 
 In Section~\ref{subsec:objects} the object model is described.
 The models of \deno{W}'s MVC are derived from this object model.
-Each model will have a direct mapping to a table in \deno{DB}, and communication with the table in \deno{DB} must go through the model.
-Some models needs extended functionality \\
+Each model will have a direct mapping to a table in \deno{DB}, and communication with the table in \deno{DB} must go through the model. 
+Some models needs extended functionality to implement the functionality defined in the use cases.
+This functionality involves e.g. authenticating users and privileges.
+The functionality of the models can be seen in Appendix~\ref{app:model_functions}. \\
 
 In order for a model to have a set of associated views it must have a controller.
 In \projectname{} this includes models such as User, Drone, and Company, described in Section~\ref{subsec:objects}.
