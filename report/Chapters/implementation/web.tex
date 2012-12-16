@@ -34,4 +34,20 @@ These are: \\
 Ruby and Rails is not able to connect with MySQL out of the box. 
 Therefore the \emph{mysql2} \citep{Rails_mysql2} gem is is used, which provides a simple interface for Ruby to connect with a MySQL database.
 
+The daemons-rails \citep{Rails_daemons_rails} is used for the daemon running in \deno{M}. 
+It accepts incoming requests from \deno{S}'s and uses the models in the web-application to interact with these.
+To make sure that the daemon can use these, the damons-rails gem is used.
+
+The Eventmachine Gem \citep{Rails_eventmachine} is used to allow our web-application to easily interact with other programs using TCP/IP.
+The daemon running on \deno{M} also uses this to communicate with \deno{S}'s when exchanging informations regarding session keys. 
+Whenever a user requests access to a drone, the request of a session key is saved in the database. 
+The daemon running on \deno{M} takes this request and uses the eventmachine to connect to the \deno{S} associated with the drone that the user wishes to interact with, in order to sync session keys and verify that the connection between the user and drone is valid. 
+
+SHT\_Rails \emph{Shared Handlebars Template for Rails} \citep{Rails_sht_rails} is used in the view of the web-interface and enables the application to render a view both as html and json, making it easier to integrate AJAX functionalities.
+
+The SWFObject Gem \citep{Rails_swfobject} allows us to easily display a swf flash object in the view of \projectname{}. \\
+
+
+
+
 
