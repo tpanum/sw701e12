@@ -59,9 +59,9 @@ Full control gives the right for passing on a privilege, or disabling if the pri
 
 The \deno{Session} object represents an active pilot connection between a user and a drone.
 The \verb+session_key+ field provides a key that needs to be sent along with the commands.
-The \deno{Session Key Task} object is an object used for \deno{D} and \deno{M} to communicate through \deno{DB}, as shown in Figure~\ref{fig:daemon_structure} in Section~\ref{sec:application_structure}.
+The \deno{Session Key Task} object is an object used for \deno{D} and \deno{M} to communicate through \deno{DB}, as shown in Figure~\ref{fig:daemon_structure} in Section~\ref{sec:application_structure}. \\
 
-In Section~\ref{privileges} solutions for handling privileges were discussed.
+In Section~\ref{sec:privileges} solutions for handling privileges were discussed.
 From this discussion it was decided to model a system capable of handling all proposed solutions to fit scenarios of the users.
 The \deno{User Privileges} relationship allows for connecting individual {Privilege} objects to a \deno{User} object.
 This is could be either granting or revoking, i.e. exceptions, the privilege.
