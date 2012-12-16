@@ -1,13 +1,13 @@
 \section{Streaming}
-In this section the setup of the two streaming tools Gstreamer and CRTMP for \projectname{} will be explained.
+In this section the setup of the two streaming tools GStreamer and CRTMP for \projectname{} will be explained.
 Following the setup of GStreamer and CRTMP, the next step is reading the output stream and displaying it in a Flash application.
 Due to the PaVE headers, however, this is not possible.
 
-\subsection{Gstreamer}
-\label{sec:gstreamer}
+\subsection{GStreamer}
+\label{sec:GStreamer}
 As described in Section~\ref{sec:tools_streaming} the tool GStreamer is used for reading the drones' video feed and forwarding it to CRTMP.
-Gstreamer is a pipeline based tool, and has a command line version which can be executed using \verb+gst-launch-0.10+.
-The plugins the pipeline consist of are seperated by a \verb+!+.
+GStreamer is a pipeline based tool, and has a command line version which can be executed using \verb+gst-launch-0.10+.
+The plugins the pipeline consist of are separated by a \verb+!+.
 The first plugin in the pipeline is called a source element, and the final element a sink.
 The plugins between the source and sink element consist of a set of video and audio processing-, and data management plugins.
 A sample pipeline is illustrated in Figure~\ref{fig:sample_pipeline}.
@@ -25,7 +25,7 @@ To read the stream, the GStreamer plugin \verb+tcpclientsrc+ is used.
 The parameters \verb+host+ and \verb+port+ can be set for \verb+tcpclientsrc+. 
 The first part of the pipeline can be seen in Listing~\ref{lst:tcpclientsrc}.
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Partial Gstreamer pipeline illustrating tcpclientsrc, label=lst:tcpclientsrc]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Partial GStreamer pipeline illustrating tcpclientsrc, label=lst:tcpclientsrc]
 gst-launch-0.10 tcpclientsrc host=192.168.1.1 port=5555
 \end{lstlisting}
 
@@ -48,24 +48,24 @@ As the video feed is forwarded to CRTMP, the sink element is \verb+rtmpsink+.
 It has one parameter called \verb+location+, which is the URL-address of the RTMP server with an extension specifying the source-URL of the stream on the RTMP server.
 The \verb+rtmpsink+ can be seen in Listing~\ref{lst:rtmpsink}:
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Partial Gstreamer pipeline illustrating rtmpsink, label=lst:rtmpsink]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Partial GStreamer pipeline illustrating rtmpsink, label=lst:rtmpsink]
 rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
 The pipeline that forwards the video feed from the drones can be seen in Listing~\ref{lst:pipeline1}.
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Gstreamer Pipeline with tcpclientsrc and rtmpsink, label=lst:pipeline1]
+\begin{lstlisting}[style=sourceCode, language=C, caption=GStreamer Pipeline with tcpclientsrc and rtmpsink, label=lst:pipeline1]
 tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
 To handle plugins working at different speeds data management plugins are added to the pipeline.
 The plugin used is \verb+queue+.
-\verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size \citep{gstreamer_plugins_queue}.
+\verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size \citep{GStreamer_plugins_queue}.
 The \verb+queue+ element is added between every plugin except \verb+tcpclientsrc+ and \verb+paveparse+.  \\
 
 The complete pipeline can be seen in Listing~\ref{lst:pipeline2}: 
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Complete Gstreamer Pipeline, label=lst:pipeline2]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Complete GStreamer Pipeline, label=lst:pipeline2]
 tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
@@ -123,10 +123,10 @@ This has however not been implemented in \projectname{}
 \subsection{Issues with PaVE Headers}
 \label{sec:issues_with_pave_headers}
 The documentation for the PaVE headers can be found at \citep[page. 59-60]{ardrone_developer_guide}.
-As described in Section~\ref{sec:gstreamer}, Flash applications are unable to interpret the PaVE headers. 
+As described in Section~\ref{sec:GStreamer}, Flash applications are unable to interpret the PaVE headers. 
 As a result of this, they are unable to display the video stream.
 These headers must therefore be removed or replaced with another header to make the stream readable.
-The implemented solution removes them with the \verb+paveparse+ plugin, described in Section~\ref{sec:gstreamer}.
+The implemented solution removes them with the \verb+paveparse+ plugin, described in Section~\ref{sec:GStreamer}.
 Removing the headers leaves raw video data with no information about how to interpret it.
 As a result of this, the Flash application, VLC, or any other video players is unable to interpret the video feed.
 An illustration of the PaVE header problem can be seen in Figure~\ref{fig:videoframe}. \\
@@ -143,7 +143,7 @@ The PaVE headers result in a situation that makes displaying the video stream in
 \subsection{Test input}\fxfatal{Bedre overskrift}
 The designed solution would work if the drones' video feed used standard headers.
 The issue is illustrated in Figure~\ref{fig:streaming_issue}.
-The goal is to gest the stream from the drone, through Gstreamer and CRTMP to a Flash application.
+The goal is to gest the stream from the drone, through GStreamer and CRTMP to a Flash application.
 The implemented solution is capable of getting the video from the drone to CRTMP, but not capable of generating an output stream readable by Flash.
 As illustrated by 3. in Figure~\ref{fig:streaming_issue} the setup can forward a stream readable by Flash.
 This can be documented by using a different video source as illustrated by 4.
@@ -158,11 +158,11 @@ It creates a test video stream as seen in Figure ~\ref{fig:videotestsrc}, consis
 
 A \verb+testvideosrc+ pipeline can be seen in Listing~\ref{lst:videotestsrc}
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Gstreamer Pipeline using videotestsrc , label=lst:videotestsrc]
+\begin{lstlisting}[style=sourceCode, language=C, caption=GStreamer Pipeline using videotestsrc , label=lst:videotestsrc]
 videotestsrc ! queue ! x264enc ! queue ! flvmux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
-If this test-source is used instead of the drones' video feed, it is possible to display the video feed send by Gstreamer. \\
+If this test-source is used instead of the drones' video feed, it is possible to display the video feed send by GStreamer. \\
 
 This solution can be seen in figure~\ref{fig:working_solution}. \\
 
@@ -198,7 +198,7 @@ RTP is a standardized protocol for sending audio and video packages over an IP n
 RTMP is not used, as it is a protocol made specifically for Flash.
 For a GStreamer only solution, RTP is better choice as it is simpler to set up, since it does not have to include settings for the Flash application.
 RTP packages are sent via UDP.
-\deno{SP} uses the \verb+tcpclientsrc+ and \verb+paveparse+ plugins used described in Section~\ref{sec:gstreamer}. \\
+\deno{SP} uses the \verb+tcpclientsrc+ and \verb+paveparse+ plugins used described in Section~\ref{sec:GStreamer}. \\
 
 Video data send via RTP must be pay-loaded, as a video frame is larger than the maximum size allowed size of a UDP packet.
 Pay-loading a video stream means encapsulating it into a specific format.
