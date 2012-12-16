@@ -2,11 +2,11 @@
 \subsection{Gstreamer}
 \label{sec:gstreamer}
 As described in Section~\ref{sec:tools_streaming} the tool GStreamer is used for reading the drones' video feed and forwarding it to CRTMP.
-It is a pipeline based tool, and can be run in the Linux terminal using the \verb+gst-launch-0.10+ command.
-A pipeline in GStreamer is a set of plugins that processes the video feed. 
-These are separated by a \verb+!+-sign.
+Gstreamer is a pipeline based tool, and has a command line version which can be executed using \verb+gst-launch-0.10+.
+The plugins the pipeline consist of are seperated by a \verb+!+.
 The first plugin in the pipeline is called a source element, and the final element a sink.
-The plugins between the source and sink element consist of a set of video and audio processing plugins, such as decoders and encoders.
+The plugins between the source and sink element consist of a set of video and audio processing-, and data management plugins.
+A sample pipeline is illustrated in Figure~\ref{fig:sample_pipeline}.
 
 \begin{figure}[htb]
     \centering
@@ -15,62 +15,62 @@ The plugins between the source and sink element consist of a set of video and au
     \label{fig:sample_pipeline}
 \end{figure}
 
-The source element is capable of receiving a video feed via a specific protocol from a defined destination.
+The source element is capable of receiving a video feed over a specific protocol from a defined destination.
 As described in Appendix~\ref{app:ar_drone_specification} the drone outputs its video feed using the TCP protocol on port 5555, and its IP-address is 192.168.1.1.
 To read the stream, the GStreamer plugin \verb+tcpclientsrc+ is used.
 The parameters \verb+host+ and \verb+port+ can be set for \verb+tcpclientsrc+. 
 The first part of the pipeline can be seen in Listing~\ref{lst:tcpclientsrc}.
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=tcpclientsrc setup, label=lst:tcpclientsrc]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Partial Gstreamer pipeline illustrating tcpclientsrc, label=lst:tcpclientsrc]
 gst-launch-0.10 tcpclientsrc host=192.168.1.1 port=5555
 \end{lstlisting}
 
-The data available to the next plugin is H.264 encoded video frames that are sent with PaVE headers.
-The PaVE headers cannot be interpreted by Flash, however, and are therefore parsed by GStreamer using the \textit{paveparse} plugin\citep{paveparse}.
+The data available to the next plugin are H.264 encoded video with PaVE headers.
+The PaVE headers are parsed using the paveparse plugin \citep{paveparse}, as described in Section~\ref{sec:tools_streaming}.
 Paveparse removes the PaVE headers and send the remaining H.264 data down the pipeline.
-Furthermore it handles the delay that comes from the drone using TCP to stream its video feed as it ignores lost frames and always displays the most recently received frame. \\
+Furthermore is ignores lost frames and discards frames sent out of order to reduce delay on the stream.
+This is necesarry as the drone streams over TCP, and as described in Section \fxfatal{Ref til analysis om hvorfor no delay på streamen er vigtigt, og check at sætningen stadig giver mening} delay is not acceptable on the stream. \\
 
-As specified in Section~\ref{sec:technologies} the video output of GStreamer should be in format FLV so that the flash-application in the browser can display it. \\
-
-Two pipelines that output this final format can be created.
+As specified in Section~\ref{sec:technologies} the video output of GStreamer should be in FLV so that the Flash application in \deno{B} can display it.
+Two pipelines that output FLV can be created.
 The first is using a H.264 decoder to create raw video data, and then encode it as FLV.
-The second is using FLVmux that takes the raw video feed as input and outputs it as a single stream, extended with the .flv extension.
-The best option is to use the H.264 decoder.
-However, as the H.264 data has no headers, due to \textit{paveparse} that removes these, the FLV encoder cannot properly encode the video data after it has been decoded.
+The second is using FLVmux.
+FLVmux muxes audio and video streams into a single flv file \citep{flvmux}.
+However, as the H.264 data has no headers, due to \textit{paveparse}, the H.264 decoder cannot decode the video.
 Therefore an FLVmuxer is used to create FLV output. \\
 
-With FLV-encoded video outputted from the FLVmuxer, the sink-element can be added to the pipeline.
+With FLV video outputted from the FLVmuxer, the sink-element can be added to the pipeline.
 As the video feed is forwarded to CRTMP, the sink element is \verb+rtmpsink+.
 It has one parameter called \verb+location+, which is the URL-address of the RTMP server with an extension specifying the source-URL of the stream on the RTMP server.
 The \verb+rtmpsink+ can be seen in Listing~\ref{lst:rtmpsink}:
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=rtmpsink setup, label=lst:rtmpsink]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Partial Gstreamer pipeline illustrating rtmpsink, label=lst:rtmpsink]
 rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
 The pipeline that forwards the video feed from the drones can be seen in Listing~\ref{lst:pipeline1}.
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Initial Pipeline, label=lst:pipeline1]
-tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux name=mux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
+\begin{lstlisting}[style=sourceCode, language=C, caption=Gstreamer Pipeline with tcpclientsrc and rtmpsink, label=lst:pipeline1]
+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! flvmux ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
-There is, however, the risk of some plugins processing data faster than others, causing data to pile up at certain plugins if it is send through unrestricted.
-This can be solved using the plugin \verb+queue+.
+To handle plugins working at different speeds data management plugins are added to the pipeline.
+The plugin used is \verb+queue+.
 \verb+queue+ is a data queue that queues data until e.g. the queue reaches a specified size \citep{gstreamer_plugins_queue}.
-The queue element is added between every plugin except \verb+tcpclientsrc+ and \verb+paveparse+, as there is no need to queue data between the entry point and the first plugin. \\
+The \verb+queue+ element is added between every plugin except \verb+tcpclientsrc+ and \verb+paveparse+.  \\
 
 The complete pipeline can be seen in Listing~\ref{lst:pipeline2}: 
 
-\begin{lstlisting}[style=sourceCode, language=C, caption=Complete Pipeline, label=lst:pipeline2]
-tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux name=mux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
+\begin{lstlisting}[style=sourceCode, language=C, caption=Complete Gstreamer Pipeline, label=lst:pipeline2]
+tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
 \end{lstlisting}
 
 \subsection{C++ RTMP Server}
 \label{sec:CRTMP}
-As described in \ref{sec:tools_streaming} C++ RTMP Server is used as the server tool between GStreamer and the flash application in the clients browser. \\
+As described in \ref{sec:tools_streaming} C++ RTMP Server is used as the server tool between GStreamer and the Flash application in the \deno{B}. \\
 
-CRTMP is found at http://www.rtmpd.com and comes in a source package ready to run.
-CRTMP is a standard executable binary. \\
+%CRTMP is found at http://www.rtmpd.com and comes in a source package ready to run.
+%CRTMP is a standard executable binary. \\
 
 There are four ways to run CRTMP:
 
