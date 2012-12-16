@@ -1,13 +1,13 @@
-\section{Interaction}
+\section{User Interaction}
 \label{sec:interaction}
 The user interacts with \projectname{} through \deno{B}.
-\at{1} and \at{2} dictates the user must be granted access to the system before being able to interact with it.
+\at{1} and \at{2} requires that the user must be granted access to the system before being able to interact with it.
 This access is granted through a valid login and privileges.
-When \deno{B} initiates a connection to \deno{M}, \deno{M} returns a login screen as a view.
+When \deno{B} initiates a connection to \deno{M}, it returns a login view.
 This is done by the access controller, which is described in Figure~\ref{tab:access_controller_actions} in Appendix~\ref{app:controller_actions}.
-The user enters his login credentials in \deno{B} and \deno{B} send a login request to \deno{M}.
-The access controller attempts to login the user and if succesfull the user is forwarded the main menu, which is returned as a view from the access controller.
-Following a succesfull login the users credentials is stored on \deno{B} as described in Section~\ref{sec:design_client}. \\
+The user enters his login credentials in the login view and \deno{B} sends a login request to \deno{M}.
+Following a successful login the user is redirected to the drone view, where the user is shown a menu and the available drones. \\
+% Following a successful login the users credentials is stored on \deno{B} as described in Section~\ref{sec:design_client}.
 
 \deno{B} can then interact with any of the models described in Section~\ref{section:uml_notation} that have associated views.
 The general interaction with these models is similar, and the interaction with drones is described as an example.
@@ -16,7 +16,7 @@ This list contains all drones the user has access to based on his privileges.
 The users privileges are retrieved through the users model.
 For each drone in the system it is checked if the user has privileges that grants him access to the drone.
 From the drones list the user can edit a drone, or delete a drone.
-Drones are added automically to the system through the initialization messages send by the \deno{Slaves}.
+Drones are added automatically to the system through the initialization messages send by the \deno{Slaves}.
 To make a drone usable in \projectname{}, it must be added to a company as reflected in the object model, see Section~\ref{subsec:objects}. \\
 
 \begin{figure}[htb]
@@ -49,4 +49,4 @@ From this page \deno{B} can view the drones video feed and send control commands
 
 
 %Login -> access i systemet, noget med privileges
-%Interaction with 
+%Interaction with

@@ -1,6 +1,5 @@
 DroneControl::Application.routes.draw do
 
-  match 'admin', :to => 'access#menu'
   match 'logout', :to => 'access#logout'
 
   # The priority is based upon order of creation:
