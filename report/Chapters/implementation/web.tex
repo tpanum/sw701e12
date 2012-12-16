@@ -1,0 +1,37 @@
+
+% Hvordan er web applikationen opbygget?
+%	Rails framework
+%	MySQL database
+% Hvilke gems bruger vi, og hvordan bruges de?
+%	mysql2
+%	daemons-rails
+%	eventmachine
+%	sht_rails
+%	swfobject-rails
+% Spændende ting
+%	CRUD
+%	Integration af streaming i web-applikationen
+%	Privileges
+
+\section{Web-interface}
+The web-interface is implemented using Rails as described in Section~\ref{sec:programming_language}.
+This framework enforces a number of standards that is followed in the implementation of the web-interface.
+The most significant is CRUD, mentioned in Section~\ref{sec:master}.
+The web-interface is implemented using the design mentioned in Section~\ref{sec:master} and Appendix~\ref{app:controller_actions}.
+A number of Rails-specific tools, named \emph{Gems} \citep{Rails_Gems}, which are plugins for Rails written by the community, provides us with a number of tools that we can use and build our own application on. 
+Five different Gems are used in \projectname{}. 
+These are: \\
+
+\begin{itemize}
+	\item mysql2
+	\item daemons-rails
+	\item eventmachine
+	\item sht\_rails
+	\item swfobject-rails
+\end{itemize}
+
+\projectname{} uses a relational MySQL database to store all informations in.
+Ruby and Rails is not able to connect with MySQL out of the box. 
+Therefore the \emph{mysql2} \citep{Rails_mysql2} gem is is used, which provides a simple interface for Ruby to connect with a MySQL database.
+
+
