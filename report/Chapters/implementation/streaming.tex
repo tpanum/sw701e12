@@ -1,4 +1,8 @@
 \section{Streaming}
+In this section the setup of the two streaming tools Gstreamer and CRTMP for \projectname{} will be explained.
+Following the setup of GStreamer and CRTMP, the next step is reading the output stream and displaying it in a Flash application.
+Due to the PaVE headers, however, this is not possible.
+
 \subsection{Gstreamer}
 \label{sec:gstreamer}
 As described in Section~\ref{sec:tools_streaming} the tool GStreamer is used for reading the drones' video feed and forwarding it to CRTMP.
@@ -67,25 +71,13 @@ tcpclientsrc host=192.168.1.1 port=5555 ! paveparse ! queue ! flvmux ! queue ! r
 
 \subsection{C++ RTMP Server}
 \label{sec:CRTMP}
-As described in \ref{sec:tools_streaming} C++ RTMP Server is used as the server tool between GStreamer and the Flash application in the \deno{B}. \\
-
+As described in \ref{sec:tools_streaming} C++ RTMP Server is used as the server tool between GStreamer and the Flash application in the \deno{B}.
+CRTMP can be executed as a daemon or a console application.
+It is configured using a configuration file where its inbound and outbound streams are defined.
+The configuration file used in \projectname{} is \verb+flvplayback.lua+, and its relevant content can be seen in Listing~\ref{lst:flvplayback}.
 %CRTMP is found at http://www.rtmpd.com and comes in a source package ready to run.
 %CRTMP is a standard executable binary. \\
-
-There are four ways to run CRTMP:
-
-\begin{itemize}
-   \item run\_all.sh
-   \item run\_all\_deamon.sh
-   \item run\_flvplayback.sh
-   \item run\_flvplayback\_deamon.sh
-\end{itemize}
-
-If \verb+sh run_all.sh+ is run, CRTMP will start using the configuration file \verb+all.lua+.
-The flvplayback was used, because this is the flash streamer application.
-The configuration file \verb+flvplayback.lua+ was configured as seen in listing~\ref{lst:flvplayback}.
-
-\begin{lstlisting}[style=sourceCode, language=C, caption=flvplayback.lua configuration, label=lst:flvplayback]
+\begin{lstlisting}[style=sourceCode, language=C, caption=Snippet of CRTMP flvplayback.lua Configuration, label=lst:flvplayback]
 acceptors =
   {
     {
@@ -105,13 +97,13 @@ externalStreams =
 \end{lstlisting}
 
 
-\verb+Acceptors+ define inbound- and \verb+externalStreams+ outbound connections of CRTMP.
-Inbound defines which ports CRTMP will let users connect to and \verb+externalStreams+ is the source of the stream.
-The sample \verb+externalSteam+ seen in listing~\ref{listing:flvplayback} has a video file on an external server as input, and gives the outbound stream the name \verb+test+.
+\verb+Acceptors+ define inbound- and \verb+externalStreams+ outbound connections to CRTMP.
+Inbound defines which ports users can connect to and \verb+externalStreams+ define the source of external input.
+The \verb+externalSteam+ seen in listing~\ref{lst:flvplayback} has a video file on an external server as input, and gives the outbound stream the name \verb+test+.
 This test-source was used to test if CRTMP was running correctly.
-To view the stream, the program Video Lan Client \emph{[VLC]}, was used, as it has the same capabilities as flash in regard to streaming RTMP.
+To view the stream, the program Video Lan Client \emph{(VLC)}, was used, as it has the same capabilities as flash in regard to streaming RTMP.
 
-A connection is established with a URL-address of the format seen in Listing~\ref{lst:server_address}, where the \verb+server address+ is the address of the CRTMP server, the \verb+application+ is the application where CRTMP lookup e.g. live or media, and the \verb+streamName+ is the name of the stream.
+A connection is established with a URL-address of the format seen in Listing~\ref{lst:server_address}, where \verb+server address+ is the address of the CRTMP server, \verb+application+ is the application where CRTMP lookup e.g. live or media, and \verb+streamName+ is the name of the stream.
 
 \begin{lstlisting}[style=sourceCode, language=C, caption=CRTMP URL Format, label=lst:server_address]
 rtmp://[server address]/[application]/[streamName]
@@ -121,23 +113,22 @@ When a user connects to CRTMP and the \verb+application+ is live, CRTMP will try
 If no such live streams is found, CRTMP will look in the media folder and try to find file streams.
 If no file stream is found, CRTMP will wait for the live stream \verb+streamName+. \\
 
-C++ RTMP Server also uses RSA keys.
-It is possible to make users and add these users to realms. 
-This can be used as an extra layer of security, but it is not implemented in this version of \projectname{}.
+CRTMP has supports user authentication, meaning access to streams can be limited to specific users.
+This has however not been implemented in \projectname{}
 
-\section{Output stream}
-Following the setup of GStreamer and CRTMP, the next step is reading the output stream and displaying it in a Flash application.
-Due to the PaVE headers, however, this is not possible.
+%C++ RTMP Server also uses RSA keys.
+%It is possible to make users and add these users to realms. 
+%This can be used as an extra layer of security, but it is not implemented in this version of \projectname{}.
 
 \subsection{Issues with PaVE Headers}
 \label{sec:issues_with_pave_headers}
 The documentation for the PaVE headers can be found at \citep[page. 59-60]{ardrone_developer_guide}.
 As described in Section~\ref{sec:gstreamer}, Flash applications are unable to interpret the PaVE headers. 
-As a result of this, they are unable to display a video stream encoded with them.
+As a result of this, they are unable to display the video stream.
 These headers must therefore be removed or replaced with another header to make the stream readable.
 The implemented solution removes them with the \verb+paveparse+ plugin, described in Section~\ref{sec:gstreamer}.
-Removing the header leaves raw video data with no information about how to interpret it.
-As a result of this, the Flash application, VLC, or any other video players is unable to interpret the raw video data.
+Removing the headers leaves raw video data with no information about how to interpret it.
+As a result of this, the Flash application, VLC, or any other video players is unable to interpret the video feed.
 An illustration of the PaVE header problem can be seen in Figure~\ref{fig:videoframe}. \\
 
 \begin{figure}[htb]
@@ -147,16 +138,31 @@ An illustration of the PaVE header problem can be seen in Figure~\ref{fig:videof
     \label{fig:videoframe}
 \end{figure}
 
-The PaVE headers result in a situation that makes displaying the video stream in Flash impossible, as the video feed cannot be interpreted by a Flash application neither with nor without them.
+The PaVE headers result in a situation that makes displaying the video stream in Flash impossible, as the video feed cannot be interpreted by a Flash application neither with or without them.
 
-\subsection{Test input}
-The designed solution would work if the drones' video feed used a standard header format in the raw video feed.
-This can be documented by using a different video source.
+\subsection{Test input}\fxfatal{Bedre overskrift}
+The designed solution would work if the drones' video feed used standard headers.
+The issue is illustrated in Figure~\ref{fig:streaming_issue}.
+The goal is to gest the stream from the drone, through Gstreamer and CRTMP to a Flash application.
+The implemented solution is capable of getting the video from the drone to CRTMP, but not capable of generating an output stream readable by Flash.
+As illustrated by 3. in Figure~\ref{fig:streaming_issue} the setup can forward a stream readable by Flash.
+This can be documented by using a different video source as illustrated by 4.
 For this purpose the GStreamer plugin \verb+videotestsrc+ is used.
-It creates a test video stream as seen in figure~\ref{fig:videotestsrc}, consisting of raw video data. \\
+It creates a test video stream as seen in Figure ~\ref{fig:videotestsrc}, consisting of raw video data.
 
-If this test-source is used instead of the one that is streamed from the drone, it is possible to show that this solution will work.
-The issue is the video format of the video stream from the drone. \\
+\begin{figure}[htb]
+    \centering \includegraphics[width=0.6\textwidth]{gfx/streaming_solution.pdf}
+    \caption{The Streaming }
+    \label{fig:streaming_issue}
+\end{figure}
+
+A \verb+testvideosrc+ pipeline can be seen in Listing~\ref{lst:videotestsrc}
+
+\begin{lstlisting}[style=sourceCode, language=C, caption=Gstreamer Pipeline using videotestsrc , label=lst:videotestsrc]
+videotestsrc ! queue ! x264enc ! queue ! flvmux ! queue ! rtmpsink location='rtmp://0.0.0.0/live/myStream'
+\end{lstlisting}
+
+If this test-source is used instead of the drones' video feed, it is possible to display the video feed send by Gstreamer. \\
 
 This solution can be seen in figure~\ref{fig:working_solution}. \\
 
@@ -174,7 +180,7 @@ This solution can be seen in figure~\ref{fig:working_solution}. \\
     \label{fig:working_solution}
 \end{figure}
 
-\subsection{Implemented solution}
+\subsection{Implemented solution}\fxfatal{Bedre overskrift}
 \label{sec:video_stream_implemented_solution}
 The streaming setup used in \projectname{} uses only GStreamer.
 One pipeline that reads the drones' video feed and serves as a server, denoted \deno{SP}, and a client pipeline, denoted \deno{CP}, for displaying the video feed on the client side.
@@ -236,7 +242,6 @@ The complete \deno{CP} can be seen in Listing~\ref{lst:CP}. \\
 udpsrc uri=rtp://XXX.XXX.XXX.XXX port=5123 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z01AFeygoP2AiAAAAwALuaygAHixbLA\\=\\,aOvssg\\=\\=\", payload=(int)96, ssrc=(uint)1171155755, clock-base=(uint)868988588, seqnum-base=(uint)65233" ! rtph264depay ! ffdec_h264 ! xvimagesink sync=false async=false
 \end{lstlisting}
 
-This solution allows us to display the video stream in a separate player, such as VLC, on the clients computer. 
 
 
 
