@@ -22,8 +22,10 @@ This connection covers the flow of the dynamic content created by \deno{M}, and 
 Connection \deno{b} sends both the static and dynamic content back to \deno{B} to be displayed for the user. \\
 
 The connection \deno{d} handles the signal described in Section~\ref{sec:functionality_distribution}.
-This signal covers the initial communication between \deno{S} and \deno{M}. \deno{M} verifies the identity of \deno{S} by \deno{S} sending its own unique identifier.
-This unique identifier is a string, which consist of X characters \fixme{How many chars?}.
+This signal covers the initial communication between \deno{S} and \deno{M}. 
+\deno{M} verifies the identity of \deno{S} by \deno{S} sending its own unique identifier.
+This unique identifier is a string that is hard coded into \deno{S} and unique for every \deno{S}.
+It is generated before a new \deno{S} is shipped and ensured that it does not match any existing identifiers. 
 All unique identifiers of each \deno{S} is known to \deno{M}.
 This allows \deno{M} to determine the identity of each incoming signal. When \deno{M} receives a signal, and verify the identity of \deno{S}, the source location of the signal is stored in \deno{M} making \deno{M} able to know the location of \deno{S}. \\
 
