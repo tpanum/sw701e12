@@ -153,7 +153,7 @@ The video feed is displayed in a Flash application, as described in Section~\ref
 Flash only natively supports video streams send via Real Time Messaging Protocol\textit{(RTMP)}\citep{rtmp_spec}.
 The drones video feed is H.264 encoded and send over TCP, as described in Appendix~\ref{app:ar_drone_specification}
 Flash is compatible with H.264 encoded video \citep{netstream_spec}.
-The drones video feed is however encoded with the PaVE headers, see Appendix~\ref{app:ar_drone_specification}. 
+The drones video feed is however encoded with the PaVE headers as \ac{Frame Header}, see Appendix~\ref{app:ar_drone_specification}. 
 Flash in incapable of reading PaVE headers.
 Therefore they must be removed before Flash is capable of displaying the video feed.
 To achieve this each \deno{S} must contain functionality capable of reading and encoding the drones stream without PaVE headers and forward it over RTMP to the Flash application. \\

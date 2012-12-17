@@ -12,8 +12,8 @@ class AccessController < ApplicationController
 
   def login
     unless session[:user_id].nil?
-      redirect_to(:action => 'menu')
-    else  
+      redirect_to(:controller => 'drones', :action => 'index')
+    else
       render :layout => 'login'
     end
   	#login form
@@ -34,7 +34,7 @@ class AccessController < ApplicationController
   	  session[:user_email] = authorized_user.email
 
   	  flash[:notice] = "You are now logged in!"
-  	  redirect_to(:action => 'menu')
+      redirect_to(:controller => 'drones', :action => 'index')
   	else
   	  flash[:notice] = "Wrong email/password combination"
   	  redirect_to(:action => 'login')
