@@ -4,11 +4,11 @@ Users interact with the system by connecting to \deno{M} through \deno{B}.
 This connection is through an Internet browser as described in Section~\ref{sec:application_structure}.
 The user will interact with the system through a web interface, which is retrieved from \deno{M}.
 The functionality of \deno{B} is described in Section~\ref{sec:functionality_distribution}.
-If \deno{B} interacts with a drone, \deno{B} must be able to displays the drones video feed, and allow the user to send commands to the drone.
+If \deno{B} interacts with a drone, \deno{B} must be able to display the drone's video feed, and allow the user to send commands to the drone.
 The communication with the drone is through \deno{S}, therefore \deno{B} must be able to communicate directly with \deno{S}.
 
-For \deno{B} to interact with the system requires authentication to establish a connection with \deno{M} or \deno{W}.%\fxfatal{Eller W}.
-The users' credentials is stored on \deno{B} and it is used to uphold the users' authentication.
+For \deno{B} to interact with the system requires authentication to establish a connection with \deno{M}\fxfatal{Eller W}.
+The login credentials are stored on \deno{B} and it is used to uphold the users' authentication.\fixme{Dette er ikke korrekt. Sessions ligger server side, og indeholder ikke credentials.}
 
 To ease the load on \deno{M}, some of the computation is moved from \deno{M} to \deno{B}.
 \deno{B} has two types of interaction with \deno{S} as described in Section~\ref{sec:communication_network}.

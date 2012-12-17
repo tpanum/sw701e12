@@ -34,7 +34,7 @@ This kind of relationship model does not have a predetermined naming convention,
 Access to and actions of the system is restricted.
 This restriction is based on the identity of user in the system.
 An instance of the \deno{User} object represents a user to the system.
-The \deno{User} object has the attributes \verb+email+ and \verb+password+, as seen in Figure~\ref{tab:user_object} in Appendix~\ref{app:objects}, these combined form the credentials needed for a user to authenticate his identity to the system. \\
+The \deno{User} object has the attributes \verb+email+ and \verb+password+, as seen in Figure~\ref{tab:user_object} in Appendix~\ref{app:objects}, these combined form the login credentials needed for a user to authenticate his identity towards the system. \\
 
 The \verb+email+ is publicly available, which leaves the \verb+password+ to be protected in order for user to protect his identity in the system.
 The \verb+password+ entered by the user is concatenated with a \verb+salt+ and hashed through a SHA-1 hashing algorithm to be stored in \verb+hashed_password+.
