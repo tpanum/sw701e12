@@ -89,8 +89,8 @@ Migrations are set of ruby classes designed to make it easy to setup and modify 
 With migrations each developer can use a local database for development, instead of a shared database.
 %When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
 %This will initialize a part of Rails that updates the developers local database.
-If a developer makes changes to the database, he makes a new migration, shares it with the other the developers, and by running the migrations their local database is updated to the latest version. 
-Additionally migrations makes deployment of systems easier, as the database is automatically setup by running all migrations.\\
+If a developer makes changes to the database, he makes a new migration, shares it with the other developers, and by running the migrations their local database is updated to the latest version. 
+Additionally migrations makes deployment of systems easier, as the database is automatically setup by running all migrations.
 
 %This is one of the features of Rails that helped us to make the decision to use it. \\
 
@@ -104,10 +104,10 @@ Additionally migrations makes deployment of systems easier, as the database is a
 %Both aspects also work very well with Ruby and Rails.
 
 \subsection{Browser technologies}
-\label{sec:browser_technologies}
-\fxfatal{Er flyttet ned for browser.}
+\label{sec:browser_technologies} %\fxfatal{Er flyttet ned for browser.}
+A number of technologies are required in the browser to display the web application.
 As described in Section~\ref{sec:design_client}, \deno{B} must be able to display a video feed and handle some of the computation to reduce the load on \deno{M}.
-Reducing the load on \deno{M} can be achieved using Javascript, see \citep{what_is_javascript}.
+Reducing the load on \deno{M} can be achieved using Javascript \citep{what_is_javascript}. \\
 
 Another tool that helps reduce computation on \deno{M} is: Asynchronous Javascript and XML \emph{(AJAX)}.
 AJAX allow \deno{B} to request a specific view asynchronously from the rest of the view, and using Javascript computed in \deno{B}, handle the output from \deno{M} and attach the information to the view.
@@ -133,7 +133,9 @@ The technologies considered for this are:
 
 Flash was chosen.
 HTML5 was discarded as it is still a new technology, and therefore not fully supported by all browsers\citep{html5_video}.
-Silverlight uses .NET as backend, and as \projectname{} is developed for a Linux Debian server it was discarded.\fxfatal{source} \\
+Silverlight applications are developed using .NET. 
+Since the other parts of \projectname{} are developed to work with the chosen Linux Debian server, Silverlight was discarded.
+%Silverlight uses .NET as backend, and as \projectname{} is developed for a Linux Debian server it was discarded.\fxfatal{source} \\
 
 Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
 The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.

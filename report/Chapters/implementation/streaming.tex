@@ -33,7 +33,7 @@ The data available to the next plugin are H.264 encoded video with PaVE headers.
 The PaVE headers are parsed using the paveparse plugin \citep{paveparse}, as described in Section~\ref{sec:tools_streaming}.
 Paveparse removes the PaVE headers and send the remaining H.264 data down the pipeline.
 Furthermore is ignores lost frames and discards frames sent out of order to reduce delay on the stream.
-This is necesarry as the drone streams over TCP, and as described in Section \fxfatal{Ref til analysis om hvorfor no delay på streamen er vigtigt, og check at sætningen stadig giver mening} delay is not acceptable on the stream. \\
+This is necessary as the drone streams over TCP, and as described in Section \fxfatal{Ref til analysis om hvorfor no delay på streamen er vigtigt, og check at sætningen stadig giver mening} delay is not acceptable on the stream. \\
 
 As specified in Section~\ref{sec:technologies} the video output of GStreamer should be in FLV so that the Flash application in \deno{B} can display it.
 Two pipelines that output FLV can be created.
@@ -140,10 +140,10 @@ An illustration of the PaVE header problem can be seen in Figure~\ref{fig:videof
 
 The PaVE headers result in a situation that makes displaying the video stream in Flash impossible, as the video feed cannot be interpreted by a Flash application neither with or without them.
 
-\subsection{Test input}\fxfatal{Bedre overskrift}
+\subsection{Testing with a test-input source}%\fxfatal{Bedre overskrift}
 The designed solution would work if the drones' video feed used standard headers.
 The issue is illustrated in Figure~\ref{fig:streaming_issue}.
-The goal is to gest the stream from the drone, through GStreamer and CRTMP to a Flash application.
+The goal is to get the stream from the drone, through GStreamer and CRTMP to a Flash application.
 The implemented solution is capable of getting the video from the drone to CRTMP, but not capable of generating an output stream readable by Flash.
 As illustrated by 3. in Figure~\ref{fig:streaming_issue} the setup can forward a stream readable by Flash.
 This can be documented by using a different video source as illustrated by 4.
@@ -180,7 +180,7 @@ This solution can be seen in figure~\ref{fig:working_solution}. \\
     \label{fig:working_solution}
 \end{figure}
 
-\subsection{Implemented solution}\fxfatal{Bedre overskrift}
+\subsection{Implemented streaming solution}%\fxfatal{Bedre overskrift}
 \label{sec:video_stream_implemented_solution}
 The streaming setup used in \projectname{} uses only GStreamer.
 One pipeline that reads the drones' video feed and serves as a server, denoted \deno{SP}, and a client pipeline, denoted \deno{CP}, for displaying the video feed on the client side.

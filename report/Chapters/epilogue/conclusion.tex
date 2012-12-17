@@ -17,7 +17,7 @@ This report shows the final results of the design and implementation of all the 
 The \deno{Master} and \deno{Slave} architecture makes \projectname{} able to scale in regards to drones. 
 The \emph{Master} is a server responsible for the web application, the database and establishing connections to slaves.
 A \emph{Slave} is a server associated with one drone. 
-All communication with this drone goes through the slave. \\
+All communication with this drone goes through the slave that it is connected to. \\
 
 \projectname{} supports that a user communicates directly with a \emph{Slave} without going through \emph{Master}, thus limiting the workload of \emph{Master}. 
 The web application on Master is designed and implemented to allows the amount of users to grow. \\
@@ -26,7 +26,7 @@ Wireless communication is used to communicate with the drone.
 Since the drone is remotely controlled, this communication includes both control commands and video streaming.
 A streaming solution was designed using the tools GStreamer and C++ RTMP Server.
 Due to the format of the drones' video feed, it was not possible to implement a working streaming solution into the web application as described in the use cases.
-Instead, this version of \projectname{} has a version of video streaming implemented that requires a third party video player to show the video stream from a drone. \\
+Instead, this version of \projectname{} has another type of video streaming implemented that requires a third party video player installed on the client-side to show the video stream from a drone. \\
 
 Users gain access to \projectname{} through the privilege concept which is implemented into the web application. 
 This concept is designed so that no user has access to any functionality, and in order to gain access they have to be granted privileges. 
@@ -39,7 +39,7 @@ Based on the use cases, a number of acceptance tests were created which the test
 Only acceptance tests were run in \projectname{}. 
 These were run to ensure that all of the required functionality were present and working. 
 They did, however, show that some of the functionality in the acceptance tests, derived from the use cases, is not working or is not implemented. 
-We do not consider any of this functionality as critical for a proof-of-concept version of \projectname{}, but they have all been listed in ``future work'' for later implementation. 
+We do not consider any of this functionality to be critical for a proof-of-concept version of \projectname{}, but they have all been listed in ``future work'' for later implementation. 
 Most of the acceptance tests were accepted, showing that the functionality that was designed is also implemented correctly into \projectname{}. \\
 
 \projectname{} in its current form is not ready-to-market.
