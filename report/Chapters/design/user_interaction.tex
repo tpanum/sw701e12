@@ -1,5 +1,5 @@
 \section{User Interaction}
-\fixme{Name change}
+%\fixme{Name change}
 \label{sec:interaction}
 The user interacts with \projectname{} through \deno{B}.
 \at{1} and \at{2} requires that the user must be granted access to the system before being able to interact with it.
@@ -34,14 +34,14 @@ If this is the case, \deno{B} receives a view from \deno{M} where the user can i
 The user can then choose save the entered data and \deno{B} then sends it to \deno{M} which saves them in the \deno{DB}.
 \deno{M} then returns \deno{B} an updated edit view the drone.
 
-As mentioned a user deletes a drone through the drones list send to \deno{B} by \deno{M}.
-When a delete request is send from \deno{B} to \deno{M} for a drone, \deno{M} deletes all links the drone has with other object in \deno{DB}.
-The drone is not deleted from the system, as described in Section~\ref{subsec:objects}\fxfatal{Dette skal skrives hvis det ikke kommer til at stå i object model}.
+As mentioned a user deletes a drone through the drones list sent to \deno{B} by \deno{M}.
+When a delete request is sent from \deno{B} to \deno{M} for a drone, \deno{M} deletes all links the drone has with other object in \deno{DB}.
+The drone is not deleted from the system, as described in Section~\ref{subsec:objects}%\fxfatal{Dette skal skrives hvis det ikke kommer til at stå i object model}.
 
-Some of the views require asynchronous behaviour, that allows the views to be updated without recomputing it.
-As an example when editing the current view can be updated asynchronously insted of having \deno{M} recompute it.
+Some of the views require asynchronous behaviour, that allows the views to be updated without recomputing it on \deno{M}.
+%As an example when editing the current view can be updated asynchronously instead of having \deno{M} recompute it.
 In this way some of the computation is moved from \deno{M} to \deno{B}, as described in Section~\ref{sec:design_client}.
-\fxfatal{User eller \deno{B} når vi snakker om brugeren}
+%\fxfatal{User eller \deno{B} når vi snakker om brugeren - her er tale om browseren. /a}
 
 From the drones' list \deno{B} can request to pilot or view of the drones' listed.
 When \deno{B} requests to pilot a drone the process of retrieving a session key from the drones' associated \deno{S} is initiated by the drones controller.
