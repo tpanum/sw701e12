@@ -1,26 +1,26 @@
 \section{Use cases}
 \label{sec:use_cases}
-The functionality of the system will be defined through use cases, describing how we expect that a user of the system would desire to interact with the system.
+The functionality of the system will be defined through use cases, describing how a user is expected to interact with \projectname{}.
 The use cases are derived from the requirements described in Section~\ref{sec:problem_domain} and from the use case domain described in the following paragraphs.
 The use cases can be seen in Table~\ref{tab:use_cases}.\\
 
 
 Along with the requirements mentioned in Section~\ref{sec:problem_domain}, a number of assumptions about the usage of \projectname{} form the basis of the use cases in Table~\ref{tab:use_cases}.
-These assumptions are our expectations to how the system will be used and therefore how to model it. 
+These assumptions are our expectations to how the system will be used.
 We expect that a number of organization each will have a number of users connected to the system.
-At the same time we expect that there will be more users than drones present in the system, and that user-specific permissions to various elements of the system is needed, such as controlling a drone. 
+At the same time we expect that there will be more users than drones present in the system, and that user-specific permissions to various elements of the system are needed, such as controlling a drone. 
 
-The terms \emph{User}, \emph{Drone} and \emph{Permission} in context of \projectname{} is therefore introduced.
+The terms \emph{User}, \emph{Drone} and \emph{Permission} in context of \projectname{} are therefore introduced.
 These regulate the relationship between one user in the system and a drone that he wishes to interact with via granted permissions. \\
 
-An example can be an organization that has 10 employees to take care of the security and that this organization has 3 drones in \projectname{}. 
-All 10 employees must have access to all 3 drones with user-specific permissions.
+An example can be an organization that has ten employees to take care of the security and has three drones in \projectname{}. 
+All ten employees must have access to all three drones.
 
 We expect multiple users from the same organization to need the same permissions in \projectname{}.
-In the case with 10 employees from the organization that needs the same permissions, it may make sense to collect the permissions for the 3 drones in a single Role and assign the 10 users to this role, rather than assigning all permissions for each drone go all 10 users.
-Therefore we introduce the terms \emph{Company} to group users and \emph{Rule} to group permissions. \\
+In the case with ten employees from the organization that needs the same permissions, it may make sense to collect the permissions for the three drones in a single Role and assign the ten users to this role, rather than assigning all permissions for each drone go all ten users.
+Therefore we introduce the terms \emph{Company} to group users and \emph{Role} to group permissions. \\
 
-These five terms -- user, drone, permission, company \& role -- are the elements that forms the security- and permissions aspect of a users interaction with \projectname{} and that are used in the use cases in Table~\ref{tab:use_cases}.
+These five terms -- user, drone, permission, company, and role -- forms the security - and permissions aspect of a user's interaction with \projectname{} and are used in the use cases in Table~\ref{tab:use_cases}.
 
 
 
