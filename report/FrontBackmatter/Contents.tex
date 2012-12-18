@@ -8,7 +8,7 @@
 \setcounter{secnumdepth}{3} % <-- 3 numbers up to subsubsections
 \manualmark
 \markboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}
-\tableofcontents 
+\tableofcontents
 \automark[section]{chapter}
 \renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\enspace\spacedlowsmallcaps{#1}}}
@@ -17,14 +17,14 @@
 %*******************************************************
 \clearpage
 
-\begingroup 
+\begingroup
     \let\clearpage\relax
     \let\cleardoublepage\relax
     \let\cleardoublepage\relax
     %*******************************************************
     % List of Figures
-    %*******************************************************    
-    %\phantomsection 
+    %*******************************************************
+    %\phantomsection
     \refstepcounter{dummy}
     %\addcontentsline{toc}{chapter}{\listfigurename}
     \pdfbookmark[1]{\listfigurename}{lof}
@@ -35,30 +35,30 @@
     %*******************************************************
     % List of Tables
     %*******************************************************
-    %\phantomsection 
+    %\phantomsection
     \refstepcounter{dummy}
     %\addcontentsline{toc}{chapter}{\listtablename}
     \pdfbookmark[1]{\listtablename}{lot}
     \listoftables
-        
+
     \vspace*{8ex}
 %   \newpage
-    
+
     %*******************************************************
     % List of Listings
-    %*******************************************************      
-	  %\phantomsection 
+    %*******************************************************
+	  %\phantomsection
     \refstepcounter{dummy}
     %\addcontentsline{toc}{chapter}{\lstlistlistingname}
     \pdfbookmark[1]{\lstlistlistingname}{lol}
-    \lstlistoflistings 
+    \lstlistoflistings
 
     \vspace*{8ex}
-       
+
     %*******************************************************
     % Acronyms
     %*******************************************************
-    %\phantomsection 
+    %\phantomsection
     \refstepcounter{dummy}
     \pdfbookmark[1]{Acronyms}{acronyms}
     \markboth{\spacedlowsmallcaps{Acronyms}}{\spacedlowsmallcaps{Acronyms}}
@@ -73,8 +73,14 @@
         \acro{Framerate}{The frequency with which a new video frame is displayed in a video. Is often meassured in Frames per second.}
         \acro{Rails}{Ruby on Rails}
         \acro{LONE}{LONE is Observation of Nondeterministic Environments}
+        \acro{CRUD}{Create, Read, Update, and Delete}
+        \acro{FIFO}{First In, First Out}
+        \acro{AJAX}{Asynchronous JavaScript and XML}
+        \acro{RTMP}{Real Time Messaging Protocol}
+        \acro{CRTMP}{C++ RTMP Server}
+        \acro{paveparse}{GStreamer PaVE parser}
         \acro{DoS}{Denial-of-service attack}
-    \end{acronym}                    
+    \end{acronym}
 \endgroup
 
 \cleardoublepage
