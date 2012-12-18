@@ -1,14 +1,11 @@
 \section{System Definition}
-\projectname{} is a web service for surveilling large areas in a dynamic way. 
-The system will be based on a drone which has the possibility of recording live video as previously stated in section~\ref{sec:problem_domain}.
-
-The service will be accessible via a web browser, where one or more users will be able to view the video feed from one or more drones and control their movements. 
-
+\projectname{} is a web service for surveilling large areas with cameras mounted on drones.
+The service will be accessible via a web browser.
+Each drone can only be controlled by one user at a time.
+Several users can view one drone's video feed simultaneously.
 The drone is controlled through keyboard gestures with a streamed video feed providing visual information about the drone's physical environment. 
-\projectname{} connects one or more users to a physical drone through their browser. 
-
-Before a connection is established the user is authenticated in order to provide security features.
-
+\projectname{} connects one or more users to a physical drone through their browser.
+Before a connection is established the user is authenticated.
 By accessing and authenticating on the website, the user should be able to view a number of drones that the user has access to.
 The user should be able to enter a detailed view of each of these in order to view the video stream and/or control the drone's flight remotely. 
 The access control, i.e. which users has access to which drones, is managed by an administrative user.
