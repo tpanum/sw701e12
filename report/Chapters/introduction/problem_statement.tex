@@ -1,31 +1,25 @@
 \section{Problem Statement}
 \label{sec:problem_definition}
-Video surveillance in its current form is stationary, meaning cameras cannot move.
-As a consequence of this, a large amount of hardware is required to properly surveil an area.
-This is problematic when a large area has to be surveilled, because the cost of hardware is high and the larger the area the more hardware is to be used.
+Video surveillance in its current form is stationary, meaning cameras cannot move out of their mounted position.
+As a consequence of this, the amount of hardware required is proportional to the size of the area to be surveilled.
+%As a consequence of this, a large amount of hardware is required to properly surveil an area.
+This means that a large area is expensive to surveil, due to the costs of hardware.
+%This is problematic when a large area has to be surveilled, because the cost of hardware is high and the larger the area the more hardware is to be used.
 Drone technology offers a possible solution to this problem by making video surveillance dynamic through movable cameras.
 This possible solution yields the following preliminary problem statement:\\
-
-%http://guide-images.ifixit.net/igi/cI6EGVSLLjjDFATI.medium
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=\textwidth]{gfx/drone.jpg}
-    \caption{AR Drone 2.0 Parrot. Picture from: http://guide-images.ifixit.net/igi/cI6EGVSLLjjDFATI.medium}
-    \label{fig:pic_of_drone}
-\end{figure}
 
 \textit{How can drone technology be applied in a software application to improve the efficiency of video surveillance?}\\
 
 From the preliminary problem statement the following aspects must be considered:
 \begin{itemize}
-	\item How to control a drone remotely over long distances
-	\item How to provide video streaming of the drones camera through the web application
-	\item How to make the web application scalable to support multiple drones and users
-	\item How the make the system accessible from remote locations in a secure manner
+	\item How to control a drones remotely over long distances.
+	\item How to provide video streaming of a drone's camera through a web application.
+	\item How to make a web application scalable to support multiple drones and users.
+	\item How the make a system accessible from remote locations in a secure manner.
 \end{itemize}
 
-For this project a AR Drone 2.0 Parrot, see Figure~\ref{fig:pic_of_drone}, has been acquired.
+%For this project a AR Drone 2.0 Parrot, see Figure~\ref{fig:pic_of_drone}, has been acquired.
 
-This yields the following problem statement: \\
+With the preliminary problem statement and the following aspects considered the following problem statement were yielded:: \\
 
 \textit{How can drone technology be applied in a scalable web application to improve the efficiency and cost-efficiency of remote video surveillance of large outdoor areas?}
