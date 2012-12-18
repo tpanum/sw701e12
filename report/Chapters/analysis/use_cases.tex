@@ -1,7 +1,7 @@
 \section{Use cases}
 \label{sec:use_cases}
 The functionality of the system will be defined through use cases, describing how a user is expected to interact with \projectname{}.
-The use cases are derived from the requirements described in Section~\ref{sec:problem_domain} and from the use case domain described in the following paragraphs.
+The use cases are derived from the requirements described in Section~\ref{sec:problem_domain}.
 The use cases can be seen in Table~\ref{tab:use_cases}.\\
 
 
@@ -11,7 +11,7 @@ We expect that a number of organization each will have a number of users connect
 At the same time we expect that there will be more users than drones present in the system, and that user-specific permissions to various elements of the system are needed, such as controlling a drone. 
 
 The terms \emph{User}, \emph{Drone} and \emph{Permission} in context of \projectname{} are therefore introduced.
-These regulate the relationship between one user in the system and a drone that he wishes to interact with via granted permissions. \\
+\emph{Users} are connected to \emph{Drones} through \emph{Permissions}. \\
 
 An example can be an organization that has ten employees to take care of the security and has three drones in \projectname{}. 
 All ten employees must have access to all three drones.
@@ -20,10 +20,8 @@ We expect multiple users from the same organization to need the same permissions
 In the case with ten employees from the organization that needs the same permissions, it may make sense to collect the permissions for the three drones in a single Role and assign the ten users to this role, rather than assigning all permissions for each drone go all ten users.
 Therefore we introduce the terms \emph{Company} to group users and \emph{Role} to group permissions. \\
 
-These five terms -- user, drone, permission, company, and role -- forms the security - and permissions aspect of a user's interaction with \projectname{} and are used in the use cases in Table~\ref{tab:use_cases}.
-
-
-
+The five objects user, drone, permission, company, and role, define the security and permissions of a user's interaction with \projectname{} and are used in the use cases in Table~\ref{tab:use_cases}.
+Use cases are refered to as \ut{X} where \verb+X+ is the id of the use case.
 
 \begin{figure}[htb]
 \begin{center}
@@ -60,21 +58,19 @@ These five terms -- user, drone, permission, company, and role -- forms the secu
 
 \clearpage
 
-The use cases define a set of objects which must be present in \projectname{} in order for the use cases to be implementable.
 The objects reflect elements in the problem domain which must be modelled in the system.
-The objects are \textit{users}, \textit{drones}, \textit{companies}, \textit{roles}, and \textit{privileges}.
 This leads to the dependency diagram in Figure~\ref{fig:element_diagram}.
 All objects are dependent on privileges, since they either provide or need privileges in order to be used.
-Everybody using \projectname{} are classified as \textit{users}, including customers, owners of companies, system administrators etc.
-However as reflected in the use cases \textit{users} will not have unrestricted access to the system, as they depend on privileges.
-Access to the system will be restricted through \textit{privileges}.
-As defined in use case \#8 privileges grants access to functionality, meaning a \textit{user} will not have access to anything by default.
+Everybody using \projectname{} are classified as \textit{users}, including customers, owners of companies, system administrators, etc.
+However as reflected in the use cases, \textit{users} will not have unrestricted access to the system as they depend on privileges.
+Access to the system will be restricted through permission.
+As defined in \ut{8} privileges grant access to functionality, meaning a \textit{user} will not have access to anything by default.
 A \textit{drone} refers to a physical drone.
-\textit{Companies} is used as a grouping of associated \textit{users}, \textit{drones}, and \textit{roles}.
+\textit{Companies} are used as a grouping of associated \textit{users}, \textit{drones}, and \textit{roles}.
 As an example a company might purchase a set of drones for surveilling their property.
 The company would need a set of users for its employees, and a set of privileges granting access to its drones.
 The \textit{company} object would handle this grouping.
-Use case \#15 defines a role as at set of privileges, that can be associated with a \textit{company} and granted to \textit{users}.
+\ut{15} defines a role as a set of privileges, that can be associated with a \textit{company} and granted to \textit{users}.
 Roles make the process of granting frequently granted privileges easier.
 This becomes easier as only one link have to be made to each user, instead of multiple links to multiple users.\\
 
@@ -85,13 +81,13 @@ This becomes easier as only one link have to be made to each user, instead of mu
     \label{fig:element_diagram}
 \end{figure}
 
-As video surveillance is concerned with sensitive information, security in \projectname{} is important.
-This is reflected in use case \#1 and \#2.
+Since video surveillance is concerned with sensitive information, security in \projectname{} is important.
+This is reflected in \ut{1} and \ut{2}.
 User authentication is used as the user must login to access to the content of system.
 Access is then further restricted with \textit{privileges}, as the user's access to content is based on his privileges.
-Privileges must therefore be designed to be applicable to all aspect of \projectname{}, and be able to restrict access to all parts of the system.
+Privileges must therefore be designed to be applicable to all objects of \projectname{}, and be able to restrict access to all parts of the system.
 Restricting users access to certain parts of the system once they have gained entry is however not sufficient security for such a system.
-It must also be considered how the system can be made secure from external attacks.
+
 
 \clearpage
 
