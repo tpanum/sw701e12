@@ -1,0 +1,94 @@
+% Dette er LaTeX-versionen af titelbladet for tek-nat-basis-rapporter 2004 efterår
+% Filen kr¾ver:
+% Universitetets logo:  aau-logo.png (for LaTeX) eller aau-logo.ps (for LaTeX)
+% Synopsis: En fil ved navn synopsis.tex
+
+%\documentclass[11pt]{article}
+%\ifx\pdfoutput\undefined 
+%\usepackage[dvips]{graphicx}
+%\else
+%\usepackage[pdftex]{graphicx} 
+%\usepackage{type1cm} \fi
+    %\usepackage[ansinew]{inputenc}
+    %\usepackage{a4}
+
+%\begin{document} 
+\thispagestyle{empty}
+%\begin{titlepage}
+\begin{nopagebreak}
+{\samepage 
+\begin{tabular}{r}
+\parbox{\textwidth}{  \raisebox{-15mm}{\includegraphics[width=5.3cm]{gfx/AAU_UK_STUDENTREPORT_blue_cmyk.eps}}
+\hfill \parbox{2.9cm}{\begin{tabular}{l} 
+{\sffamily\small \textbf{Aalborg University }}\\
+{\sffamily\small  \textbf{Department of Computer Science}} \\
+{\sffamily\small Selma Lagerlöfs Vej 300} \\
+{\sffamily\small 9220 Aalborg East} \\
+{\sffamily\small http://www.cs.aau.dk}
+\end{tabular}}}
+\vspace{15mm}
+\\
+%\parbox{\textwidth}{ \vspace{-41.7mm}{\sffamily\small Student report}}
+
+\end{tabular}
+
+\begin{tabular}{cc}
+\parbox{7cm}{
+\begin{description}
+
+\item {\bfseries Title:} 
+
+\textit{\myTitle} --- \mySubtitle
+  
+\item {\bfseries Theme:} 
+
+Internet Technology
+
+\end{description}
+
+\parbox{8cm}{
+
+\begin{description}
+\item {\bfseries Project Term:}\\
+   P7, Fall 2012 \\
+  \hspace{4cm}
+\item {\bfseries Project Group:}\\
+  \myName \\
+  \hspace{3cm}
+\item {\bfseries Students:}\\
+Anders Eiler \\
+Bjarke Hesthaven Søndergaard \\
+Esben Pilgaard Møller \\
+Rasmus Steiniche \\
+Thomas Kobber Panum
+
+  \hspace{1cm}
+\item {\bfseries Supervisor:}\\
+ 	Lone Leth Thomsen
+\end{description}
+}
+\begin{description}
+\item {\bfseries Copies:} 6
+\item {\bfseries Pages:} \pageref{LastPage}
+\item {\bfseries Finished:} December 20th, 2012.
+\end{description}
+\vfill } &
+\parbox{7cm}{
+  \vspace{.15cm}
+  \hfill 
+  \begin{tabular}{l}
+  {\bfseries Synopsis:}\bigskip \\
+  \fbox{
+    \parbox{6.5cm}{\bigskip
+     {\vfill{\small \input{FrontBackmatter/Synopsis}
+     \bigskip}}
+     }}
+   \end{tabular}}
+\end{tabular}}
+\\
+
+\noindent{\footnotesize\emph{This report and its content is freely available, but publication (with source) may only be made by agreement with the authors.}}
+\end{nopagebreak}
+%\end{titlepage}
+%\end{document}
+
