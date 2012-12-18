@@ -9,28 +9,25 @@
 
 The structure of \deno{M}, as shown in Figure~\ref{fig:int_struct_m} is derived from the functionality of Master described in Section~\ref{sec:functionality_distribution}.
 This figure shows three processes; Web, Database, and Daemon.
-The Database process, \deno{DB} can be any database engine capable of handling transactions, therefore this will not be elaborated further.
-The Web and Daemon processes will need further explanation, however. \\
+The Database process, \deno{DB} can be any database engine capable of handling transactions. \\
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.7\textwidth]{gfx/master_internal_structure.pdf}
-    \caption{Internal structure of Master}
+    \caption{Internal structure of Master.}
     \label{fig:int_struct_m}
 \end{figure}
 %\fxfatal{Skal der være noget der indikerer kommunimation til og fra daemon og web på figuren. - nej, denne figur viser jo bare intern kommunikation imellem de tre ting... /a}
 
 %%%%%  WEB   %%%%%
-The web process, \deno{W} will be a web server using the Model-View-Controller (MVC) design pattern, see \citep{mvc}.
+The web process, \deno{W} will be using the Model-View-Controller (MVC) design pattern \citep{mvc}.
 It consists of three layers, model, view, and controller.
-There are several frameworks in different languages that support MVC, which will be considered in Section~\ref{sec:tools}. \\
-
-The concept of MVC is decoupling the different layers to make it possible to develop them with some degree indepence.
-As an example a method for fetching data in the model, can be changed without affecting the view, as long as its output format remains unchanged.
+The concept of MVC is decoupling the different layers to make it possible to develop them with some degree of independence.
+As an example a method for fetching data in the model can be changed without affecting the view, as long as its output format remains unchanged.
 %Furthermore the developers can create several views for the same model.
 %It also provides developers the opportunity to change how user input is handled in the controller without modifying the associated view.
-Decoupling the layers forces the developer to keep the code separated, keeping code meant for the controller out of the view.
-This separation means that the developer can isolate bugs to a specific layer, and can make debugging easier.
+Decoupling the layers forces the developer to keep the code separated, keeping the code for the controller layer out of the view layer.
+This separation means that the developer can isolate bugs to a specific layer, and can make debugging easier. \\
 
 % The analysis of the problem domain provided the object model as described in Section~\ref{subsec:objects}.
 % This model provides several models that are suitable for the MVC structure.
@@ -43,7 +40,7 @@ This separation means that the developer can isolate bugs to a specific layer, a
 
 In Section~\ref{subsec:objects} the object model is described.
 The models of \deno{W}'s MVC are derived from this object model.
-Each model will have a direct mapping to a table in \deno{DB}, and communication with the table in \deno{DB} must go through the model. 
+Each model will have a corresponding table in \deno{DB}, and communication with the table in \deno{DB} must go through the model.
 Some models needs extended functionality to implement the functionality defined in the use cases.
 This functionality involves e.g. authenticating users and privileges.
 The functionality of the models can be seen in Appendix~\ref{app:model_functions}. \\
@@ -51,41 +48,39 @@ The functionality of the models can be seen in Appendix~\ref{app:model_functions
 In order for a model to have a set of associated views it must have a controller.
 In \projectname{} this includes models such as User, Drone, and Company, described in Section~\ref{subsec:objects}.
 There will furthermore be controllers with no corresponding model, e.g. an access controller, which will handle login and logout.
-Each controller in \projectname{} with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will have Create, Read, Update, and Delete (CRUD) \citep{CRUD} as default actions. 
-All the controllers' actions are listed in Appendix~\ref{app:controller_actions} \\
+Each controller in \projectname{} with a corresponding model, i.e. Affiliate Privilege, Company, Drone, Privilege, Role, and User, will have \ac{CRUD} \citep{CRUD} as default actions.
+All the controllers' actions are listed in Appendix~\ref{app:controller_actions}. \\
 
 %In the application there will be two ways of returning the information from a controller, either HTML \citep{what_is_html} or JSON \citep{what_is_json}.
 %The JSON view will only contain the raw JSON, whereas the HTML will contain e.g. HTML tags, CSS, and Javascript.
 %The JSON views will be used for asynchronously fetching data from the server, while the HTML views will be used for actions that require user input. \\
 
 %%%%% DAEMON %%%%%
-The daemon process, \deno{D}, has two tasks and will be a process running in the background of \deno{M}.
-One will handle the session communication with \deno{S}, as described in Section~\ref{sec:communication_network}.
-The other handles receiving initialization messages from \deno{S}.
-This communications between \deno{M} and \deno{S} will be done using JSON (\textit{JavaScript Object Notation}).
+The daemon process, \deno{D}, has two tasks and will be a process running asynchronously relative to \deno{W} on \deno{M}.
+One task will handle the session communication with \deno{S} as described in Section~\ref{sec:communication_network}.
+The other task receives initialization messages from \deno{S}. \\
+% This communications between \deno{M} and \deno{S} will be done using JSON (\textit{JavaScript Object Notation}).
 
 Session communication refers to the session key required to communicate with a drone.
-\deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
+% \deno{D} will be written in the same language as \deno{W}. % to limit the amount of languages used.
 \deno{D} will handle session communication with \deno{S} by continuously checking \deno{DB} for new session requests.
-Session request are entered in a table in \deno{DB} by \deno{M} when a request for one is received from \deno{B}, as illustrated in Figure~\ref{fig:sessionkey_communication_b}.
-The session communication is handled through the \deno{DB}, to account for the asynchronous behaviour of the web\citep{stateless}.
+Session requests are inserted in \deno{DB} by \deno{W} when a request is received from \deno{B}, as illustrated in Figure~\ref{fig:sessionkey_communication_b}.
+The session communication is handled through the \deno{DB} to account for the asynchronous behavior of the web \citep{stateless}.
 This makes it possible to run multiple instances of \deno{D}, as they can all read the same table in \deno{DB}.
 If a session request is present in \deno{DB}, then \deno{D} will request a session from the associated \deno{S}.
-If \deno{D} receives a valid session key from \deno{S}, it saves this in \deno{DB} and \deno{W} sends it to the user.
-\deno{D} should handle session requests chronologically, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously.
+If \deno{D} receives a valid session key from \deno{S}, it saves this in \deno{DB} and \deno{W} sends it to \deno{B}.
+\deno{D} should handle session requests sequentially, thus if several requests are present in \deno{DB} then \deno{D} will not perform all requests simultaneously. \\
+
 The second purpose of \deno{D}, is to handle initialization messages from \deno{S}.
-Each \deno{S} is associated with a \deno{drone} in the object model described in section~\ref{section:uml_notation}.
-When \deno{D} receive an initialization message from \deno{S} it will create a \deno{drone} object and store it in the \deno{DB}.
-In the \deno{drone} object the \verb+ip+,\verb+location+, and \verb+name+ will be retrieved from the initialization message send from \deno{S}.
-The \verb+location+ is retrived from the IP and the \verb+name+ is the drones' serial code.
-If \deno{M} receives an initialization message from a \deno{S} with a changed IP, it will update the \verb+ip+ and \verb+location+ of the \deno{S} in \deno{DB}.
-The drones' serial code will be described in Section~\ref{sec:design_slave}.
+Each \deno{S} is associated with a drone in the object model described in section~\ref{section:uml_notation}.
+When \deno{D} receives an initialization message from \deno{S} it will create a drone object and store it in \deno{DB}.
+In the drone object the \verb+ip+,\verb+location+, and \verb+name+ will be retrieved from the initialization message sent from \deno{S}.
+The \verb+location+ is retrieved from the IP and the \verb+name+ is the drone's serial.
+If \deno{M} receives an initialization message from a \deno{S} with a changed IP, it will update the \verb+ip+ and \verb+location+ of the drone in \deno{DB}.
+The drone's serial will be described in Section~\ref{sec:design_slave}.
 \\
 
-All communication between \deno{M} and \deno{S} is done using JavaScript Object Notation (\textit{JSON})\citep{JSON}.
-The choice of JSON is described in Secion~\ref{sec:tools}.
-
-\deno{D} will handle the session requests as a First In, First Out (FIFO) queue, to reduce the average time it takes to receive a session key after requestion one.
+\deno{D} will handle the session requests as a \ac{FIFO} queue.
 However, since the response from \deno{S} can be delayed for an arbitrary amount of time, there is no guarantee that the first session request to be handled is also the first session to be entered in \deno{DB}.
 \deno{S} will only return a valid session key, if it currently has no active sessions.
 Therefore at most one person will have a valid session key for communicating with \deno{S} at any given time.

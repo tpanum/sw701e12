@@ -1,13 +1,13 @@
 \section{Technologies}
 \label{sec:tools}
 \label{sec:technologies}
-The application structure described in Section~\ref{sec:application_structure} specifies \projectname{} will consist of a web application on \deno{M} and server-side scripting on \deno{M} and the \deno{Slaves}.
-In this section the development setup will be chosen, including both server operating systems and programming language.
+The application structure described in Section~\ref{sec:application_structure} specifies that \projectname{} will consist of a web application on \deno{M} and \deno{S}.
+In this section the development setup will be chosen, including both server operating system and programming language.
 The design furthermore specifies some functionality which must be implemented using specific technologies.
 
 \subsection{Server Operating System}
 In this project two operating system families will be considered for use.
-Each family consist of a set of operating systems.
+Each family consists of a set of operating systems.
 
 \begin{itemize}
     \item Windows Server family
@@ -30,43 +30,37 @@ Each family consist of a set of operating systems.
         \end{itemize}
 \end{itemize}
 
-\projectname{} will use Linux Debian as server operating system:
+Linux Debian was chosen as the server operating system due to the following reasons:
 
 \begin{itemize}
     %\item We find that the various Linux distributions are easier to use for project like these, where various web applications and server-side scripts are executed on the server. This is of course our preference, and a Windows-family server has equivalent execution power when it comes to executing web applications and similar. We have more experience with the Linux-family server operating systems, and therefore it is easier for us to deploy.
-    \item Installation of new programs is quick through the Debian package manager.
-    \item Linux Debian is open-source\citep{Debian}.
-    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}. 
+    % \item Installation of new programs is easy on Debian due to its package manager.
+    % \item Installation of new programs is quick through the Debian package manager.
+    \item Linux Debian is open-source \citep{Debian}, thus it is not necessary to purchase licenses.
+    \item Linux Debian is one of the most well-liked operating systems amongst system administrators, credited for its maintainability, size, ease to customize and community support \citep{why_debian}.
     %\item Linux Debian has a huge community that continuously updates and maintains it.
 \end{itemize}
 
 %It is important to underline that all considered operating systems contain the functionality needed in this project.
 %Operating systems are often chosen based on personal preferences or experience with a given operating system.
 %Deciding which operating system to use is often considered a ``religious'' choice, as different system administrates has each there preferences.
-The operating system chosen for the server-side applications in \projectname{} is Linux Debian.
+The operating system chosen will be used for \deno{M} and \deno{S} in \projectname{}.
 
-\subsection{Programming language}
+\subsection{Programming Language}
 \label{sec:programming_language}
-Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages.
+Using Linux Debian as operating system on \deno{M} and \deno{S}, limits the possible options for programming languages, since the chosen programming language must be supported by Linux Debian.
 %Programming languages within the .NET framework are not natively written to work on other platforms than Windows Server and are therefore discarded as emulating tools such as Wine are not a reliable solution. \\
 
 The programming language must have the following:
 
 \begin{itemize}
-	\item Support for network communication, see Section~\ref{sec:communication_network}.
-	\item Support for communicating with databases, see Section~\ref{sec:application_structure}.
-	\item Support for object oriented programming, see Section~\ref{subsec:objects}.
-	\item Must be maintained to ensure the language does not become discontinued.
+    \item Support for communicating with databases, as described Section~\ref{sec:application_structure}.
+	\item Support for network communication, as described Section~\ref{sec:communication_network}.
+	\item Support for object oriented programming, as described Section~\ref{subsec:objects}.
+	% \item Must be maintained to ensure the language does not become discontinued.
 \end{itemize}
 
-The considered programming languages were:
-
-\begin{itemize}
-    \item Python
-    \item Ruby
-    \item Perl
-    \item PHP
-\end{itemize}
+The considered programming languages are Perl, PHP, Python, and Ruby.
 
 %All the listed languages can output a program with similar functionality that runs on a Linux Debian server.\\
 %Check point
@@ -75,21 +69,23 @@ Ruby was chosen for the following reasons:
 \begin{itemize}
     %\item Ruby is easy to install server-side.
     \item Ruby can be used as a scripting language.
-    \item Ruby on Rails \emph{(Rails)} provide a framework for web-development with Ruby.
+    \item Ruby on Rails \emph{(Rails)} provides a framework for web-development with Ruby.
 \end{itemize}
 
-Ruby is a object oriented scripting language. \\
+Ruby is an object-oriented scripting language. \\
 %Besides working as a server-side scripting language it also works for web programming as several different web servers - e.g. Apache - has modules to support Ruby. \\
 
-Rails is an open-source web framework for Ruby\citep{rails}, the following paragraph uses it as source.
-Rails provide a set of built-in features, such as native support for the MVC model and Active Records.
-Rails also contains features, which simplifies distributed development.
-An example is Migrations. 
-Migrations are set of ruby classes designed to make it easy to setup and modify databases.
+Rails is an open-source web framework for Ruby \citep{rails}.
+Rails provide a set of built-in features, such as native support for the MVC model and Active Records \citep{patterns:2003}.
+Rails also contains features, which simplifies configuration management.
+An example is Migrations.
+Migrations are a set of ruby classes designed to make it easy to setup and modify databases.
 With migrations each developer can use a local database for development, instead of a shared database.
 %When a developer pulls the newest revision from the repository, he is able to execute a command to run all migrations.
 %This will initialize a part of Rails that updates the developers local database.
-If a developer makes changes to the database, he makes a new migration, shares it with the other developers, and by running the migrations their local database is updated to the latest version. 
+% If a developer makes changes to the database, he makes a new migration, shares it with the other developers, and by running the migrations their local database is updated to the latest version.
+If a developer makes a change to the database with a migration, he can share it with the other developers in his team.
+The other developers can then update their databases to reflect these changes by running his migration.
 Additionally migrations makes deployment of systems easier, as the database is automatically setup by running all migrations.
 
 %This is one of the features of Rails that helped us to make the decision to use it. \\
@@ -103,26 +99,29 @@ Additionally migrations makes deployment of systems easier, as the database is a
 %We also already know that we have to build some web application and server side scripting which both requires some soft of hosting.
 %Both aspects also work very well with Ruby and Rails.
 
-\subsection{Browser technologies}
+\subsection{Browser Technologies}
 \label{sec:browser_technologies} %\fxfatal{Er flyttet ned for browser.}
 A number of technologies are required in the browser to display the web application.
-As described in Section~\ref{sec:design_client}, \deno{B} must be able to display a video feed and handle some of the computation to reduce the load on \deno{M}.
-Reducing the load on \deno{M} can be achieved using Javascript \citep{what_is_javascript}. \\
+As described in Section~\ref{sec:design_client}, \deno{B} must be able to display a video stream and handle some of the computation to reduce the load on \deno{M}.
+Reducing the load on \deno{M} can be achieved using JavaScript \citep{what_is_javascript}. \\
 
-Another tool that helps reduce computation on \deno{M} is: Asynchronous Javascript and XML \emph{(AJAX)}.
-AJAX allow \deno{B} to request a specific view asynchronously from the rest of the view, and using Javascript computed in \deno{B}, handle the output from \deno{M} and attach the information to the view.
+Another tool that helps reduce computation on \deno{M} is: \ac{AJAX}.
+% \acs{AJAX} allows \deno{B} to request a specific view asynchronously from the rest of the view, and using Javascript computed in \deno{B}, handle the output from \deno{M} and attach the information to the view.
+\acs{AJAX} allows \deno{M} to only compute the needed pieces of information instead recomputing and resending the entire view.
+Then JavaScript on \deno{B} uses the information to update the view locally.
 This also provides the asynchronous processing described in Section~\ref{sec:interaction}.
 This approach has several advantages:
 
 \begin{itemize}
-	\item The content of a view can be updated without recomputing it. This is normally not possible with web-development, as the web is stateless\citep{stateless}.
+	\item The content of a view can be updated without recomputing the entire page.
+    This is normally not possible with web-development, as the web is stateless \citep{stateless}.
 	%\item It saves resources server-side, as only the parts that are needed will be processed and sent to the client. Normally, the entire interface has to be prepared and sent to the client when informations are updated.
-	\item Using AJAX can improve usability of a web application.\citep{why_ajax_makes_the_user_experience_better}
+	\item Using AJAX can improve usability of a web application \citep{why_ajax_makes_the_user_experience_better}.
 \end{itemize}
 
 These tools ensure that \deno{B} of \projectname{} is be platform independent while providing a better user-experience for the users \citep{why_ajax_makes_the_user_experience_better}.\\
 
-As described in Section~\ref{sec:design_client} a technology must be used in \deno{B} to display the drones video feed.
+As described in Section~\ref{sec:design_client} a technology must be used in \deno{B} to display the drone's video stream.
 The technologies considered for this are:
 
 \begin{itemize}
@@ -132,13 +131,13 @@ The technologies considered for this are:
 \end{itemize}
 
 Flash was chosen.
-HTML5 was discarded as it is still a new technology, and therefore not fully supported by all browsers\citep{html5_video}.
-Silverlight applications are developed using .NET. 
+HTML5 was discarded as it is still a new technology, and therefore not fully supported by all browsers \citep{html5_video}.
+Silverlight applications are developed using .NET.
 Since the other parts of \projectname{} are developed to work with the chosen Linux Debian server, Silverlight was discarded.
 %Silverlight uses .NET as backend, and as \projectname{} is developed for a Linux Debian server it was discarded.\fxfatal{source} \\
 
-Flash is platform-independent and can be run as a plugin in the clients Internet-browser.
-The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video feed and control it.
+Flash is platform-independent and can be run as a plugin in \deno{B}.
+The flash-application will be able to connect the user directly to the slave associated with a drone, enabling the user to view its video stream and control it.
 
 \subsection{Streaming Technologies}\label{sec:tools_streaming}
 %Hvad skal vi opnå med streaming
@@ -146,50 +145,50 @@ The flash-application will be able to connect the user directly to the slave ass
 %Hvilke løsningsmuligheder findes i den valgte tilgang
 %Hvilke tools er valgt og hvorfor
 %Hvordan er toolsne kombineret
-Developing a video streaming tool is without the scope of \projectname{} as described in Section~\ref{sec:design_slave}.
+Developing a video streaming tool is outside the scope of \projectname{} as described in Section~\ref{sec:design_slave}.
 Video streaming is therefore done using existing streaming technologies.
 
 %Reviewer det selv inden andre skal se på det, for havde ikke meget fokus da jeg skrev det
-The video feed send by the drone to \deno{S} is forwarded to \deno{B} as seen in Figure~\ref{fig:sequence_diagram}.
-The video feed is displayed in a Flash application, as described in Section~\ref{sec:browser_technologies}.
-Flash only natively supports video streams send via Real Time Messaging Protocol\textit{(RTMP)}\citep{rtmp_spec}.
-The drones video feed is H.264 encoded and send over TCP, as described in Appendix~\ref{app:ar_drone_specification}
+The video stream sent by the drone to \deno{S} is forwarded to \deno{B} as seen in Figure~\ref{fig:sequence_diagram}.
+The video stream is displayed in a Flash application, as described in Section~\ref{sec:browser_technologies}.
+Flash only natively supports video streams send via \ac{RTMP} \citep{rtmp_spec}.
+The drone's video stream is H.264 encoded and sent over TCP, as described in Appendix~\ref{app:ar_drone_specification}.
 Flash is compatible with H.264 encoded video \citep{netstream_spec}.
-The drones video feed is however encoded with the PaVE headers as \ac{Frame Header}, see Appendix~\ref{app:ar_drone_specification}. 
-Flash in incapable of reading PaVE headers.
-Therefore they must be removed before Flash is capable of displaying the video feed.
-To achieve this each \deno{S} must contain functionality capable of reading and encoding the drones stream without PaVE headers and forward it over RTMP to the Flash application. \\
+The drones video stream is however encoded with the PaVE headers as \acs{Frame Header}, see Appendix~\ref{app:ar_drone_specification}.
+Flash is incapable of reading PaVE headers.
+Therefore they must be removed before Flash is capable of displaying the video stream.
+To achieve this each \deno{S} must contain functionality capable of reading and encoding the drone's stream without PaVE headers and forward it over RTMP to the Flash application. \\
 
 There are two approaches to achieve the streaming functionality required in \projectname{}.
-One is using a single streaming technology with functionality to read the drones video feed and broadcast it over RTMP without the PaVE headers.
-The other is using two distinct technologies, with one reading the drones video feed and forwarding it to a streaming server.
-The streaming server reads the incomming video feed and broadcasts it over RTMP to \deno{B}
+One is using a single streaming technology with functionality to read the drone's video stream and broadcast it over RTMP without the PaVE headers.
+The other is using two distinct technologies, with one reading the drone's video stream and forwarding it to a streaming server.
+The streaming server reads the incoming video stream and broadcasts it over RTMP to \deno{B}.
 Both approaches depend on a technology with functionality to decode the PaVE headers.
-The technologies considered are the multimedia frameworks FFmpeg and Gstreamer, and the multimedia server C++ RTMP Server\textit{(CRTMP)}. 
+The technologies considered are the multimedia frameworks FFmpeg and GStreamer, and the multimedia server \ac{CRTMP}.
 \\
 
 ``FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video'' \citep{ffmpeg}.
 It contains a multimedia streaming server called FFserver.
-FFserver is used for live broadcasts and is capable of decoding and enconding video and audio.
-It does not contain functionlity to decode the PaVE headers, but can output over RTMP.
-Therefore FFmpeg cannot be used to read the drones video feed, but can send the RTMP stream if given a proper input. 
+FFserver is used for live broadcasts and is capable of decoding and encoding video and audio.
+It does not contain functionality to decode the PaVE headers, but can output over RTMP.
+Therefore FFmpeg cannot be used to read the drone's video stream, but can send the RTMP stream if given a proper input.
 \\
 
-Gstreamer is a multimedia framework that uses a pipeline architecture.
-A Gstreamer pipeline is a set of plugins the video feed is processed by.
-As an example a video feed might be decoded and then encoded in a new format.
-Gstreamer does not have a RTMP server.
-It is however capable of sending a video feed to a RTMP server.
-Gstreamer does not contain functionality to parse PaVE headers.
-There does however exist an externally developed plugin for Gstreamer \citep{paveparse} which contains the functionality to parse PaVE headers.
-The plugin is named Gstreamer PaVE parser \textit{(paveparse)}.
+GStreamer is a multimedia framework that uses a pipeline architecture.
+A GStreamer pipeline is a set of plugins the video stream is processed by.
+As an example a video stream might be decoded and then encoded in a new format.
+GStreamer does not have an RTMP server.
+It is however capable of sending a video stream to an RTMP server.
+GStreamer does not contain functionality to parse PaVE headers.
+There does however exist an externally developed plugin for GStreamer \citep{paveparse}, which contains the functionality to parse PaVE headers.
+The plugin is named \ac{paveparse}.
 \\
 
 CRTMP is a streaming server capable of streaming to and from a Flash application.
-It can receive a local stream send over RTP and broadcast it globally as RTMP.
+It can receive a local stream sent over RTP and broadcast it globally as RTMP.
 
-Gstreamer is the only tool with functionality to parse PaVE headers, but as it does not contain a RTMP server it must be used in correlation with either FFmpeg or CRTMP.
-FFserver is not capable of reading a video stream outputted by Gstreamer \citep{ffserver}, therefore CRTMP is used as the RTMP server in \projectname{}
+GStreamer is the only tool with functionality to parse PaVE headers, but as it does not contain a \acs{RTMP} server it must be used in correlation with either FFmpeg or \acs{CRTMP}.
+FFserver is not capable of reading a video stream outputted by GStreamer \citep{ffserver}, therefore \acs{CRTMP} will be used as the \acs{RTMP} server in \projectname{}.
 
 
 
