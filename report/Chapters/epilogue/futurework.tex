@@ -1,27 +1,23 @@
 
 \section{Future work}
+A number of the acceptance tests failed.
+The tests which were not passed must be implemented and bugs must be corrected before \projectname{} is ready for deployment \\
 
-\projectname{} in its current state is, as mentioned previously, a proof of concept.
-It is not ready to market yet. 
-A couple of things has to be fixed or implemented in order to make it fully ready to market. 
-These are considered future work and are covered in this section. \\
+Dynamic black-box testing, through acceptance tests, was the only testing performed after development ended on \projectname{}.
+To move from the current proof of concept state to on ready for deployment, \projectname{} must be subjected to more extensive testing.
+This testing should include both unit testing to eliminate bugs, and usability testing.
 
-A number of the accepts testes were not accepted when the tests were run.
-These can be seen in Section~\ref{sec:testing_report}.
-All of the tests that were not accepted must be implemented / fixed before \projectname{} is ready to market. \\
+The streaming solution made for \projectname{} is not ideal from an use case perspective.
+To implement a solution usable in \projectname{} would require developing a streaming tool, capable of parsing PaVE headers and forward a video stream displayable in a Flash application. \\
 
-As described in Section~\ref{sec:testing_approach} only dynamic black-box testing (acceptance tests) were run on \projectname{} to verify that it is implemented as planned and designed.
-When moving the project from a proof of concept state to a ready to market state, we believe that dynamic white box testing (unit testing) is necessary in order to ensure that the system works 100\% correct at all times, given any input. \\
+Those are the issues that must be resolved in the project's current state
+There are however a set of additional items that must be addressed to make \projectname{} ready for deployment:
 
-As described in Section~\ref{sec:discussion}, the streaming implemented in \projectname{} now is not a solution that can be shipped to the market. 
-The solution that was originally planned for implementation -- or a similar solution where the video feed is displayed in the clients browser -- must be implemented into \projectname{} before it is ready to market. \\
-
-Those are the things that needs to be fixed or improved in the project as it looks now.
-Besides that there are two things that qualifies as future work to make \projectname{} ready to market. 
 
 \begin{itemize}
-	\item Radio-controlled drones -- It is not an optimal solution that the drones broadcast their own WIFI network that \deno{S} has to connect to in order to be able to communicate with the drone. Instead a desirable solution is that the drone can receive a given radio signal. This gives two advantages. 1) It has a much larger range than then WIFI signal that the AR Drone, used in this project, has. And 2) it will be better if the drone can connect to a broadcasted signal rather than it is the one broadcasting the signal, as we will have better control with a signal that the \deno{S} broadcasts itself. 
-	\item Better hardware -- The current drones has limited fly time due to the batteries. This needs to be improved. The WIFI network card that we are using in \deno{S} is also of low quality. It has low range and we have seen the driver crash when the connection is interrupted (e.g. by cutting the power to the drone). This hardware needs to be improved before \projectname{} can be used in production. 
+	\item Radio-controlled drones -- It is not an optimal solution that the drones broadcast their own WIFI network that \deno{S} must connect to in order to enable communication with the drone. An alternative solution is communicate with the drone through radio signals. This gives two advantages. The maximum range of the Ar Drone's Wi-Fi signal is 50 meters \citep{wifirange}, where as a radio signal . And 2) it will be better if the drone can connect to a broadcasted signal rather than it is the one broadcasting the signal, as we will have better control with a signal that the \deno{S} broadcasts itself. 
+	\item Better hardware -- The current drones has limited fly time due to the batteries. The Wi-Fi network card used in \deno{S} is of low quality. It has a limited range, and its driver contains a bug which causes \deno{S} to crash whenever the connection to the drone is lost. This hardware needs to be improved before \projectname{} deployed.
+	\item Recording of video stream - The video stream must be recorded on \deno{S} to ensure video documentation is available.
 \end{itemize}
 
-Once this list of fixes and improvements has been implemented, \projectname{} is getting close to a ready to market state. After completing an intense testing session, of course. 
+%Once this list of fixes and improvements has been implemented, \projectname{} is getting close to a ready to market state. After completing an intense testing session, of course. 
