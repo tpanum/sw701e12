@@ -6,41 +6,42 @@ The purpose of this report is to describe how we developed a solution to the fol
 
 Before developing a solution to the problem it was necessary to define the problem domain.
 The problem domain was defined through an analysis of existing solutions and interviews with a security company.
-From this definition of the problem domain we identified the issues as: Scalability, wireless short-distance and wired long-distance communication and streaming, and permissions- and access control. \\
+From this definition of the problem domain we identified the issues as: Scalability, wireless short-distance and wired long-distance communication and streaming, and permissions- and access control.
+Use cases were created based on these issues.
+Based on the use cases a set of acceptance tests were made from which the functionality of \projectname{} was derived. 
+The design was based on this functionality. \\
 
-Use cases were created based on these issues, and the functionality of \projectname{} was then derived from the use cases. 
-The design was based on this functionality and the use cases.
-\projectname{} was both designed and implemented using an iterative process, where a combination of SCRUM and XP was applied. 
-Each iteration contained planning, designing, implementation and testing. 
-This report shows the final results of the design and implementation of all the iterations. \\
+\projectname{} was both developed using an iterative process, where a combination of SCRUM and XP was applied. 
+Each iteration contained planning, design, implementation, and testing. 
+This report documents the final results of the design and implementation. \\
 
 The \deno{Master} and \deno{Slave} architecture makes \projectname{} able to scale in regards to drones. 
-The \emph{Master} is a server responsible for the web application, the database and establishing connections to slaves.
+The \emph{Master} is a server responsible for the web application, the database, and establishing connections to slaves.
 A \emph{Slave} is a server associated with one drone. 
 All communication with this drone goes through the slave that it is connected to. \\
 
 \projectname{} supports that a user communicates directly with a \emph{Slave} without going through \emph{Master}, thus limiting the workload of \emph{Master}. 
-The web application on Master is designed and implemented to allows the amount of users to grow. \\
+The web application on Master is developed to support a growing amount of users. \\
 
 Wireless communication is used to communicate with the drone. 
 Since the drone is remotely controlled, this communication includes both control commands and video streaming.
 A streaming solution was designed using the tools GStreamer and C++ RTMP Server.
-Due to the format of the drones' video feed, it was not possible to implement a working streaming solution into the web application as described in the use cases.
+Due to the format of the drone's video stream, it was not possible to implement a working streaming solution into the web application as described in the use cases.
 Instead, this version of \projectname{} has another type of video streaming implemented that requires a third party video player installed on the client-side to show the video stream from a drone. \\
 
-Users gain access to \projectname{} through the privilege concept which is implemented into the web application. 
+Users gain access to \projectname{} through the implemented privilege concept. 
 This concept is designed so that no user has access to any functionality, and in order to gain access they have to be granted privileges. 
 Since the user communicates through a \emph{Slave} when communicating with a drone, it is necessary to implement access control on the \emph{Slave} too. 
 This is done by enforcing that all communication to a \emph{Slave} happens through a valid session. 
 A valid session is achieved using a \emph{session key}, which can be obtained in the web application on the Master, if the user has the required privileges. 
 A session key is a unique key that verifies that the session between a user and a \emph{Slave} is valid, and that the user has the right permissions to communicate with this \emph{Slave}. \\
 
-Based on the use cases, a number of acceptance tests were created which the testing of \projectname{} was based upon. 
-Only acceptance tests were run in \projectname{}. 
-These were run to ensure that all of the required functionality were present and working. 
-They did, however, show that some of the functionality in the acceptance tests, derived from the use cases, is not working or is not implemented. 
-We do not consider any of this functionality to be critical for a proof-of-concept version of \projectname{}, but they have all been listed in ``future work'' for later implementation. 
-Most of the acceptance tests were accepted, showing that the functionality that was designed is also implemented correctly into \projectname{}. \\
+Based on the use cases, a number of acceptance tests were created.
+These tests were the base of testing \projectname{}. 
+Only acceptance tests were performed on \projectname{}. 
+These were run to ensure that all of the required functionality was present and working. 
+They did, however, show that some of the functionality defined by the acceptance tests, is not working or is not implemented. 
+We do not consider any of this functionality to be critical for a proof of concept version of \projectname{}, but they have all been listed in ``future work'' for later implementation. \\
 
-\projectname{} in its current form is not ready-to-market.
-It is, however, a proof-of-concept solution showing how drone technology can be applied in a scalable web application to improve the efficiency and cost-efficiency of remote video surveillance of large outdoor areas.
+\projectname{} in its current state is not ready to deploy.
+It is, however, a proof of concept solution showing how drone technology can be applied in a scalable web application to improve the efficiency and cost-efficiency of remote video surveillance of large outdoor areas.

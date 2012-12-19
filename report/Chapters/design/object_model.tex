@@ -3,7 +3,7 @@
 \label{subsec:objects}
 
 This section will cover the design choices behind the application's object model, derived from the use cases in Section~\ref{sec:use_cases}.
-The UML object model diagram can be seen in Figure~\ref{fig:UML_class_diagram}, and is guided by the UML standard guide written in cooperation by several different software companies~\citep{UML_notation}.\\
+The UML object model diagram can be seen in Figure~\ref{fig:UML_class_diagram}, and is guided by the UML standard guide written by several different software companies in cooperation~\citep{UML_notation}.\\
 
 The UML attribute notation in this report is:
 \begin{itemize}
@@ -15,56 +15,61 @@ The UML attribute notation in this report is:
 The system will contain the following objects: \deno{Affiliate Privilege}, \deno{Company}, \deno{Drone}, \deno{Privilege}, \deno{Role}, \deno{Session}, and \deno{User}.
 The model of the objects and their relationships can be seen in Figure~\ref{fig:UML_class_diagram}.
 Each object covered is represented in the object model diagram with its name in lowercase and pluralized, e.g. \deno{User} object $\rightarrow$ \deno{users}.
-If an object's name consists of several words the spaces will be replaced by underscores, e.g. Session Key Task becomes session\_key\_tasks.
-The relationships between objects can either be implicit with a line directly from one object to another, or explicit with a simple or rich relationship model between the two objects.
-Simple relationship models are models without a PK.
+If an object's name consists of several words the spaces will be replaced by underscores, e.g. Session Key Task $\rightarrow$ session\_key\_tasks.
+
+The relationship between two objects \deno{a} to \deno{b} can be either implicit or explicit.
+Implicit relationships are illustrated as line from an \deno{a} to \deno{b}, where \deno{b} has a FK from \deno{a}
+Explicit relationships can be either simple or rich.
+Simple relationship models are models containing a FK from both \deno{a} and \deno{b} that is connected with a line to both.
 They are represented in the model diagram with both objects in lowercase and pluralized, e.g. roles\_users.
-Rich relationship models have a PK.
+Rich relationship models are similar to simple, but has a PK.
 This kind of relationship model does not have a predetermined naming convention, therefore it can be anything as long as it does not collide with the other model names, e.g. user\_privileges.\\
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/UML_model.pdf}
-    \caption{UML Class Diagram of \projectname{}}
+    \caption{UML Class Diagram of \projectname{}.}
     \label{fig:UML_class_diagram}
 \end{figure}
 
 
 %\subsection{Objects} %\fixme{Skal denne overskrift være der? Det burde ikke være nødvendigt at have den, men så skal teksten ændres lidt.}
-Access to and actions of the system is restricted.
-This restriction is based on the identity of user in the system.
-An instance of the \deno{User} object represents a user to the system.
+Access to the system and its functionality is restricted.
+This restriction is based on the identity of the user in the system.
+An instance of the \deno{User} object represents a user of the system.
 The \deno{User} object has the attributes \verb+email+ and \verb+password+, as seen in Figure~\ref{tab:user_object} in Appendix~\ref{app:objects}, these combined form the login credentials needed for a user to authenticate his identity towards the system. \\
 
-The \verb+email+ is publicly available, which leaves the \verb+password+ to be protected in order for user to protect his identity in the system.
+The \verb+email+ is publicly available.
+Therefore the \verb+password+ must be protected in order for users to protect their user in the system.
 The \verb+password+ entered by the user is concatenated with a \verb+salt+ and hashed through a SHA-1 hashing algorithm to be stored in \verb+hashed_password+.
-The hashing algorithm provides a way for storing the password without having its exact value, as this could leave to a security flaw.
-Having access to passwords of users directly, e.g. through a hacker attack, would allow the hacker to login into the users account, which is unintended for the system.
-When a salt is concatenated before hashing it makes it harder for the hacker to gain the original passwords, e.g. through a rainbow table~\cite{something}. \\
+The hashing algorithm provides a way for storing the password without having its exact value.
+Storing passwords of users unencrypted would allow a third party to login into the system should he gain access to the database.
+When a salt is concatenated before hashing it makes it harder for the third party to gain the original passwords, e.g. through a rainbow table~\cite{rainbow}. \\
 
 Having a distributed setup with multiple \deno{S}, each representing a \deno{Drone} object, means that the network locations of these need to be known in order to communicate.
 The network location is stored in the \verb+ip+ field of the \deno{Drone} object, as shown in Figure~\ref{tab:drone_object} of Appendix~\ref{app:objects}.
-The physical drone have a unique identifier known as \verb+name+, which makes the user able to identify a given drone. \\
+The physical drone has a unique identifier known as \verb+name+, which makes the user able to identify a given drone. \\
 
-The users of the system will be part of different companies, therefore there is a need for grouping users by a company.
-The \deno{Company} object have an \verb+owner+, which is a reference to a \deno{User} object.
-This is required for the system to know which user have access to all \deno{Affiliate Privilege} objects of the company. \\
+The users of the system will be part of different companies, as described in Section~\ref{sec:use_cases}, therefore there is a need for grouping users by a company.
+The \deno{Company} object has an \verb+owner+, which is a reference to a \deno{User} object.
+This is required for the system to know which user has access to all \deno{Affiliate Privilege} objects of the company. \\
 
-An \deno{Affiliate Privilege} object references a \deno{Privilege}, and only when combined they form a unique key.
-This key unlocks a certain functionality, meaning that if the user does not have a relation to the \deno{Affiliate Privilege} object, which represents the key, then the user is not able to unlock that functionality.
+An \deno{Affiliate Privilege} object references a \deno{Privilege}, and combined they form a unique key.
+This key is associated with a specific functionality in the system.
+A user is granted access to the functionality by having a relation with the \deno{Affiliate Privilege} that is part of the key.
 \deno{Role} objects give the possibility of grouping \deno{Privilege} objects together.
 Each \deno{Company} have a related role which contains all privileges, of which the company have full control.
-Full control gives the right for passing on a privilege, or disabling if the privilege is already granted.
+Full control of a privilege gives the right to grant or revoke it from users.
 \deno{Affiliate Privilege} objects have a field \verb+affiliate+ that links the privilege to an object of the type declared by the referenced \deno{Privilege} object's \verb+instance_type+ field. \\
 
-The \deno{Session} object represents an active pilot connection between a user and a drone.
+The \deno{Session} object represents an active control connection between a user and a drone.
 The \verb+session_key+ field provides a key that needs to be sent along with the commands.
 The \deno{Session Key Task} object is an object used for \deno{D} and \deno{M} to communicate through \deno{DB}, as shown in Figure~\ref{fig:daemon_structure} in Section~\ref{sec:application_structure}. \\
 
 In Section~\ref{sec:privileges} solutions for handling privileges were discussed.
 From this discussion it was decided to model a system capable of handling all proposed solutions to fit scenarios of the users.
 The \deno{User Privileges} relationship allows for connecting individual {Privilege} objects to a \deno{User} object.
-This is could be either granting or revoking, i.e. exceptions, the privilege.
+This is could be either granting or revoking, i.e. creating exceptions, the privilege.
 The \verb+flag+ field represents a value of either 1 or -1; 1 is regarded as granted, and -1 is regarded as revoked.
 
 
