@@ -1,0 +1,37 @@
+\chapter*{Preface}
+\label{preface}
+%This report is written to document the 6^{th} semester project of the software engineer student group, sw609f12, at Aalborg University.
+%The project commenced on the somethingnd of February of 2012 and finished on the 4^{th} of july
+We would like to thank our supervisor Lone Leth Thomsen for helping and supervising throughout the project.\\
+Furthermore we would like to thank Dardo Kleiner for developing the GStreamer PaVE parser plugin for GStreamer.
+
+\paragraph{The Summary} that is required of this report can be found in Appendix~\ref{appendix:summary}
+
+\paragraph{Quotations} are the words of another person along with a source.
+The source of the citation will either be in the text immediately before or after, or could potentially be incorporated into the quote as shown in the example below: \\
+
+\myQuoteA{This is an example of a quotation.}{X, p.~Y}
+
+\paragraph{References} are references to sections, figures, code snippets, chapters or parts written elsewhere in the report.
+This could look like the following:\\
+
+This is described in Section~X.Y.
+
+\paragraph{Code examples} are written in a special environment so they are easy to read and recognize.
+Examples can be seen in Code~snippet~\ref{phphelloworld}.
+Whenever there is a sequence of three dots (``...'') in a code snippet, it means that we have omitted some content, which is not important in that specific context.
+
+\begin{lstlisting}[style=sourceCode, caption={Code example of a hello world script written in PHP.}, label=phphelloworld]
+<?php
+
+function print_numbers($from, $to) {
+    
+    echo "Hello World! Here are the numbers from " . $from . " to " . $to;
+    for($i = $from; $i <= $to; $i++) {
+        echo "\n" . $i;
+    }
+    
+}
+print_numbers(1,100);
+
+\end{lstlisting}
