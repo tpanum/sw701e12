@@ -25,7 +25,7 @@ u.connect DRONE_IP, 1
 u.close
 
 class SlaveServer
-  HOST = "172.25.19.246"
+  HOST = "172.25.26.142"
   module EchoServer
 
     def post_init
@@ -86,7 +86,7 @@ class SlaveServer
 
       unless json['action'].nil?
         @t = json['action']
-        result += "command: #{@t}"
+        result += "#{Time.now} | command: #{@t}"
       end
 
       result
@@ -110,6 +110,7 @@ class SlaveServer
 
     def sendSessionTerminate
       send_data("{\"session_terminate_by_name\":\"#{@slave_id}\"}")
+      puts "The session key have been reset."
       $key = nil
     end
   end
@@ -280,6 +281,7 @@ class SlaveServer
         @respond = "{\"sessionkey\":\"invalid\"}"
       end
       puts "Send session key: \"#{$key}\""
+      puts "@respond: #{@respond}"
       send_data @respond
     end
 
