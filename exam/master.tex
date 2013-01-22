@@ -32,6 +32,9 @@
 % does not look nice, try deleting the line with the fontenc.
 \usepackage{lmodern} %optional
 
+
+\usepackage{comment} %Rasmus was here
+
 % colored hyperlinks
 \newcommand{\chref}[2]{%
   \href{#1}{{\usebeamercolor[bg]{Aalborg}#2}}
@@ -75,6 +78,9 @@
 
 \begin{document}
 % the titlepage
+
+\begin{comment}
+
 \begin{frame}[plain] % the plain option removes the sidebar and header from the title page
   \titlepage
 \end{frame}
@@ -128,6 +134,7 @@
 \end{frame}
 
 % general installation instructions
+
 \begin{frame}{Installation}
   \begin{block}{Global Installation}
   \begin{itemize}
@@ -137,6 +144,7 @@
   \end{itemize}
   \end{block}
 \end{frame}
+
 
 \subsection{GNU/Linux}
 % installation on GNU/Linux
@@ -326,6 +334,8 @@ In case you have any comments, suggestions or have found a bug, please do not he
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%
+\end{comment}
+
 
 \input{slides/index}
 
