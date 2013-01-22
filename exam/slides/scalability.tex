@@ -1,0 +1,52 @@
+\section{Scalability}
+\begin{frame}{Scalability}{}
+\begin{block}{Scalability Issues}
+  \begin{itemize}
+    \item An increasing amount of users will result in an increased load on the server
+    \item We assume an increased amount of users will result in:
+    \begin{itemize}
+			\item More page loads (Computation)
+			\item More privileges which are loaded often when using the system (Computation and I/O)
+			\item Session keys from a Slave are handled one at a time
+		\end{itemize}
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\subsection{Hardware}
+\begin{frame}{Scalability}{Hardware}
+  \begin{itemize}
+  	\item Uses a Master/slave architecture
+    \item Scale-out on Master to handle increased load
+    \item Scale-out and apply use a distributed database to distribute I/O operations
+    \item A distributed database can be used 
+  \end{itemize}
+\end{frame}
+
+\subsection{Software}
+\begin{frame}{Scalability}{Software}
+  \begin{itemize}
+    \item Caching views 
+    \item Caching data on DB level
+  \end{itemize}
+\end{frame}
+
+\subsection{Software}
+\begin{frame}{Scalability}{Software}
+\begin{block}{Caching}
+  \begin{itemize}
+    \item Caching views 
+    \item Distributed database
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\subsection{Software}
+\begin{frame}{Scalability}{Software}
+\begin{block}{Caching on DB level}
+  \begin{itemize}
+    \item Cache a users privileges when they login
+    \item Distributed database
+  \end{itemize}
+\end{block}
+\end{frame}
