@@ -140,9 +140,10 @@ module Seskey_connector
       obj = JSON.parse(data)
       unless obj['sessionkey'].nil?
         @seskey = obj['sessionkey']
-        if @seskey != "invalid" && @seskey.size == 40
-          @drone.session.session_key = @seskey unless @drone.session.nil?
-          @drone.session.save
+        if @seskey != "invalid"
+          session = @drone.session unless @drone.session.nil?
+          session.session_key = @seskey unless session.nil?
+          session.save unless session.nil?
         end
       end
       self.close_connection
