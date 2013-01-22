@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require notice
 //= require_tree .
+//= require swfobject
+
 //= require handlebars
 //= require_tree ../../templates
-//= require swfobject
 
