@@ -1,23 +1,63 @@
 \author{Thomas Kobber Panum}
+\section{Streaming}
 \subsection{What is streaming?}
 \begin{frame}{Streaming}{What is streaming?}
   \begin{columns}[T]
-    \begin{column}{.5\textwidth}
+    \begin{column}{.6\textwidth}
      \begin{block}{}
 % Your text here
+    Definition:
     \begin{itemize}
+      \item No exact definition
+      \item 'A stream' -- \textit{something} continues
+    \end{itemize}
+    What are we refering to by streaming?
+    \begin{itemize}
+      \item Video streaming
       \item Frames Per Second (FPS)
       \item Resolution (Width x Height)
     \end{itemize}
     \end{block}
     \end{column}
-    \begin{column}{.5\textwidth}
-    \begin{block}{}
-% Your image included here
-    \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/video_structure.pdf}
-    \end{center}
-    \end{block}
+    \begin{column}{.4\textwidth}
+      \begin{block}{}
+        % Your image included here
+        \begin{center}
+          \includegraphics[width=0.7\textwidth]{images/video_structure.pdf}
+        \end{center}
+      \end{block}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}{Streaming}{What is streaming?}
+  \includegraphics[width=1\textwidth]{images/file_vs_stream1.pdf}
+\end{frame}
+
+\begin{frame}{Streaming}{What is streaming?}
+  \includegraphics[width=1\textwidth]{images/file_vs_stream2.pdf}
+\end{frame}
+
+\subsection{Implementation}
+
+\begin{frame}{Streaming}{Implementation}
+  \begin{center}
+    \includegraphics[height=0.7\textheight]{images/dataflow_diagram.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Streaming}{Implementation}
+  \begin{block}{Current implementation}
+    \begin{center}
+      \includegraphics[width=0.4\textwidth]{images/stream_what_we_did.pdf}
+    \end{center}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Streaming}{Implementation}
+  \begin{block}{Complete implementation}
+    \begin{center}
+      \includegraphics[width=0.4\textwidth]{images/stream_what_we_should_have_done.pdf}
+    \end{center}
+  \end{block}
 \end{frame}
