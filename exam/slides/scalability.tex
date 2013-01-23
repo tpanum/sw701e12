@@ -5,7 +5,7 @@
   \begin{itemize}
   	\item The ability to handle an increasing amount of work in a capable manner
   	\item LONE has scalability for drones, not users
-  	\item Consider how to ensure performence with increased users
+  	\item Consider how to ensure performance with increased users
   \end{itemize}
 \end{frame}
 
@@ -21,6 +21,17 @@
   \end{itemize}
 \end{block}
 \end{frame}
+
+\begin{frame}{Scalability}{}
+\begin{block}{Scalability Solutions}
+  \begin{itemize}
+    \item Cache frequently accessed data
+    \item Scale-up or Scale-out on hardware
+  \end{itemize}
+\end{block}
+\end{frame}
+
+
 
 \begin{frame}{Scalability}{}
 \begin{block}{More page loads}
@@ -49,11 +60,24 @@
     \begin{block}{}
 % Your image included here
     \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/master_edge.pdf}
+    \includegraphics[width=1\textwidth]{images/master_edge.pdf}
     \end{center}
     \end{block}
     \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}{Scalability}{}
+\begin{block}{Increased I/O operations}
+  \begin{itemize}
+    \item Use database caching
+    \item Levels of database caching
+    	\begin{itemize}
+				\item Cache frequently accessed records in cache
+				\item Cache results of frequently posed querries
+			\end{itemize}
+  \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}{Scalability}{}
@@ -63,6 +87,8 @@
   \begin{itemize}
     \item Scale-out on hardware
     \item Distributed database
+    \item Load distributed across several machines
+    \item Consistency becomes important
   \end{itemize}
 \end{block}
 \end{column}
@@ -70,39 +96,11 @@
     \begin{block}{}
 % Your image included here
     \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/master_scaling.pdf}
+    \includegraphics[width=1\textwidth]{images/master_scaling.pdf}
     \end{center}
     \end{block}
     \end{column}
     \end{columns}
-\end{frame}
-
-
-
-
-\subsection{Hardware}
-\begin{frame}{Scalability}{Hardware}
-  \begin{columns}[T]
-    \begin{column}{.5\textwidth}
-     \begin{block}{}
-% Your text here
-    \begin{itemize}
-  	\item Uses a Master/slave architecture
-    \item Scale-out on Master to handle increased load
-    \item Scale-out and apply use a distributed database to distribute I/O operations  
-    \item Session keys requests could be distributed accross physical machines
-    \end{itemize}
-    \end{block}
-    \end{column}
-    \begin{column}{.5\textwidth}
-    \begin{block}{}
-% Your image included here
-    \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/master_scaling.pdf}
-    \end{center}
-    \end{block}
-    \end{column}
-\end{columns}
 \end{frame}
 
 \begin{frame}{Scalability}{}
