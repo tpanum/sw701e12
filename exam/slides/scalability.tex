@@ -2,20 +2,101 @@
 
 \section{Scalability}
 \begin{frame}{Scalability}{}
+  \begin{itemize}
+  	\item The ability to handle an increasing amount of work in a capable manner
+  	\item LONE has scalability for drones, not users
+  	\item 
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Scalability}{}
 \begin{block}{Scalability Issues}
   \begin{itemize}
-  	\item Design handles scalability issues with drones, not users
-    \item An increasing amount of users will result in an increased load on the server
     \item We assume an increased amount of users will result in:
     \begin{itemize}
 			\item More page loads (Computation)
 			\item More privileges which are loaded often when using the system (Computation and I/O)
 			\item More session key requests
 		\end{itemize}
-		\item Scaling with hardware or software
   \end{itemize}
 \end{block}
 \end{frame}
+
+\begin{frame}{Scalability}{}
+\begin{block}{More page loads}
+  \begin{itemize}
+    \item Cache frequently accessed pages on M
+    \item Must ensure consistency when data is updated
+    	\begin{itemize}
+				\item Rails can handle this
+			\end{itemize}
+		\item Must be based on usage analysis to be effective
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Scalability}{}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+     \begin{block}{More page loads}
+  \begin{itemize}
+    \item Cache frequently accessed pages on M
+    \item Must ensure consistency when data is updated
+    	\begin{itemize}
+				\item Rails can handle this
+			\end{itemize}
+		\item Must be based on usage analysis to be effective
+  \end{itemize}
+\end{block}
+    \begin{column}{.5\textwidth}
+    \begin{block}{}
+% Your image included here
+    \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/master_edge.pdf}
+    \end{center}
+    \end{block}
+    \end{column}
+\end{frame}
+
+\begin{frame}{Scalability}{}
+\begin{block}{Increased I/O operations}
+  \begin{itemize}
+    \item Cache frequently accessed pages on M
+    \item Must ensure consistency when data is updated
+    	\begin{itemize}
+				\item Rails can handle this
+			\end{itemize}
+		\item Must be based on usage analysis to be effective
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Scalability}{}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+     \begin{block}{Increased I/O operations}
+  \begin{itemize}
+    \item Cache frequently accessed pages on M
+    \item Must ensure consistency when data is updated
+    	\begin{itemize}
+				\item Rails can handle this
+			\end{itemize}
+		\item Must be based on usage analysis to be effective
+  \end{itemize}
+\end{block}
+    \begin{column}{.5\textwidth}
+    \begin{block}{}
+% Your image included here
+    \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/master_scaling.pdf}
+    \end{center}
+    \end{block}
+    \end{column}
+\end{frame}
+
+
+
 
 \subsection{Hardware}
 \begin{frame}{Scalability}{Hardware}
