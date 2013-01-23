@@ -1,14 +1,13 @@
-\author{Esben Pilgaard Møller}
+\author{Esben Pilgaard M\o{}ller}
 
 \section{Scalability}
 \begin{frame}{Scalability}{}
   \begin{itemize}
   	\item The ability to handle an increasing amount of work in a capable manner
   	\item LONE has scalability for drones, not users
-  	\item 
+  	\item Consider how to ensure performence with increased users
   \end{itemize}
 \end{frame}
-
 
 \begin{frame}{Scalability}{}
 \begin{block}{Scalability Issues}
@@ -40,15 +39,12 @@
   \begin{columns}[T]
     \begin{column}{.5\textwidth}
      \begin{block}{More page loads}
-  \begin{itemize}
-    \item Cache frequently accessed pages on M
-    \item Must ensure consistency when data is updated
-    	\begin{itemize}
-				\item Rails can handle this
-			\end{itemize}
-		\item Must be based on usage analysis to be effective
-  \end{itemize}
-\end{block}
+  		\begin{itemize}
+  			\item Improved hardware
+  			\item Edge servers with application code
+  		\end{itemize}
+			\end{block}
+		\end{column}
     \begin{column}{.5\textwidth}
     \begin{block}{}
 % Your image included here
@@ -57,19 +53,7 @@
     \end{center}
     \end{block}
     \end{column}
-\end{frame}
-
-\begin{frame}{Scalability}{}
-\begin{block}{Increased I/O operations}
-  \begin{itemize}
-    \item Cache frequently accessed pages on M
-    \item Must ensure consistency when data is updated
-    	\begin{itemize}
-				\item Rails can handle this
-			\end{itemize}
-		\item Must be based on usage analysis to be effective
-  \end{itemize}
-\end{block}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Scalability}{}
@@ -77,14 +61,11 @@
     \begin{column}{.5\textwidth}
      \begin{block}{Increased I/O operations}
   \begin{itemize}
-    \item Cache frequently accessed pages on M
-    \item Must ensure consistency when data is updated
-    	\begin{itemize}
-				\item Rails can handle this
-			\end{itemize}
-		\item Must be based on usage analysis to be effective
+    \item Scale-out on hardware
+    \item Distributed database
   \end{itemize}
 \end{block}
+\end{column}
     \begin{column}{.5\textwidth}
     \begin{block}{}
 % Your image included here
@@ -93,6 +74,7 @@
     \end{center}
     \end{block}
     \end{column}
+    \end{columns}
 \end{frame}
 
 
@@ -107,7 +89,7 @@
     \begin{itemize}
   	\item Uses a Master/slave architecture
     \item Scale-out on Master to handle increased load
-    \item Scale-out and apply use a distributed database to distribute I/O operations
+    \item Scale-out and apply use a distributed database to distribute I/O operations  
     \item Session keys requests could be distributed accross physical machines
     \end{itemize}
     \end{block}
@@ -120,39 +102,47 @@
     \end{center}
     \end{block}
     \end{column}
-\end{columns}\end{frame}
-
-
-
-\subsection{Software}
-\begin{frame}{Scalability}{Software}
-  \begin{itemize}
-    \item Caching and Replicas
-    \item Can be applied on both the application and DB level
-  \end{itemize}
+\end{columns}
 \end{frame}
 
-\begin{frame}{Scalability}{Software}
-\begin{block}{Application level}
+\begin{frame}{Scalability}{}
+\begin{block}{Session key requests}
   \begin{itemize}
-    \item Scale-out on Master and use two identical application servers
-    \begin{itemize}
-			\item Can use shared DB or DB replicas
-		\end{itemize}
-    \item Perform usage analysis and cache frequently accessed pages
+    \item Scale-out
+    \item Distribute session key requests accross physical machines
   \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}{Scalability}{Software}
-\begin{block}{Caching on DB level}
-  \begin{itemize}
-    \item Cache frequently accessed DB records
-    \item Cache the results of frequently posed querries
-    	\begin{itemize}
-				\item Rails stores results of querries for the duration of an action
-			\end{itemize}
-		\item Creates issues with consistency
-  \end{itemize}
-\end{block}
-\end{frame}
+%\subsection{Software}
+%\begin{frame}{Scalability}{Software}
+%  \begin{itemize}
+%    \item Caching and Replicas
+%    \item Can be applied on both the application and DB level
+%  \end{itemize}
+%\end{frame}
+
+%\begin{frame}{Scalability}{Software}
+%\begin{block}{Application level}
+%  \begin{itemize}
+%    \item Scale-out on Master and use two identical application servers
+%    \begin{itemize}%
+%			\item Can use shared DB or DB replicas 
+%		\end{itemize}
+%    \item Perform usage analysis and cache frequently accessed pages 
+%  \end{itemize}
+%\end{block}
+%\end{frame}
+
+%\begin{frame}{Scalability}{Software}
+%\begin{block}{Caching on DB level}
+%  \begin{itemize}
+%    \item Cache frequently accessed DB records
+%    \item Cache the results of frequently posed querries
+%    	\begin{itemize}%
+%				\item Rails stores results of querries for the duration of an action 
+%			\end{itemize}
+%		\item Creates issues with consistency
+ % \end{itemize}
+%\end{block}
+%\end{frame}
