@@ -19,6 +19,23 @@
   \end{block}
 \end{frame}
 
+
+\subsection{Drones vs. Slaves}
+\begin{frame}{Design}{Drones vs. Slaves}
+  \begin{block}{How many slaves per drone, or drones per slave?}
+	The current design uses one slave per drone. Is this the right design?
+
+	Potential issues:
+	\begin{itemize}
+		\item Hardware overflow -- too much hardware on systems with low load.
+		\item Too little hardware on systems with high load.
+	\end{itemize}
+
+	Solution?
+  \end{block}
+\end{frame}
+
+
 \subsection{Privileges}
 \begin{frame}{Design}{Privileges}
   \begin{block}{}
@@ -68,7 +85,7 @@
 
 \begin{frame}{Design}{Privileges}
   \begin{block}{}
-  	4 users, 1 role, 9 roles (7 of those in the privilege, 2 directly assigned)
+  	4 users, 1 role, 7 privileges (5 of those in the role, 2 directly assigned)
 
   	\begin{figure}[htb]
     	\centering
@@ -79,29 +96,12 @@
 
 \begin{frame}{Design}{Privileges}
   \begin{block}{}
-  	4 users, 1 role, 9 roles (7 of those in the privilege, 2 directly assigned and 2 exceptions)
+  	4 users, 1 role, 7 privileges (5 of those in the role, 2 directly assigned and 2 exceptions)
 
   	\begin{figure}[htb]
     	\centering
     	\includegraphics[width=0.35\textwidth]{images/privileges5.pdf}
   	\end{figure}
-  \end{block}
-\end{frame}
-
-
-
-\subsection{Drones vs. Slaves}
-\begin{frame}{Design}{Drones vs. Slaves}
-  \begin{block}{How many slaves per drone, or drones per slave?}
-	The current design uses one slave per drone. Is this the right design?
-
-	Potential issues:
-	\begin{itemize}
-		\item Hardware overflow -- too much hardware on systems with low load.
-		\item Too little hardware on systems with high load.
-	\end{itemize}
-
-	Solution?
   \end{block}
 \end{frame}
 
